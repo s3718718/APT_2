@@ -1,0 +1,5 @@
+class QwirkleMenu {
+public:
+
+private:
+};
