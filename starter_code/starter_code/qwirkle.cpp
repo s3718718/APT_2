@@ -31,21 +31,24 @@ int main(void) {
       if(menuInput == menuInputs[0]) {
       cout << "Starting a New Game" << endl;      
       cout << "Enter a name for player 1" << endl;
-      // cin >> player1Name;
-      // player1Name = to_upper(player1Name);
-      // cout << player1Name << endl;
+         // cin >> player1Name;
+         // player1Name = to_upper(player1Name);
+         // cout << player1Name << endl;
       }
       else if(menuInput == menuInputs[1]) {
          cout << "2 was selected" << endl;
+         //TODO
       }
       else if(menuInput == menuInputs[2]) {
          cout << "3 was selected" << endl;
+         //TODO
       }
       else if(menuInput == menuInputs[3]) {
          cout << "Goodbye" << endl;
+         //TODO
       }
 
-      cout << "Invalid Input. Try again" << endl;
+      cout << "Invalid Input" << endl;
    }
    return EXIT_SUCCESS;
 }
