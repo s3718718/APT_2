@@ -32,6 +32,7 @@ int main(void) {
       cout << "Starting a New Game" << endl;      
       cout << "Enter a name for player 1" << endl;
          // cin >> player1Name;
+         //validUserName(player1Name);
          // player1Name = to_upper(player1Name);
          // cout << player1Name << endl;
       }
