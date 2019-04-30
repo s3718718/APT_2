@@ -1,13 +1,15 @@
-class QwirkleMenu {
+class QwirkleMenu
+{
 public:
+  void newGame();
 
-void newGame();
+  void loadGame();
 
-void loadGame();
+  void studentInfo();
 
-void studentInfo();
+  void quit();
 
-void quit();
+  void loadFile(std::string fileName);
 
 private:
 };

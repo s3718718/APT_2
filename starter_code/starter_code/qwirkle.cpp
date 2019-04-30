@@ -48,24 +48,39 @@ int main(void)
   return EXIT_SUCCESS;
 }
 
-public void QuirkleMenu::newGame() {
-   cout << "Starting a New Game" << endl;
-   cout << "Enter a name for player 1" << endl;
-   cin >> player1Name;
-   // validUserName(player1Name);
-   // player1Name = to_upper(player1Name);
-   // cout << player1Name << endl;
+void QuirkleMenu::newGame()
+{
+  cout << "Starting a New Game" << endl;
+  cout << "Enter a name for player 1" << endl;
+  cin >> player1Name;
+  // validUserName(player1Name);
+  // player1Name = to_upper(player1Name);
+  // cout << player1Name << endl;
 }
 
-public void QuirkleMenu::loadGame() {
-   cout << "2 was selected" << endl;
+void QuirkleMenu::loadGame()
+{
+  cout << "Please enter save file name (relative path)" << endl;
+  cout << "> ";
+
+  std::string fileName;
+  std::getline(cin, fileName);
+
+  loadFile(fileName);
 }
 
-public void QuirkleMenu::studentInfo() {
-   cout << "3 was selected" << endl;
+void QuirkleMenu::studentInfo()
+{
+  cout << "3 was selected" << endl;
 }
 
-public void QuirkleMenu::quit() {
-   cout << "Goodbye" << endl;
-   exit(0);
+void QuirkleMenu::quit()
+{
+  cout << "Goodbye" << endl;
+  exit(0);
+}
+
+void QuirkleMenu::loadFile(std::string fileName)
+{
+  cout << "loading file " << fileName << endl;
 }
