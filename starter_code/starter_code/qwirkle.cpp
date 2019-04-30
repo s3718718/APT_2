@@ -1,5 +1,7 @@
 
 // Sam Hoch, s3721859
+
+// Md Abir Ishtiaque s3677701
 /* Duncan Do s3718718 */
 #include "LinkedList.h"
 #include "QwirkleMenu.h"
@@ -44,12 +46,10 @@ int main(void)
     else if (menuInput == menuInputs[1])
     {
       cout << "2 was selected" << endl;
-      //TODO
     }
     else if (menuInput == menuInputs[2])
     {
       cout << "3 was selected" << endl;
-      //TODO
     }
     else if (menuInput == menuInputs[3])
     {
