@@ -35,30 +35,37 @@ int main(void)
     cin >> menuInput;
 
     if (menuInput == menuInputs[0])
-    {
-      cout << "Starting a New Game" << endl;
-      cout << "Enter a name for player 1" << endl;
-      cin >> player1Name;
-      // validUserName(player1Name);
-      // player1Name = to_upper(player1Name);
-      // cout << player1Name << endl;
-    }
+      newGame();
     else if (menuInput == menuInputs[1])
-    {
-      cout << "2 was selected" << endl;
-    }
+      loadGame();
     else if (menuInput == menuInputs[2])
-    {
-      cout << "3 was selected" << endl;
-    }
+      studentInfo();
     else if (menuInput == menuInputs[3])
-    {
-      cout << "Goodbye" << endl;
-      exit(0);
-      //TODO
-    }
+      quit();
     else
       cout << "Invalid Input" << endl;
   }
   return EXIT_SUCCESS;
+}
+
+public void QuirkleMenu::newGame() {
+   cout << "Starting a New Game" << endl;
+   cout << "Enter a name for player 1" << endl;
+   cin >> player1Name;
+   // validUserName(player1Name);
+   // player1Name = to_upper(player1Name);
+   // cout << player1Name << endl;
+}
+
+public void QuirkleMenu::loadGame() {
+   cout << "2 was selected" << endl;
+}
+
+public void QuirkleMenu::studentInfo() {
+   cout << "3 was selected" << endl;
+}
+
+public void QuirkleMenu::quit() {
+   cout << "Goodbye" << endl;
+   exit(0);
 }
