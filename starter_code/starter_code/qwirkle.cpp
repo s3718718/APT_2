@@ -48,6 +48,7 @@ int main(void)
   return EXIT_SUCCESS;
 }
 
+
 void QuirkleMenu::newGame()
 {
   cout << "Starting a New Game" << endl;
@@ -57,6 +58,7 @@ void QuirkleMenu::newGame()
   // player1Name = to_upper(player1Name);
   // cout << player1Name << endl;
 }
+
 
 void QuirkleMenu::loadGame()
 {
@@ -69,9 +71,14 @@ void QuirkleMenu::loadGame()
   loadFile(fileName);
 }
 
+
 void QuirkleMenu::studentInfo()
 {
   cout << "3 was selected" << endl;
+  cout << "--------------" << endl;
+  cout << "Name : <full name>" << endl;
+  cout << "Student ID <student number>" << endl;
+  cout << "Email <email address>" << endl;
 }
 
 void QuirkleMenu::quit()
@@ -82,5 +89,5 @@ void QuirkleMenu::quit()
 
 void QuirkleMenu::loadFile(std::string fileName)
 {
-  cout << "loading file with filename" << fileName << endl;
+  cout << "loading file with filename " << fileName << endl;
 }
