@@ -48,6 +48,7 @@ int main(void)
   return EXIT_SUCCESS;
 }
 
+public
 void QuirkleMenu::newGame()
 {
   cout << "Starting a New Game" << endl;
@@ -58,20 +59,20 @@ void QuirkleMenu::newGame()
   // cout << player1Name << endl;
 }
 
+public
 void QuirkleMenu::loadGame()
 {
-  cout << "Please enter save file name (relative path)" << endl;
-  cout << "> ";
-
-  std::string fileName;
-  std::getline(cin, fileName);
-
-  loadFile(fileName);
+  cout << "2 was selected" << endl;
 }
 
+public
 void QuirkleMenu::studentInfo()
 {
   cout << "3 was selected" << endl;
+  cout << "--------------" << endl;
+  cout << "Name : <full name>" << endl;
+  cout << "Student ID <student number>" << endl;
+  cout << "Email <email address>" << endl;
 }
 
 void QuirkleMenu::quit()
