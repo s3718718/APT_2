@@ -1,5 +1,6 @@
 
 // Sam Hoch, s3721859
+/* Duncan Do s3718718 */
 #include "LinkedList.h"
 #include "QwirkleMenu.h"
 #include <iostream>
@@ -35,8 +36,8 @@ int main(void)
     {
       cout << "Starting a New Game" << endl;
       cout << "Enter a name for player 1" << endl;
-      // cin >> player1Name;
-      //validUserName(player1Name);
+      cin >> player1Name;
+      // validUserName(player1Name);
       // player1Name = to_upper(player1Name);
       // cout << player1Name << endl;
     }
@@ -53,10 +54,11 @@ int main(void)
     else if (menuInput == menuInputs[3])
     {
       cout << "Goodbye" << endl;
+      exit(0);
       //TODO
     }
-
-    cout << "Invalid Input" << endl;
+    else
+      cout << "Invalid Input" << endl;
   }
   return EXIT_SUCCESS;
 }
