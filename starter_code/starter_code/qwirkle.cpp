@@ -82,5 +82,5 @@ void QuirkleMenu::quit()
 
 void QuirkleMenu::loadFile(std::string fileName)
 {
-  cout << "loading file " << fileName << endl;
+  cout << "loading file with filename " << fileName << endl;
 }
