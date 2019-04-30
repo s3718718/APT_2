@@ -48,24 +48,36 @@ int main(void)
   return EXIT_SUCCESS;
 }
 
-public void QuirkleMenu::newGame() {
+void QwirkleMenu::newGame() {
+   std::string inputName = "";
    cout << "Starting a New Game" << endl;
+   
    cout << "Enter a name for player 1" << endl;
-   cin >> player1Name;
-   // validUserName(player1Name);
-   // player1Name = to_upper(player1Name);
-   // cout << player1Name << endl;
+   cin >> name;
+   if(validUserName(name))
+      player1Name = name;
+
+   cout << "Enter a name for player 2" << endl;
+   cin >> name;
+   if(validUserName(name))
+      player2Name = name;
+   
+   cout << "Player 1: " + player1Name + "\nPlayer 2: " + player2Name <<endl;
 }
 
-public void QuirkleMenu::loadGame() {
+void QwirkleMenu::loadGame() {
    cout << "2 was selected" << endl;
 }
 
-public void QuirkleMenu::studentInfo() {
+void QwirkleMenu::studentInfo() {
    cout << "3 was selected" << endl;
 }
 
-public void QuirkleMenu::quit() {
+void QwirkleMenu::quit() {
    cout << "Goodbye" << endl;
    exit(0);
+}
+
+bool QwirkeMenu::validUserName(std::string name) {
+   return true;
 }

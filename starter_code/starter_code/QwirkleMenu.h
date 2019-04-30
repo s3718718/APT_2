@@ -1,13 +1,18 @@
 class QwirkleMenu {
 public:
 
-void newGame();
+    void newGame();
 
-void loadGame();
+    void loadGame();
 
-void studentInfo();
+    void studentInfo();
 
-void quit();
+    void quit();
+
+    bool validUserName(std::string name);
 
 private:
+
+    std::string player1Name;
+    std::string player2Name;
 };
