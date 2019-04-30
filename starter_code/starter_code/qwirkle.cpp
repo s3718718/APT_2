@@ -65,19 +65,35 @@ void QwirkleMenu::newGame() {
    cout << "Player 1: " + player1Name + "\nPlayer 2: " + player2Name <<endl;
 }
 
-void QwirkleMenu::loadGame() {
-   cout << "2 was selected" << endl;
+
+void QuirkleMenu::loadGame()
+{
+  cout << "Please enter save file name (relative path)" << endl;
+  cout << "> ";
+
+  std::string fileName;
+  std::getline(cin, fileName);
+
+  loadFile(fileName);
 }
 
-void QwirkleMenu::studentInfo() {
-   cout << "3 was selected" << endl;
+
+void QuirkleMenu::studentInfo()
+{
+  cout << "3 was selected" << endl;
+  cout << "--------------" << endl;
+  cout << "Name : <full name>" << endl;
+  cout << "Student ID <student number>" << endl;
+  cout << "Email <email address>" << endl;
 }
 
-void QwirkleMenu::quit() {
-   cout << "Goodbye" << endl;
-   exit(0);
+void QuirkleMenu::quit()
+{
+  cout << "Goodbye" << endl;
+  exit(0);
 }
 
-bool QwirkeMenu::validUserName(std::string name) {
-   return true;
+void QuirkleMenu::loadFile(std::string fileName)
+{
+  cout << "loading file with filename " << fileName << endl;
 }
