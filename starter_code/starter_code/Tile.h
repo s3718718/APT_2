@@ -11,13 +11,13 @@ typedef int Shape;
 class Tile
 {
  public:
-   Tile(Colour colour, Shape shape);
+  static constexpr Colour colours[6] = {RED,ORANGE,YELLOW,GREEN,BLUE,PURPLE};
+  static constexpr Shape shapes[6] = {CIRCLE,STAR_4,DIAMOND,SQUARE,STAR_6,CLOVER};
+  Tile(Colour colour, Shape shape);
 
-  private:
+ private:
   Colour colour;
   Shape shape;
-  Colour colours[6] = {RED,ORANGE,YELLOW,GREEN,BLUE,PURPLE};
-  Shape shapes[6] = {CIRCLE,STAR_4,DIAMOND,SQUARE,STAR_6,CLOVER};
 };
 
 #endif // ASSIGN2_TILE_H
