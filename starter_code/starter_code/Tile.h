@@ -12,8 +12,10 @@ class Tile
 {
  public:
    Tile(Colour colour, Shape shape);
-   Colour colour;
-   Shape shape;
+
+  private:
+  Colour colour;
+  Shape shape;
 };
 
 #endif // ASSIGN2_TILE_H
