@@ -30,3 +30,7 @@ bool Player::removeTile(Tile tile){
 void Player::fillHand(){
     //TODO
 }
+
+void Player::printHand(){
+    
+}

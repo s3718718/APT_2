@@ -13,6 +13,7 @@ class Player
     bool hasTile(Tile tile);
     int getPoints();
     void fillHand(); // From TileBag
+    void printHand();
 
 
   private:

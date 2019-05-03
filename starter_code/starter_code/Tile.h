@@ -14,6 +14,7 @@ class Tile
   static constexpr Colour colours[6] = {RED,ORANGE,YELLOW,GREEN,BLUE,PURPLE};
   static constexpr Shape shapes[6] = {CIRCLE,STAR_4,DIAMOND,SQUARE,STAR_6,CLOVER};
   Tile(Colour colour, Shape shape);
+  void toString();
 
  private:
   Colour colour;
