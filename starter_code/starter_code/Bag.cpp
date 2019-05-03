@@ -3,8 +3,11 @@
 #include "Tile.h"
 
 Bag::Bag(){
-    for(Colour &colour : Tile::colours){
-        
+    for(const Colour &colour : Tile::colours){
+        for(const Shape &shape : Tile::shapes){
+            Tile tile = Tile(colour,shape);
+            //TODO : add to linkedList, then shuffle
+        }
     }
 }
 
