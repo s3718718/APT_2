@@ -8,10 +8,12 @@ typedef char Colour;
 // Define a Shape type
 typedef int Shape;
 
-class Tile {
-public:
+class Tile
+{
+ public:
+   Tile(Colour colour, Shape shape);
    Colour colour;
-   Shape  shape;
+   Shape shape;
 };
 
 #endif // ASSIGN2_TILE_H
