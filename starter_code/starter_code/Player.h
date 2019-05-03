@@ -17,10 +17,10 @@ class Player
 
 
   private:
-  string name;
-  string studentId;
-  string email;
-  int points;
+    string name;
+    string studentId;
+    string email;
+    int points;
   //TODO : Make ordered linked list of tiles for hand.
 
 };
