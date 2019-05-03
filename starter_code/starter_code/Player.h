@@ -10,6 +10,7 @@ class Player
     bool removeTile(Tile tile);
     bool save();
     void addPoints(int i);
+    bool hasTile(Tile tile);
     int getPoints();
     void fillHand(); // From TileBag
 
