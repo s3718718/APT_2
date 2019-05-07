@@ -1,6 +1,6 @@
 #include <cstdlib>
-#include "Player.h"
 #include <string>
+#include "Player.h"
 #include "Tile.h"
 
 using std::string;
@@ -14,27 +14,27 @@ Player::Player(string name, string studentId, string email)
 
 bool Player::drawTile(Bag bag) {
     //if statement first, return true if pass
-    Tile newTile = bag.takeFirst();
-    addTile(newTile);
+    // Tile newTile = bag.takeFirst();
+    // addTile(newTile);
     return true;
 }
 
 bool Player::addTile(Tile tile) {
     //if statement first, return true if pass
-    hand.add(tile);
+    // hand.add(tile);
     return true;
 }
 
 bool Player::placeTile(Tile tile) {
     //if statement first, return true if pass
     //board.add(tile);
-    hand.remove(tile);
+    // hand.remove(tile);
     return true;
 }
 
 bool Player::removeTile(Tile tile)
 {
-    hand.remove(tile);
+    // hand.remove(tile);
     return true;
 }
 void Player::addPoints(int i)
@@ -62,6 +62,7 @@ void Player::printHand() {
 
 bool save(string fileName) {
     //TODO
+    return true;
 }
 
 string Player::getName() {

@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "Tile.h"
 
-class Bag{
+class Bag {
     public:
         Bag();
         int size();

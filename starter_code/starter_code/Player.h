@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "LinkedList.h"
+#include "Bag.h"
 #include <string>
 
 #define HAND_LIMIT    6
@@ -9,7 +10,7 @@ class Player
 {
   public:
     Player(string name, string studentId, string email);
-    bool DrawTile(Bag bag);   //Removing from bag, adding to hand bag.takeFirst()
+    bool drawTile(Bag bag);   //Removing from bag, adding to hand bag.takeFirst()
     bool addTile(Tile tile);
     bool placeTile(Tile tile);  //Removing from hand, adding to board. NEED to add target location on board (vector of vectors holding tile pointers)
     bool removeTile(Tile tile);
@@ -37,7 +38,7 @@ class Player
     string studentId;
     string email;
     int points;
-    LinkedList hand = new LinkedList();
+    LinkedList* hand = new LinkedList();
   //TODO : Make ordered linked list of tiles for hand.
 
 };
