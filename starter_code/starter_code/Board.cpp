@@ -7,7 +7,7 @@
 //
 
 #include "Board.hpp"
-#include "Tile.h";
+#include "Tile.h"
 //to make an empty grid of size nxn. it has initially all nullpointers which can be later replaced with pointer to tiles
 Board::Board(int size)
 {
