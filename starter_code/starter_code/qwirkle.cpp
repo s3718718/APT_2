@@ -6,6 +6,7 @@
 #include "LinkedList.h"
 #include "QwirkleMenu.h"
 #include <iostream>
+#include "Bag.h"
 
 #define EXIT_SUCCESS 0
 
@@ -17,6 +18,8 @@ int main(void)
 {
   // LinkedList* list = new LinkedList();
   // delete list;
+
+  QwirkleMenu game = QwirkleMenu();
 
   std::string menuInputs[4] = {"1", "2", "3", "4"};
   std::string menuInput = "";
@@ -35,38 +38,38 @@ int main(void)
     cin >> menuInput;
 
     if (menuInput == menuInputs[0])
-      newGame();
+      game.newGame();
     else if (menuInput == menuInputs[1])
-      loadGame();
+      game.loadGame();
     else if (menuInput == menuInputs[2])
-      studentInfo();
+      game.studentInfo();
     else if (menuInput == menuInputs[3])
-      quit();
+      game.quit();
     else
       cout << "Invalid Input" << endl;
   }
   return EXIT_SUCCESS;
 }
 
-void QwirkleMenu::newGame() {
-   std::string inputName = "";
-   cout << "Starting a New Game" << endl;
-   
-   cout << "Enter a name for player 1" << endl;
-   cin >> name;
-   if(validUserName(name))
-      player1Name = name;
+void QwirkleMenu::newGame()
+{
+  std::string name = "";
+  cout << "Starting a New Game" << endl;
 
-   cout << "Enter a name for player 2" << endl;
-   cin >> name;
-   if(validUserName(name))
-      player2Name = name;
-   
-   cout << "Player 1: " + player1Name + "\nPlayer 2: " + player2Name <<endl;
+  cout << "Enter a name for player 1" << endl;
+  cin >> name;
+  //if (validUserName(name))
+  player1Name = name;
+
+  cout << "Enter a name for player 2" << endl;
+  cin >> name;
+  //if (validUserName(name))
+  player2Name = name;
+
+  cout << "Player 1: " + player1Name + "\nPlayer 2: " + player2Name << endl;
 }
 
-
-void QuirkleMenu::loadGame()
+void QwirkleMenu::loadGame()
 {
   cout << "Please enter save file name (relative path)" << endl;
   cout << "> ";
@@ -74,11 +77,11 @@ void QuirkleMenu::loadGame()
   std::string fileName;
   std::getline(cin, fileName);
 
-  loadFile(fileName);
+  //TODO
+  //loadFile(fileName);
 }
 
-
-void QuirkleMenu::studentInfo()
+void QwirkleMenu::studentInfo()
 {
   cout << "3 was selected" << endl;
   cout << "--------------" << endl;
@@ -87,13 +90,13 @@ void QuirkleMenu::studentInfo()
   cout << "Email <email address>" << endl;
 }
 
-void QuirkleMenu::quit()
+void QwirkleMenu::quit()
 {
   cout << "Goodbye" << endl;
   exit(0);
 }
 
-void QuirkleMenu::loadFile(std::string fileName)
+void QwirkleMenu::loadFile(std::string fileName)
 {
   cout << "loading file with filename " << fileName << endl;
 }

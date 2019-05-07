@@ -1,20 +1,21 @@
+#include <string>
+
 class QwirkleMenu
 {
 public:
   void newGame();
 
-    void loadGame();
+  void loadGame();
 
-    void studentInfo();
+  void studentInfo();
 
-    void quit();
+  void quit();
 
-    bool validUserName(std::string name);
+  bool validUserName(std::string name);
 
   void loadFile(std::string fileName);
 
 private:
-
-    std::string player1Name;
-    std::string player2Name;
+  std::string player1Name;
+  std::string player2Name;
 };
