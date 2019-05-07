@@ -3,7 +3,7 @@
 #include <iostream>
 
 using std::cout;
-
+using std::endl;
 Bag::Bag()
 {
     tileList = new LinkedList();
@@ -11,6 +11,7 @@ Bag::Bag()
     for ( Colour &color : colours){     //TODo : Fix arrays
         for ( Shape &shape : shapes) {
             Tile tile = Tile(shape, color);
+            cout<<"Adding Tile : "<<shape<<color<<std::endl;
             tileList->add(tile);
         }
     }

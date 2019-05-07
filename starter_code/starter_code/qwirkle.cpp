@@ -55,7 +55,8 @@ void QwirkleMenu::newGame()
 {
   std::string name = "";
   cout << "Starting a New Game" << endl;
-
+  Bag bag = Bag();
+  bag.print();
   cout << "Enter a name for player 1" << endl;
   cin >> name;
   //if (validUserName(name))
