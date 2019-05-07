@@ -15,6 +15,8 @@ class Tile
   static constexpr Shape shapes[6] = {CIRCLE,STAR_4,DIAMOND,SQUARE,STAR_6,CLOVER};
   Tile(Colour colour, Shape shape);
   void toString();
+  Colour getColour();
+  Shape getShape();
 
  private:
   Colour colour;

@@ -7,6 +7,7 @@
 //
 
 #include "Board.hpp"
+#include "Tile.h";
 //to make an empty grid of size nxn. it has initially all nullpointers which can be later replaced with pointer to tiles
 Board::Board(int size)
 {
@@ -97,7 +98,7 @@ void Board::display()
         for(int j=0;j<n;j++)
         {
             if(board[i][j] != nullptr)
-                std::cout<<board[i][j]->colour<<board[i][j]->shape<<"|";
+                std::cout<<board[i][j]->getColour()<<board[i][j]->getShape()<<"|";
             else
                 std::cout<<"  |";
         }
