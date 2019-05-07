@@ -4,14 +4,20 @@
 
 #include "Node.h"
 
-class LinkedList {
+class LinkedList
+{
 public:
-
-   LinkedList();
-   ~LinkedList();
+  LinkedList();
+  ~LinkedList();
+  void add(Tile tile);
+  Tile *takeTile(char colour, int shape);
+  Tile *get(char colour, int shape);
+  Tile *takeFirst();
+  void printList();
 
 private:
-   Node* head;
+  Node *head;
+  Node *tail;
 };
 
 #endif // ASSIGN2_LINKEDLIST_H

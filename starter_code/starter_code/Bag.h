@@ -3,12 +3,12 @@
 
 class Bag
 {
-  public:
-    Bag();
-    int size();
-    Tile pullTile();
-    void print();
+public:
+  Bag();
+  int size();
+  Tile pullTile();
+  void print();
 
-  private:
-    // Make ordered linked lists of tiles
+private:
+  // Make ordered linked lists of tiles
 };

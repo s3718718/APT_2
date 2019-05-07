@@ -1,6 +1,6 @@
 #include <cstdlib>
-#include "Player.h"
 #include <string>
+#include "Player.h"
 #include "Tile.h"
 
 using std::string;
@@ -12,14 +12,34 @@ Player::Player(string name, string studentId, string email)
     points = 0;
 }
 
+bool Player::drawTile(Bag bag) {
+    //if statement first, return true if pass
+    // Tile newTile = bag.takeFirst();
+    // addTile(newTile);
+    return true;
+}
+
+bool Player::addTile(Tile tile) {
+    //if statement first, return true if pass
+    // hand.add(tile);
+    return true;
+}
+
+bool Player::placeTile(Tile tile) {
+    //if statement first, return true if pass
+    //board.add(tile);
+    // hand.remove(tile);
+    return true;
+}
+
+bool Player::removeTile(Tile tile)
+{
+    // hand.remove(tile);
+    return true;
+}
 void Player::addPoints(int i)
 {
     points += i;
-}
-
-int Player::getPoints()
-{
-    return points;
 }
 
 bool Player::hasTile(Tile tile)
@@ -28,17 +48,35 @@ bool Player::hasTile(Tile tile)
     return true;
 }
 
-bool Player::removeTile(Tile tile)
+void Player::fillHand(Bag bag)
 {
+    int i = 0;
+    while(i < HAND_LIMIT) {
+        drawTile(bag);
+    }
+}
+
+void Player::printHand() {
+    //TODO
+}
+
+bool save(string fileName) {
     //TODO
     return true;
 }
 
-void Player::fillHand()
-{
-    //TODO
+string Player::getName() {
+    return name;
 }
 
-void Player::printHand()
-{
+int Player::getPoints() {
+    return points;
+}
+
+string Player::getStudentId() {
+    return studentId;
+}
+
+string Player::getEmail() {
+    return email;
 }

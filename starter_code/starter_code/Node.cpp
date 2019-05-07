@@ -1,12 +1,33 @@
-
+#include <iostream>
 #include "Node.h"
+#include "Tile.h"
 
-Node::Node(Tile* tile, Node* next)
+// Node *next;
+// Tile tile;
+
+Node::Node(Tile tile, Node *next)
 {
-   // TODO
+  this->next = next;
+
+  this->tile = tile;
 }
 
-Node::Node(Node& other)
+Node::Node(Node &other)
 {
-   // TODO
+  // TODO
+}
+
+Node *Node::getNext()
+{
+  return next;
+}
+
+Tile *Node::getValue()
+{
+  return &tile;
+}
+
+void Node::setNext(Node *newNext)
+{
+  next = newNext;
 }
