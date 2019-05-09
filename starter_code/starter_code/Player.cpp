@@ -4,28 +4,29 @@
 #include "Tile.h"
 
 using std::string;
-Player::Player(string name, string studentId, string email)
+Player::Player(string name)
 {
     this->name = name;
-    this->studentId = studentId;
-    this->email = email;
     points = 0;
 }
 
-bool Player::drawTile(Bag bag) {
+bool Player::drawTile(Bag bag)
+{
     //if statement first, return true if pass
     // Tile newTile = bag.takeFirst();
     // addTile(newTile);
     return true;
 }
 
-bool Player::addTile(Tile tile) {
+bool Player::addTile(Tile tile)
+{
     //if statement first, return true if pass
     // hand.add(tile);
     return true;
 }
 
-bool Player::placeTile(Tile tile) {
+bool Player::placeTile(Tile tile)
+{
     //if statement first, return true if pass
     //board.add(tile);
     // hand.remove(tile);
@@ -51,32 +52,29 @@ bool Player::hasTile(Tile tile)
 void Player::fillHand(Bag bag)
 {
     int i = 0;
-    while(i < HAND_LIMIT) {
+    while (i < HAND_LIMIT)
+    {
         drawTile(bag);
     }
 }
 
-void Player::printHand() {
+void Player::printHand()
+{
     //TODO
 }
 
-bool save(string fileName) {
+bool save(string fileName)
+{
     //TODO
     return true;
 }
 
-string Player::getName() {
+string Player::getName()
+{
     return name;
 }
 
-int Player::getPoints() {
+int Player::getPoints()
+{
     return points;
-}
-
-string Player::getStudentId() {
-    return studentId;
-}
-
-string Player::getEmail() {
-    return email;
 }
