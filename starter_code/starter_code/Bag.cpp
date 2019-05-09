@@ -10,7 +10,7 @@ Bag::Bag()
       // add tile of every shape/color combo available
     for ( Colour &color : colours){     //TODo : Fix arrays
         for ( Shape &shape : shapes) {
-            Tile tile = Tile(shape, color);
+            Tile tile = Tile(color, shape);
             cout<<"Adding Tile : "<<shape<<color<<std::endl;
             tileList->add(tile);
         }
@@ -24,3 +24,16 @@ void Bag::print()
     std::cout << "bagprint";
 }
 
+// Tile Bag::pullTile(){
+//     return;
+// }
+
+// LinkedList Bag::shuffle(){
+//     //TODO
+//     return NULL;
+// }
+
+bool Bag::isEmpty(){
+    //TODO
+    return false;
+}
