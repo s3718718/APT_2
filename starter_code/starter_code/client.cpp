@@ -30,7 +30,7 @@ int main(void)
     cout << "2. Load Game" << endl;
     cout << "3. Show student information" << endl;
     cout << "4. Quit" << endl;
-
+    cout << "> ";
     cin >> menuInput;
 
     if (menuInput == menuInputs[0])
