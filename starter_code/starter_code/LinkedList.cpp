@@ -123,6 +123,7 @@ void LinkedList::deleteAll(){
   }
 }
 
+// TODO : Refactor method
 void LinkedList::shuffle(){
   int len = 36;
   Tile *tileArray = new Tile[len];

@@ -8,24 +8,18 @@ Bag::Bag()
 {
     tileList = new LinkedList();
     getShuffledBag();
-    tileList->printList();
 }
 
 // For debugging purposes. MUST Remove from final impl
 void Bag::print()
 {   
   tileList->printList();
-    
 }
 
-// Tile Bag::pullTile(){
-//     return;
-// }
+Tile Bag::pullTile(){
+   return *tileList->takeFirst();
+}
 
-// LinkedList Bag::shuffle(){
-//     //TODO
-//     return NULL;
-// }
 
 bool Bag::isEmpty()
 {

@@ -8,7 +8,6 @@ public:
   int size();
   Tile pullTile();
   void print();
-  LinkedList shuffle();
   bool isEmpty();
 
 private:
