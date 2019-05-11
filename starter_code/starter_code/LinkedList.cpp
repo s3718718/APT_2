@@ -113,9 +113,19 @@ int LinkedList::getSize(){
   return counter;
 }
 
-Tile* LinkedList::toArray(){
-  int len = this->getSize();
-  Tile *tileArray = new Tile[this->getSize()];
+void LinkedList::deleteAll(){
+  Node *currentNode, *store;
+  currentNode = head;
+  while(currentNode != nullptr){
+    store = currentNode->getNext();
+    free(currentNode);
+    currentNode = store;
+  }
+}
+
+void LinkedList::shuffle(){
+  int len = 36;
+  Tile *tileArray = new Tile[len];
   int i = 0;
   Node *currentNode = head;
   std::cout<<"Converting to Array"<<std::endl;
@@ -127,11 +137,18 @@ Tile* LinkedList::toArray(){
   Tile temp;
   int randomIndex = 0;
 
-  for(int i=0;i<this->getSize();i++){
+  // Shuffling the array
+  for(int i=0;i<len;i++){
     randomIndex = rand() % len;
     temp = tileArray[i];
     tileArray[i] = tileArray[randomIndex];
     tileArray[randomIndex] = temp;
   }
-  return tileArray;
+
+  this->deleteAll();
+
+  // Adding shuffled tiles back to linked list
+    for(int i=0;i<len;i++){
+      this->add(tileArray[i]);
+    }
 }

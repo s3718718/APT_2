@@ -15,4 +15,5 @@ private:
   LinkedList* tileList;
   Colour colours[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
   Shape shapes[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
+  void getShuffledBag();
 };

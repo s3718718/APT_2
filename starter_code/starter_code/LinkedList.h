@@ -14,7 +14,7 @@ public:
   Tile *get(char colour, int shape);
   Tile *takeFirst();
   void printList();
-  Tile* toArray();
+  void shuffle();
   int getSize();
   void deleteAll();
 
