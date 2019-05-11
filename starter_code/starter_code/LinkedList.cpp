@@ -1,6 +1,7 @@
 
 #include "LinkedList.h"
 #include <iostream>
+#include <ctime>
 
 //TODO: Rewrite code to comply with structured programming
 
@@ -99,4 +100,38 @@ Tile *LinkedList::get(char colour, int shape)
     }
   }
   return nullptr;
+}
+
+int LinkedList::getSize(){
+   Node *currentNode = head;
+   int counter = 0;
+  while (currentNode != nullptr)
+  {
+    currentNode = currentNode->getNext();
+    counter++;
+  }
+  return counter;
+}
+
+Tile* LinkedList::toArray(){
+  int len = this->getSize();
+  Tile *tileArray = new Tile[this->getSize()];
+  int i = 0;
+  Node *currentNode = head;
+  std::cout<<"Converting to Array"<<std::endl;
+  while(currentNode != nullptr){
+    tileArray[i] = *currentNode->getValue();
+    currentNode = currentNode->getNext();
+    i++;
+  }
+  Tile temp;
+  int randomIndex = 0;
+
+  for(int i=0;i<this->getSize();i++){
+    randomIndex = rand() % len;
+    temp = tileArray[i];
+    tileArray[i] = tileArray[randomIndex];
+    tileArray[randomIndex] = temp;
+  }
+  return tileArray;
 }

@@ -14,6 +14,9 @@ public:
   Tile *get(char colour, int shape);
   Tile *takeFirst();
   void printList();
+  Tile* toArray();
+  int getSize();
+  void deleteAll();
 
 private:
   Node *head;
