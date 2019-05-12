@@ -23,11 +23,11 @@ Tile Bag::pullTile(){
 
 bool Bag::isEmpty()
 {
-    bool isEmpty = false;
+    bool retVal = false;
     if(tileList->getSize() == 0){
-        isEmpty = true;
+        retVal = true;
     }
-    return isEmpty;
+    return retVal;
 }
 
 void Bag::getShuffledBag(){
@@ -37,7 +37,7 @@ void Bag::getShuffledBag(){
         for (Shape &shape : shapes)
         {
             Tile tile = Tile(color, shape);
-            cout << "Adding Tile : " << shape << color << std::endl;
+          //  cout << "Adding Tile : " << shape << color << std::endl;
             tileList->add(tile);
         }
     }

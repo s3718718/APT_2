@@ -1,6 +1,6 @@
 
 #include "Tile.h"
-
+#include <iostream>
 Tile::Tile(Colour colour, Shape shape)
 {
     this->colour = colour;
@@ -13,8 +13,9 @@ Tile::Tile()
     this->shape = 9;
 }
 
-void Tile::toString()
+void Tile::printTile()
 {
+    std::cout<<this->colour<<this->shape<<std::endl;
 }
 
 Colour Tile::getColour()
