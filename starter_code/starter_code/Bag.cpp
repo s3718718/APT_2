@@ -23,10 +23,11 @@ Tile Bag::pullTile(){
 
 bool Bag::isEmpty()
 {
-    if(tileList->getSize() <= 0){
-        return true;
+    bool isEmpty = false;
+    if(tileList->getSize() == 0){
+        isEmpty = true;
     }
-    return false;
+    return isEmpty;
 }
 
 void Bag::getShuffledBag(){

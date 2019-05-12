@@ -129,7 +129,7 @@ void LinkedList::shuffle(){
   Tile *tileArray = new Tile[len];
   int i = 0;
   Node *currentNode = head;
-  std::cout<<"Converting to Array"<<std::endl;
+ // std::cout<<"Converting to Array"<<std::endl;
   while(currentNode != nullptr){
     tileArray[i] = *currentNode->getValue();
     currentNode = currentNode->getNext();
