@@ -39,11 +39,7 @@ int main(void)
       game.loadGame();
     else if (menuInput == menuInputs[2])
     {
-      cout << "3 was selected" << endl;
-      cout << "--------------" << endl;
-      cout << "Name : <full name>" << endl;
-      cout << "Student ID <student number>" << endl;
-      cout << "Email <email address>" << endl;
+      game.studentInformation();
     }
     else if (menuInput == menuInputs[3])
       game.quit();

@@ -1,8 +1,8 @@
 
 // Sam Hoch, s3721859
-// Labiba islam s3694372
+// Labiba Islam s3694372
 // Md Abir Ishtiaque s3677701
-/* Duncan Do s3718718 */
+// Duncan Do s3718718
 
 //Input format:
 //place <tileCode>,<boardPosition>
@@ -15,6 +15,14 @@
 using std::cin;
 using std::cout;
 using std::endl;
+
+void qwirkle::studentInformation() 
+{
+  cout  << "Name: Duncan Do\nStudent Number: s3718718\nEmail: s3718718@student.rmit.edu.au" << endl;
+        << "Name: Sam Hoch\nStudent Number: s3721859\nEmail: s3721859@student.rmit.edu.au" << endl;
+        << "Name: Labiba Islam\nStudent Number: s3718718\nEmail: s3694372@student.rmit.edu.au" << endl;
+        << "Name: Md Abir Ishtiaque\nStudent Number: s3718718\nEmail: s3677701@student.rmit.edu.au" << endl;
+}
 
 void qwirkle::newGame()
 {

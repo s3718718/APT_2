@@ -11,6 +11,8 @@ public:
   void newGame();
 
   void loadGame();
+  
+  void studentInformation() 
 
   void quit();
 
