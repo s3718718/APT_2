@@ -37,6 +37,7 @@ std::string LinkedList::toString()
 
 void LinkedList::printList()
 {
+  std::cout << "Size of list : " << this->getSize() << std::endl;
   Node *currentNode = head;
   // Tile *output == nullptr;
   std::cout << "---LinkedList Contents---" << std::endl;
@@ -140,10 +141,13 @@ void LinkedList::deleteAll()
   currentNode = head;
   while (currentNode != nullptr)
   {
+    // std::cout<<"Deleting : "<<std::endl;
     store = currentNode->getNext();
-    free(currentNode);
+    delete currentNode;
     currentNode = store;
+    //  std::cout<<"Size of list : "<<this->getSize()<<std::endl;
   }
+  head = nullptr;
 }
 
 // TODO : Refactor method
@@ -153,16 +157,17 @@ void LinkedList::shuffle()
   Tile *tileArray = new Tile[len];
   int i = 0;
   Node *currentNode = head;
-  std::cout << "Converting to Array" << std::endl;
+  //std::cout<<"Converting to Array"<<std::endl;
   while (currentNode != nullptr)
   {
+    // std::cout<<"Adding to array at : "<<i<<std::endl;
     tileArray[i] = *currentNode->getValue();
     currentNode = currentNode->getNext();
     i++;
   }
+
   Tile temp;
   int randomIndex = 0;
-
   // Shuffling the array
   for (int i = 0; i < len; i++)
   {
@@ -173,10 +178,14 @@ void LinkedList::shuffle()
   }
 
   this->deleteAll();
-
+  //std::cout<<"Size of list : "<<this->getSize()<<std::endl;
   // Adding shuffled tiles back to linked list
   for (int i = 0; i < len; i++)
   {
+    // std::cout<<"Size of list : "<<this->getSize()<<std::endl;
+    //  std::cout<<"Adding back to linked list at : "<<i<<std::endl;
+    //  tileArray[i].printTile();
     this->add(tileArray[i]);
   }
+  //std::cout<<"Size of list : "<<this->getSize()<<std::endl;
 }

@@ -7,7 +7,7 @@
 //
 
 #include "Board.hpp"
-#include "Tile.h"       // Why include again ??
+#include "Tile.h" // Why include again ??
 //to make an empty grid of size nxn. it has initially all nullpointers which can be later replaced with pointer to tiles
 Board::Board(int size)
 {
@@ -84,7 +84,14 @@ void Board::display()
     std::cout << "   ";
     // shows the top most row conatining integers b0 , 1 2 and so on
     for (int k = 0; k < n; k++)
-        std::cout << k << "  ";
+        if (k < 10)
+        {
+            std::cout << k << "  ";
+        }
+        else
+        {
+            std::cout << k << " ";
+        }
     std::cout << "\n  ";
     for (int t = 0; t < n; t++)
         std::cout << "---";

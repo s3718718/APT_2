@@ -13,7 +13,7 @@ class Tile
 public:
   Tile(Colour colour, Shape shape);
   Tile();
-  void toString();
+  void printTile();
   Colour getColour();
   Shape getShape();
 

@@ -12,6 +12,8 @@ public:
 
   void loadGame();
 
+  void studentInformation();
+
   void quit();
 
   bool validUserName(std::string name);
