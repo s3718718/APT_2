@@ -98,6 +98,7 @@ Tile *LinkedList::takeTile(char colour, int shape)
       currentNode = currentNode->getNext();
     }
   }
+  std::cout << "returning null poil"
   return nullptr;
 }
 

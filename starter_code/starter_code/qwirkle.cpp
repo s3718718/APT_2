@@ -37,11 +37,14 @@ void qwirkle::newGame()
   cin >> name;
   //if (validUserName(name))
   this->player1 = std::make_shared<Player>(*(new Player(name)));
+  cout << "AAAAAAAAAA" << endl;
+  this->player1->fillHand(*this->bag);
   cout
       << "Enter a name for player 2" << endl
       << "> ";
   cin >> name;
   this->player2 = std::make_shared<Player>(*(new Player(name)));
+  this->player2->fillHand(*this->bag);
   //if (validUserName(name))
   cout << "Player 1: " + this->player1->getName() + "\nPlayer 2: " + this->player2->getName() << endl;
   this->currentPlayer = this->player1;
@@ -131,6 +134,7 @@ void qwirkle::newTurn()
 
       validInput = true;
       //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
+      placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), 5, 5, *board);
     }
     else if (command == "replace")
     {

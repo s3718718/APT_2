@@ -1,7 +1,7 @@
 #include <string>
 #include <memory>
 #include "Player.h"
-#include "Board.hpp"
+#include "Board.h"
 
 using std::shared_ptr;
 
@@ -22,9 +22,9 @@ public:
 
   void newTurn();
 
-  int checkTiles(Tile tile, int row, int col,Board board, int selection, int direction)
+  int checkTiles(Tile tile, int row, int col,Board board, int selection, int direction);
 
-  bool placeTile(Tile tile, int row, int col,Board board) {
+  bool placeTile(Tile tile, int row, int col,Board board);
 
 private:
   shared_ptr<Bag> bag;
