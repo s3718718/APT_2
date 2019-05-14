@@ -22,7 +22,7 @@ void qwirkle::newGame()
   std::string name = "";
   cout << "Starting a New Game" << endl;
   this->bag = std::make_shared<Bag>(*(new Bag()));
-  this->bag->print();
+  cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(26)));
   cout << "Enter a name for player 1" << endl
        << "> ";
@@ -88,52 +88,64 @@ void qwirkle::newTurn()
   this->board->display();
   this->currentPlayer->printHand();
   std::string input;
-  cout << "> ";
-  std::getline(cin, input);
-  int commandEnd = input.find(' ');
-
-  std::string command = input.substr(0, commandEnd);
-  //the 1s depend on delimiter length, hopefully if you need to debug it you find this
-  std::string args = input.substr(commandEnd + 1, input.length()); //may need to be length -1
-  //TODO
-  //maybe wrap in while(validInput) when input is garbo alfonzo
-  //lots of magic numbers here, will probs want to fix that at some point. but it works!
-  //also change the string initialization to something that isn't trash
-
-  if (command == "place")
+  bool validInput = false;
+  while (!validInput)
   {
-    std::string tileString = args.substr(0, args.find(','));
-    std::string positionString = args.substr(tileString.length(), args.length());
+    cout << "> ";
+    std::getline(cin, input);
+    int commandEnd = input.find(' ');
+    std::string command = input.substr(0, commandEnd);
+    //the 1s depend on delimiter length, hopefully if you need to debug it you find this
+    std::string args = input.substr(commandEnd + 1, input.length()); //may need to be length -1
 
-    char test2 = 'b';
+    //TODO
+    //maybe wrap in while(validInput) when input is garbo alfonzo
+    //lots of magic numbers here, will probs want to fix that at some point. but it works!
+    //also change the string initialization to something that isn't trash
 
-    char *tileCol = &test2;
-    tileString.substr(0, 1).copy(tileCol, 1);
-    int tileShape = std::stoi(tileString.substr(1, 2));
+    if (command == "place")
+    {
+      std::string tileString = args.substr(0, args.find(','));
+      std::string positionString = args.substr(tileString.length(), args.length());
 
-    char test1 = 'a';
-    char *positionChar = &test1;
-    positionString.substr(0, 1).copy(positionChar, 0);
-    int positionInt = std::stoi(positionString.substr(2, 3));
+      char test2 = 'b';
 
-    cout << "placing " << *tileCol << tileShape << " at " << *positionChar << positionInt << endl;
+      char *tileCol = &test2;
+      tileString.substr(0, 1).copy(tileCol, 1);
+      int tileShape = std::stoi(tileString.substr(1, 2));
 
-    //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
-  }
-  else if (command == "replace")
-  {
-    char test3 = 'c';
-    char *tileCol = &test3;
-    args.substr(0, 1).copy(tileCol, 1);
-    int tileShape = std::stoi(args.substr(1, 2));
+      char test1 = 'a';
+      char *positionChar = &test1;
+      positionString.substr(0, 1).copy(positionChar, 0);
+      int positionInt = std::stoi(positionString.substr(2, 3));
 
-    cout << "replacing " << *tileCol << tileShape << endl;
+      cout << "placing " << *tileCol << tileShape << " at " << *positionChar << positionInt << endl;
 
-    //Run necessary code to replace a tile using *tileCol and tileShape
-  }
-  else
-  {
-    cout << "command \"" << command << "\" unknown" << endl;
+      validInput = true;
+      //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
+    }
+    else if (command == "replace")
+    {
+
+      char test3 = 'c';
+      char *tileCol = &test3;
+      args.substr(0, 1).copy(tileCol, 1);
+      int tileShape = std::stoi(args.substr(1, 2));
+
+      cout << "replacing " << *tileCol << tileShape << endl;
+      if (currentPlayer.hand.get(*tileCol, tileShape) != nullptr)
+      {
+
+        this->bag->add(this->currentPlayer->takeTile(*tileCol, tileShape));
+
+        validInput = true;
+      }
+      //Run necessary code to replace a tile using *tileCol and tileShape
+    }
+    else
+    {
+      cout << "command \"" << command << "\" unknown" << endl;
+    }
   }
 
   if (this->currentPlayer == this->player1)

@@ -7,32 +7,39 @@ using std::endl;
 Bag::Bag()
 {
     tileList = new LinkedList();
-    getShuffledBag();
+    //getShuffledBag();
 }
 
 // For debugging purposes. MUST Remove from final impl
 void Bag::print()
-{   
-  tileList->printList();
+{
+    tileList->printList();
 }
 
-Tile Bag::pullTile(){
-   return *tileList->takeFirst();
+std::string Bag::toString()
+{
+    return tileList->toString();
 }
 
+Tile Bag::pullTile()
+{
+    return *tileList->takeFirst();
+}
 
 bool Bag::isEmpty()
 {
-    if(tileList->getSize() <= 0){
+    if (tileList->getSize() <= 0)
+    {
         return true;
     }
     return false;
 }
 
-void Bag::getShuffledBag(){
+void Bag::getShuffledBag()
+{
     // add tile of every shape/color combo available
     for (Colour &color : colours)
-    { 
+    {
         for (Shape &shape : shapes)
         {
             Tile tile = Tile(color, shape);

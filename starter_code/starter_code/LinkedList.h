@@ -3,6 +3,7 @@
 #define ASSIGN2_LINKEDLIST_H
 
 #include "Node.h"
+#include <string>
 
 class LinkedList
 {
@@ -17,6 +18,7 @@ public:
   void shuffle();
   int getSize();
   void deleteAll();
+  std::string toString();
 
 private:
   Node *head;

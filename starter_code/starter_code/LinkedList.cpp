@@ -15,6 +15,26 @@ LinkedList::~LinkedList()
 {
 }
 
+std::string LinkedList::toString()
+{
+  Node *currentNode = head;
+  // Tile *output == nullptr;
+  std::string output = "";
+  while (currentNode != nullptr)
+  {
+
+    //check if current node matches args, if it don't currentNode = currentNode.getNext()
+    int tileShape = currentNode->getValue()->getShape();
+    char tileCol = currentNode->getValue()->getColour();
+    std::string tileColString(1, tileCol);
+    output.append(tileColString);
+    output.append(std::to_string(tileShape));
+    output.append(", ");
+    currentNode = currentNode->getNext();
+  }
+  return output;
+}
+
 void LinkedList::printList()
 {
   Node *currentNode = head;
@@ -102,9 +122,10 @@ Tile *LinkedList::get(char colour, int shape)
   return nullptr;
 }
 
-int LinkedList::getSize(){
-   Node *currentNode = head;
-   int counter = 0;
+int LinkedList::getSize()
+{
+  Node *currentNode = head;
+  int counter = 0;
   while (currentNode != nullptr)
   {
     currentNode = currentNode->getNext();
@@ -113,10 +134,12 @@ int LinkedList::getSize(){
   return counter;
 }
 
-void LinkedList::deleteAll(){
+void LinkedList::deleteAll()
+{
   Node *currentNode, *store;
   currentNode = head;
-  while(currentNode != nullptr){
+  while (currentNode != nullptr)
+  {
     store = currentNode->getNext();
     free(currentNode);
     currentNode = store;
@@ -124,13 +147,15 @@ void LinkedList::deleteAll(){
 }
 
 // TODO : Refactor method
-void LinkedList::shuffle(){
+void LinkedList::shuffle()
+{
   int len = 36;
   Tile *tileArray = new Tile[len];
   int i = 0;
   Node *currentNode = head;
-  std::cout<<"Converting to Array"<<std::endl;
-  while(currentNode != nullptr){
+  std::cout << "Converting to Array" << std::endl;
+  while (currentNode != nullptr)
+  {
     tileArray[i] = *currentNode->getValue();
     currentNode = currentNode->getNext();
     i++;
@@ -139,7 +164,8 @@ void LinkedList::shuffle(){
   int randomIndex = 0;
 
   // Shuffling the array
-  for(int i=0;i<len;i++){
+  for (int i = 0; i < len; i++)
+  {
     randomIndex = rand() % len;
     temp = tileArray[i];
     tileArray[i] = tileArray[randomIndex];
@@ -149,7 +175,8 @@ void LinkedList::shuffle(){
   this->deleteAll();
 
   // Adding shuffled tiles back to linked list
-    for(int i=0;i<len;i++){
-      this->add(tileArray[i]);
-    }
+  for (int i = 0; i < len; i++)
+  {
+    this->add(tileArray[i]);
+  }
 }
