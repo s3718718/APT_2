@@ -166,3 +166,74 @@ void qwirkle::newTurn()
     cout << "current player assignment is breaking, debug please" << endl;
   }
 }
+
+int qwirkle::checkTiles(Tile tile, int row, int col,Board board, int selection, int direction)
+{
+    int num=0;
+    bool stop=false;
+    int x=row, y=col;
+    while(!stop && x>0 && y>0 && x< board.getSize() && y < board.getSize())
+    {    if(direction == 1)
+        x = x-1;
+    else if(direction == 2)
+        x = x+1;
+    else if(direction == 3)
+        y= y+1;
+    else if(direction == 4)
+        y= y-1;
+        Tile *neighbour = board.getTile(x,y);
+        if(neighbour == nullptr)
+            stop = true;
+        else if(selection == 1 && tile.getColour() == neighbour->getColour())
+            num++;
+        else if(selection ==2 && tile.getShape() == neighbour->getShape())
+            num++;
+        else
+            stop = true;
+    }
+    return num;
+}
+
+bool qwirkle::placeTile(Tile tile, int row, int col,Board board) {
+    
+    int selection;
+    int total=0;
+    if(row < board.getSize() && col < board.getSize() )
+    {
+        
+        // Checking if tile matches the any of four directions one bby one
+        for(int d=1; d<=4;d++)
+        {
+            
+            Tile *check = nullptr;
+            if(d==1) // up
+                check =board.getTile(row - 1,col);
+            else if(d==2) //down
+                check = board.getTile(row+1,col);
+            else if(d == 3) // right
+                check = board.getTile(row, col+1);
+            else //left
+                check = board.getTile(row, col-1);
+            
+            if(check != nullptr)  // if threre is a tile
+            {
+                // checks if its of same colour or shape
+                if(check->getColour() == tile.getColour() || check->getShape() == tile.getShape())
+                {
+                    if(check->getColour() == tile.getColour())
+                        selection = 1;
+                    else
+                        selection = 2;
+                    // to get number of tiles matching in that direction
+                    int numOfTiles = 1 + checkTiles(tile,row,col,board,selection,2);
+                    if(numOfTiles < 6) // if there are less than 6 in a row, set thde new tile on bboard
+                    {
+                        board.setTile(row,col,&tile);
+                        total = total +1 +numOfTiles;
+                    }
+                }
+            }
+        }   
+    }
+    return true;
+}

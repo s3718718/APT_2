@@ -10,15 +10,8 @@ class Player
 {
 public:
   Player(string name);
-  bool drawTile(Bag bag); //Removing from bag, adding to hand bag.takeFirst()
-  bool addTile(Tile tile);
-  bool placeTile(Tile tile); //Removing from hand, adding to board. NEED to add target location on board (vector of vectors holding tile pointers)
-  bool removeTile(Tile tile);
-  void addPoints(int i);
-  bool hasTile(Tile tile);    //Validate the methods that manipulate tiles
-  void fillHand(Bag bag);     // From TileBag
-  void printHand();           //For Testing
-  bool save(string fileName); //IO
+  //Copy Constructor?
+  //Deconstructor?
 
   //Getters
   string getName();
@@ -30,9 +23,17 @@ public:
   // void setStudentId(string studentId);
   // void setEmail(string email);
 
+  void addPoints(int i);
+  bool addTile(Tile tile);
+  bool drawTile(Bag bag);                       //Removing from bag, adding to hand bag.takeFirst()
+  Tile removeTile(char colour, int shape);
+  void fillHand(Bag bag);                       // From TileBag
+  bool hasTile(char colour, int shape);         //Validate the methods that manipulate tiles
+  void printHand();                             //For Testing //CHANGE TO TOSTRING
+  string toString();
+
 private:
   string name;
   int points;
   LinkedList *hand = new LinkedList();
-  //TODO : Make ordered linked list of tiles for hand.
 };
