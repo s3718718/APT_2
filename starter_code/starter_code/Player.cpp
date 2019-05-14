@@ -2,6 +2,10 @@
 #include <string>
 #include "Player.h"
 #include "Tile.h"
+#include "Bag.h"
+#include "LinkedList.h"
+#include "Board.h"
+
 
 using std::string;
 Player::Player(string name)
@@ -13,29 +17,29 @@ Player::Player(string name)
 bool Player::drawTile(Bag bag)
 {
     //if statement first, return true if pass
-    // Tile newTile = bag.takeFirst();
-    // addTile(newTile);
+    Tile newTile = bag.takeFirst();
+    addTile(newTile);
     return true;
 }
 
 bool Player::addTile(Tile tile)
 {
     //if statement first, return true if pass
-    // hand.add(tile);
+    hand->add(tile);
     return true;
 }
 
 bool Player::placeTile(Tile tile)
 {
     //if statement first, return true if pass
-    //board.add(tile);
-    // hand.remove(tile);
+    // board.add(tile);
+    // removeTile(tile);
     return true;
 }
 
 bool Player::removeTile(Tile tile)
 {
-    // hand.remove(tile);
+    hand->takeTile(tile.getColour, tile.getShape);
     return true;
 }
 void Player::addPoints(int i)
@@ -60,7 +64,7 @@ void Player::fillHand(Bag bag)
 
 void Player::printHand()
 {
-    //TODO
+    hand->printList();
 }
 
 bool save(string fileName)
