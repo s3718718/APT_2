@@ -22,6 +22,10 @@ public:
 
   void newTurn();
 
+  int checkTiles(Tile tile, int row, int col,Board board, int selection, int direction)
+
+  bool placeTile(Tile tile, int row, int col,Board board) {
+
 private:
   shared_ptr<Bag> bag;
   shared_ptr<Board> board;

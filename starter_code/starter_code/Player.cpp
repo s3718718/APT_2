@@ -4,7 +4,6 @@
 #include "Tile.h"
 #include "Bag.h"
 #include "LinkedList.h"
-#include "Board.h"
 
 
 using std::string;
@@ -12,6 +11,29 @@ Player::Player(string name)
 {
     this->name = name;
     points = 0;
+}
+
+string Player::getName()
+{
+    return name;
+}
+
+int Player::getPoints()
+{
+    return points;
+}
+
+
+void Player::addPoints(int i)
+{
+    points += i;
+}
+
+bool Player::addTile(Tile tile)
+{
+    //if statement first, return true if pass
+    hand->add(tile);
+    return true;
 }
 
 bool Player::drawTile(Bag bag)
@@ -22,35 +44,9 @@ bool Player::drawTile(Bag bag)
     return true;
 }
 
-bool Player::addTile(Tile tile)
+Tile Player::removeTile(char colour, int shape)
 {
-    //if statement first, return true if pass
-    hand->add(tile);
-    return true;
-}
-
-bool Player::placeTile(Tile tile)
-{
-    //if statement first, return true if pass
-    // board.add(tile);
-    // removeTile(tile);
-    return true;
-}
-
-bool Player::removeTile(Tile tile)
-{
-    hand->takeTile(tile.getColour, tile.getShape);
-    return true;
-}
-void Player::addPoints(int i)
-{
-    points += i;
-}
-
-bool Player::hasTile(Tile tile)
-{
-    //TODO
-    return true;
+    return hand->takeTile(colour, shape);
 }
 
 void Player::fillHand(Bag bag)
@@ -62,23 +58,20 @@ void Player::fillHand(Bag bag)
     }
 }
 
+bool Player::hasTile(char colour, int shape)
+{ 
+    bool result = false;
+    if(hand->get(char colour, int shape) != null)
+        result  = true;
+    return result;
+}
+
 void Player::printHand()
 {
     hand->printList();
 }
 
-bool save(string fileName)
+string Player::toString() 
 {
-    //TODO
-    return true;
-}
-
-string Player::getName()
-{
-    return name;
-}
-
-int Player::getPoints()
-{
-    return points;
+    return hand->toString();
 }
