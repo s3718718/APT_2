@@ -37,11 +37,14 @@ void qwirkle::newGame()
   cin >> name;
   //if (validUserName(name))
   this->player1 = std::make_shared<Player>(*(new Player(name)));
+  cout << "AAAAAAAAAA" << endl;
+  this->player1->fillHand(*this->bag);
   cout
       << "Enter a name for player 2" << endl
       << "> ";
   cin >> name;
   this->player2 = std::make_shared<Player>(*(new Player(name)));
+  this->player2->fillHand(*this->bag);
   //if (validUserName(name))
   cout << "Player 1: " + this->player1->getName() + "\nPlayer 2: " + this->player2->getName() << endl;
   this->currentPlayer = this->player1;
@@ -97,6 +100,7 @@ void qwirkle::newTurn()
   this->currentPlayer->printHand();
   std::string input;
   bool validInput = false;
+  bool firstTurn = true;
   while (!validInput)
   {
     cout << "> ";
@@ -131,6 +135,9 @@ void qwirkle::newTurn()
 
       validInput = true;
       //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
+      this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), 5, 5, firstTurn);
+      cout << "after placeTile in newTurn, using this->board->getTile() col = " << this->board->getTile(5, 5)->getColour() << endl;
+      firstTurn = false;
     }
     else if (command == "replace")
     {
@@ -147,6 +154,9 @@ void qwirkle::newTurn()
       //this->bag->add(currentPlayer->takeTile());
       //currentPlayer->add(this->bag->takeTile());
     }
+
+    /*
+
     else if (command = "save")
     {
       //Construct yuge string of the save file
@@ -176,7 +186,7 @@ void qwirkle::newTurn()
 
       saveData.append(player1Data);
       saveData.append("\n");
-      saveDate.append(player2Data);
+      saveData.append(player2Data);
       saveData.append("\n");
       saveData.append(boardData);
       saveData.append("\n");
@@ -189,6 +199,9 @@ void qwirkle::newTurn()
       outFile << saveData << endl;
       outFile.close(args);
     }
+
+    */
+
     else
     {
       cout << "command \"" << command << "\" unknown" << endl;
@@ -209,12 +222,12 @@ void qwirkle::newTurn()
   }
 }
 
-int qwirkle::checkTiles(Tile tile, int row, int col, Board board, int selection, int direction)
+int qwirkle::checkTiles(Tile tile, int row, int col, int selection, int direction)
 {
   int num = 0;
   bool stop = false;
   int x = row, y = col;
-  while (!stop && x > 0 && y > 0 && x < board.getSize() && y < board.getSize())
+  while (!stop && x > 0 && y > 0 && x < this->board->getSize() && y < this->board->getSize())
   {
     if (direction == 1)
       x = x - 1;
@@ -224,7 +237,7 @@ int qwirkle::checkTiles(Tile tile, int row, int col, Board board, int selection,
       y = y + 1;
     else if (direction == 4)
       y = y - 1;
-    Tile *neighbour = board.getTile(x, y);
+    Tile *neighbour = this->board->getTile(x, y);
     if (neighbour == nullptr)
       stop = true;
     else if (selection == 1 && tile.getColour() == neighbour->getColour())
@@ -237,43 +250,58 @@ int qwirkle::checkTiles(Tile tile, int row, int col, Board board, int selection,
   return num;
 }
 
-bool qwirkle::placeTile(Tile tile, int row, int col, Board board)
+bool qwirkle::placeTile(Tile tile, int row, int col, bool firstTurn)
 {
 
   int selection;
   int total = 0;
-  if (row < board.getSize() && col < board.getSize())
+
+  if (row < this->board->getSize() && col < this->board->getSize())
   {
-
-    // Checking if tile matches the any of four directions one bby one
-    for (int d = 1; d <= 4; d++)
+    cout << "plassing test 1" << endl;
+    if (firstTurn)
     {
-
-      Tile *check = nullptr;
-      if (d == 1) // up
-        check = board.getTile(row - 1, col);
-      else if (d == 2) //down
-        check = board.getTile(row + 1, col);
-      else if (d == 3) // right
-        check = board.getTile(row, col + 1);
-      else //left
-        check = board.getTile(row, col - 1);
-
-      if (check != nullptr) // if threre is a tile
+      this->board->setTile(row, col, &tile);
+      std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
+      total = total + 1;
+    }
+    else
+    {
+      // Checking if tile matches the any of four directions one bby one
+      for (int d = 1; d <= 4; d++)
       {
-        // checks if its of same colour or shape
-        if (check->getColour() == tile.getColour() || check->getShape() == tile.getShape())
+
+        Tile *check = nullptr;
+        if (d == 1) // up
+          check = this->board->getTile(row - 1, col);
+        else if (d == 2) //down
+          check = this->board->getTile(row + 1, col);
+        else if (d == 3) // right
+          check = this->board->getTile(row, col + 1);
+        else //left
+          check = this->board->getTile(row, col - 1);
+
+        cout << "b4 test 2" << endl;
+        if (check != nullptr) // if threre is a tile
         {
-          if (check->getColour() == tile.getColour())
-            selection = 1;
-          else
-            selection = 2;
-          // to get number of tiles matching in that direction
-          int numOfTiles = 1 + checkTiles(tile, row, col, board, selection, 2);
-          if (numOfTiles < 6) // if there are less than 6 in a row, set thde new tile on bboard
+          cout << "plassing test 2" << endl;
+
+          // checks if its of same colour or shape
+          if (check->getColour() == tile.getColour() || check->getShape() == tile.getShape())
           {
-            board.setTile(row, col, &tile);
-            total = total + 1 + numOfTiles;
+            cout << "plassing test 3" << endl;
+            if (check->getColour() == tile.getColour())
+              selection = 1;
+            else
+              selection = 2;
+            // to get number of tiles matching in that direction
+            int numOfTiles = 1 + checkTiles(tile, row, col, selection, 2);
+            if (numOfTiles < 6) // if there are less than 6 in a row, set thde new tile on bthis->board
+            {
+              this->board->setTile(row, col, &tile);
+              std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
+              total = total + 1 + numOfTiles;
+            }
           }
         }
       }

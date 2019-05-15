@@ -78,27 +78,38 @@ Tile *LinkedList::takeFirst()
 
 Tile *LinkedList::takeTile(char colour, int shape)
 {
+  std::cout << "take tile input = " << colour << shape << std::endl;
   Tile *target = nullptr;
   Node *currentNode = head;
-  while (currentNode->getNext() != nullptr)
+
+  if (head->getValue()->getColour() == colour && head->getValue()->getShape() == shape)
   {
-    int tileShape = currentNode->getNext()->getValue()->getShape();
-    char tileCol = currentNode->getNext()->getValue()->getColour();
-    if (tileCol == colour && tileShape == shape)
+    target = head->getValue();
+    head = head->getNext();
+  }
+  else
+  {
+    while (currentNode->getNext() != nullptr)
     {
-      Node *newNext = currentNode->getNext()->getNext();
-      target = currentNode->getNext()->getValue();
-      currentNode->setNext(newNext);
-      return target;
-      //TODO figure out deletion
-      //delete newNext;
-    }
-    else
-    {
-      currentNode = currentNode->getNext();
+
+      int tileShape = currentNode->getNext()->getValue()->getShape();
+      char tileCol = currentNode->getNext()->getValue()->getColour();
+      std::cout << "checking input: " << colour << shape << " vs current: " << tileCol << tileShape << std::endl;
+      if (tileCol == colour && tileShape == shape)
+      {
+
+        //TODO this might break when there's 2 of each tile. If it does, change it so that this rearrangement happens only at the end of the loop.
+        Node *newNext = currentNode->getNext()->getNext();
+        target = currentNode->getNext()->getValue();
+        currentNode->setNext(newNext);
+      }
+      else
+      {
+        currentNode = currentNode->getNext();
+      }
     }
   }
-  return nullptr;
+  return target;
 }
 
 Tile *LinkedList::get(char colour, int shape)

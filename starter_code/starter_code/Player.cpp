@@ -1,15 +1,14 @@
 #include <cstdlib>
 #include <string>
+#include <iostream>
 #include "Player.h"
-#include "Tile.h"
-#include "Bag.h"
-#include "LinkedList.h"
-
 
 using std::string;
+
 Player::Player(string name)
 {
     this->name = name;
+    this->hand = new LinkedList();
     points = 0;
 }
 
@@ -39,29 +38,30 @@ bool Player::addTile(Tile tile)
 bool Player::drawTile(Bag bag)
 {
     //if statement first, return true if pass
-    Tile newTile = bag.takeFirst();
-    addTile(newTile);
+    addTile(bag.pullTile());
     return true;
 }
 
 Tile Player::removeTile(char colour, int shape)
 {
-    return hand->takeTile(colour, shape);
+    std::cout << "LOL" << std::endl;
+    return *(hand->takeTile(colour, shape));
 }
 
 void Player::fillHand(Bag bag)
 {
     int i = 0;
-    while (i < HAND_LIMIT)
+    while (i < HAND_LIMIT - 1)
     {
         drawTile(bag);
+        i++;
     }
 }
 
 bool Player::hasTile(char colour, int shape)
 { 
     bool result = false;
-    if(hand->get(char colour, int shape) != null)
+    if(hand->get(colour, shape) != nullptr)
         result  = true;
     return result;
 }

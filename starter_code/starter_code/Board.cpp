@@ -6,8 +6,32 @@
 //  Copyright © 2019 Labiba Islam. All rights reserved.
 //
 
-#include "Board.hpp"
-#include "Tile.h" // Why include again ??
+#include "Board.h"
+
+int Board ::getSize()
+{
+    return (int)board.size();
+}
+
+Tile *Board::getTile(int row, int col)
+{
+    Tile *tile = nullptr;
+    if (row < getSize() && col < getSize())
+    {
+        tile = board[row][col];
+    }
+    return tile;
+}
+void Board::setTile(int row, int col, Tile *tile)
+{
+    if (row < getSize() && col < getSize())
+    {
+        std::cout << "setting" << std::endl;
+        board[row][col] = tile;
+        std::cout << "from setTile, using getTile colour is: " << getTile(row, col)->getColour() << std::endl;
+    }
+}
+
 //to make an empty grid of size nxn. it has initially all nullpointers which can be later replaced with pointer to tiles
 Board::Board(int size)
 {
@@ -84,14 +108,7 @@ void Board::display()
     std::cout << "   ";
     // shows the top most row conatining integers b0 , 1 2 and so on
     for (int k = 0; k < n; k++)
-        if (k < 10)
-        {
-            std::cout << k << "  ";
-        }
-        else
-        {
-            std::cout << k << " ";
-        }
+        std::cout << k << "  ";
     std::cout << "\n  ";
     for (int t = 0; t < n; t++)
         std::cout << "---";
@@ -103,7 +120,10 @@ void Board::display()
         for (int j = 0; j < n; j++)
         {
             if (board[i][j] != nullptr)
-                std::cout << board[i][j]->getColour() << board[i][j]->getShape() << "|";
+            {
+                std::cout << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape() << "|";
+            }
+            // std::cout<<board[i][j]->colour<<board[i][j]->shape<<"|";
             else
                 std::cout << "  |";
         }

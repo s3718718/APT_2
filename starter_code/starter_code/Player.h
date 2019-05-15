@@ -1,6 +1,7 @@
 #include "Tile.h"
-#include "LinkedList.h"
 #include "Bag.h"
+#include "LinkedList.h"
+
 #include <string>
 
 #define HAND_LIMIT 6
@@ -35,5 +36,5 @@ public:
 private:
   string name;
   int points;
-  LinkedList *hand = new LinkedList();
+  LinkedList *hand;
 };
