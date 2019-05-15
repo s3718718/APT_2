@@ -147,6 +147,48 @@ void qwirkle::newTurn()
       //this->bag->add(currentPlayer->takeTile());
       //currentPlayer->add(this->bag->takeTile());
     }
+    else if (command = "save")
+    {
+      //Construct yuge string of the save file
+      std::string saveData = "";
+      std::string player1Data = "";
+      std::string player2Data = "";
+      std::string boardData = "";
+      std::string bagData = "";
+
+      player1Data.append(player1->getName());
+      player1Data.append("\n");
+      player1Data.append(std::to_string(player1->getPoints()));
+      player1Data.append("\n");
+      player1Data.append(player1->hand->toString());
+
+      cout << player1Data << endl;
+
+      player2Data.append(player2->getName());
+      player2Data.append("\n");
+      player2Data.append(std::to_string(player2->getPoints()));
+      player2Data.append("\n");
+      player2Data.append(player2->hand->toString());
+
+      cout << player2Data << endl;
+
+      bagData.append(this->bag->toString());
+
+      saveData.append(player1Data);
+      saveData.append("\n");
+      saveDate.append(player2Data);
+      saveData.append("\n");
+      saveData.append(boardData);
+      saveData.append("\n");
+      saveData.append(bagData);
+      saveData.append("\n");
+      saveData.append(currentPlayer->getName());
+
+      std::ofstream outFile;
+      outFile.open(args);
+      outFile << saveData << endl;
+      outFile.close(args);
+    }
     else
     {
       cout << "command \"" << command << "\" unknown" << endl;
