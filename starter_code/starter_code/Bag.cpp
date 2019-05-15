@@ -21,9 +21,9 @@ std::string Bag::toString()
     return tileList->toString();
 }
 
-Tile Bag::pullTile()
+Tile *Bag::pullTile()
 {
-    return *tileList->takeFirst();
+    return tileList->takeFirst();
 }
 
 bool Bag::isEmpty()
@@ -43,10 +43,10 @@ void Bag::getShuffledBag()
     {
         for (Shape &shape : shapes)
         {
-            Tile tile = Tile(color, shape);
+            Tile *tile = new Tile(color, shape);
             //  cout << "Adding Tile : " << shape << color << std::endl;
             tileList->add(tile);
         }
     }
-    tileList->shuffle();
+    //tileList->shuffle();
 }

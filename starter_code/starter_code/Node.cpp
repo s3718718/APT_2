@@ -5,7 +5,7 @@
 // Node *next;
 // Tile tile;
 
-Node::Node(Tile tile, Node *next)
+Node::Node(Tile *tile, Node *next)
 {
   this->next = next;
 
@@ -24,7 +24,7 @@ Node *Node::getNext()
 
 Tile *Node::getValue()
 {
-  return &tile;
+  return tile;
 }
 
 void Node::setNext(Node *newNext)

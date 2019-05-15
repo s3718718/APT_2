@@ -25,9 +25,9 @@ public:
 
   void newTurn();
 
-  int checkTiles(Tile tile, int row, int col, int selection, int direction);
+  int checkTiles(Tile *tile, int row, int col, int selection, int direction);
 
-  bool placeTile(Tile tile, int row, int col, bool firstTurn);
+  bool placeTile(Tile *tile, int row, int col, bool firstTurn);
 
 private:
   shared_ptr<Bag> bag;

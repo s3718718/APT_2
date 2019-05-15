@@ -25,12 +25,12 @@ public:
   // void setEmail(string email);
 
   void addPoints(int i);
-  bool addTile(Tile tile);
-  bool drawTile(Bag bag);                       //Removing from bag, adding to hand bag.takeFirst()
-  Tile removeTile(char colour, int shape);
-  void fillHand(Bag bag);                       // From TileBag
-  bool hasTile(char colour, int shape);         //Validate the methods that manipulate tiles
-  void printHand();                             //For Testing //CHANGE TO TOSTRING
+  bool addTile(Tile *tile);
+  bool drawTile(Bag bag); //Removing from bag, adding to hand bag.takeFirst()
+  Tile *removeTile(char colour, int shape);
+  void fillHand(Bag bag);               // From TileBag
+  bool hasTile(char colour, int shape); //Validate the methods that manipulate tiles
+  void printHand();                     //For Testing //CHANGE TO TOSTRING
   string toString();
 
 private:

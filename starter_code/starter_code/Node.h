@@ -7,13 +7,13 @@
 class Node
 {
 public:
-  Node(Tile tile, Node *next);
+  Node(Tile *tile, Node *next);
   Node(Node &other);
   Node *getNext();
   Tile *getValue();
   void setNext(Node *newNext);
 
-  Tile tile;
+  Tile *tile;
   Node *next;
 };
 

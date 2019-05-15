@@ -10,12 +10,12 @@ class LinkedList
 public:
   LinkedList();
   ~LinkedList();
-  void add(Tile tile);
+  void add(Tile *tile);
   Tile *takeTile(char colour, int shape);
   Tile *get(char colour, int shape);
   Tile *takeFirst();
   void printList();
-  void shuffle();
+  //void shuffle();
   int getSize();
   void deleteAll();
   std::string toString();

@@ -6,7 +6,7 @@ class Bag
 public:
   Bag();
   int size();
-  Tile pullTile();
+  Tile *pullTile();
   void print();
   bool isEmpty();
   std::string toString();

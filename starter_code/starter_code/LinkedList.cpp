@@ -52,7 +52,7 @@ void LinkedList::printList()
   std::cout << "---End---" << std::endl;
 }
 //TODO ask why Tile default constructor runs
-void LinkedList::add(Tile tile)
+void LinkedList::add(Tile *tile)
 {
   Node *node = new Node(tile, nullptr);
   if (head == nullptr)
@@ -162,6 +162,9 @@ void LinkedList::deleteAll()
 }
 
 // TODO : Refactor method
+
+/*
+
 void LinkedList::shuffle()
 {
   int len = 36;
@@ -200,3 +203,5 @@ void LinkedList::shuffle()
   }
   //std::cout<<"Size of list : "<<this->getSize()<<std::endl;
 }
+
+*/

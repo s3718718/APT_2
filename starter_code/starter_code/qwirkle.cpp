@@ -222,7 +222,7 @@ void qwirkle::newTurn()
   }
 }
 
-int qwirkle::checkTiles(Tile tile, int row, int col, int selection, int direction)
+int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int direction)
 {
   int num = 0;
   bool stop = false;
@@ -240,9 +240,9 @@ int qwirkle::checkTiles(Tile tile, int row, int col, int selection, int directio
     Tile *neighbour = this->board->getTile(x, y);
     if (neighbour == nullptr)
       stop = true;
-    else if (selection == 1 && tile.getColour() == neighbour->getColour())
+    else if (selection == 1 && tile->getColour() == neighbour->getColour())
       num++;
-    else if (selection == 2 && tile.getShape() == neighbour->getShape())
+    else if (selection == 2 && tile->getShape() == neighbour->getShape())
       num++;
     else
       stop = true;
@@ -250,7 +250,7 @@ int qwirkle::checkTiles(Tile tile, int row, int col, int selection, int directio
   return num;
 }
 
-bool qwirkle::placeTile(Tile tile, int row, int col, bool firstTurn)
+bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
 {
 
   int selection;
@@ -261,7 +261,7 @@ bool qwirkle::placeTile(Tile tile, int row, int col, bool firstTurn)
     cout << "plassing test 1" << endl;
     if (firstTurn)
     {
-      this->board->setTile(row, col, &tile);
+      this->board->setTile(row, col, tile);
       std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
       total = total + 1;
     }
@@ -287,10 +287,10 @@ bool qwirkle::placeTile(Tile tile, int row, int col, bool firstTurn)
           cout << "plassing test 2" << endl;
 
           // checks if its of same colour or shape
-          if (check->getColour() == tile.getColour() || check->getShape() == tile.getShape())
+          if (check->getColour() == tile->getColour() || check->getShape() == tile->getShape())
           {
             cout << "plassing test 3" << endl;
-            if (check->getColour() == tile.getColour())
+            if (check->getColour() == tile->getColour())
               selection = 1;
             else
               selection = 2;
@@ -298,7 +298,7 @@ bool qwirkle::placeTile(Tile tile, int row, int col, bool firstTurn)
             int numOfTiles = 1 + checkTiles(tile, row, col, selection, 2);
             if (numOfTiles < 6) // if there are less than 6 in a row, set thde new tile on bthis->board
             {
-              this->board->setTile(row, col, &tile);
+              this->board->setTile(row, col, tile);
               std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
               total = total + 1 + numOfTiles;
             }
