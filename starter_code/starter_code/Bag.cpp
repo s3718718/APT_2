@@ -8,6 +8,7 @@ Bag::Bag()
 {
     tileList = new LinkedList();
     getShuffledBag();
+    tileList->printList();
 }
 
 // For debugging purposes. MUST Remove from final impl

@@ -44,9 +44,10 @@ void LinkedList::printList()
   while (currentNode != nullptr)
   {
     //check if current node matches args, if it don't currentNode = currentNode.getNext()
-    int tileShape = currentNode->getValue()->getShape();
-    char tileCol = currentNode->getValue()->getColour();
-    std::cout << tileCol << tileShape << std::endl;
+  //  Shape tileShape = currentNode->getValue()->getShape();
+  //  Colour tileCol = currentNode->getValue()->getColour();
+    //std::cout << "\e[31mred"<<tileCol << tileShape << std::endl;
+    currentNode->getValue()->printColoured();
     currentNode = currentNode->getNext();
   }
   std::cout << "---End---" << std::endl;
@@ -167,10 +168,11 @@ void LinkedList::deleteAll()
 
 void LinkedList::shuffle()
 {
-  int len = 36;
+  int len = this->getSize();
   Tile* tileArray[len];
   int i = 0;
   Node *currentNode = head;
+  srand(time(0));
   //std::cout<<"Converting to Array"<<std::endl;
   while (currentNode != nullptr)
   {
@@ -185,7 +187,7 @@ void LinkedList::shuffle()
   // Shuffling the array
   for (int i = 0; i < len; i++)
   {
-    randomIndex = rand() % len;
+    randomIndex = rand() % len; //Generate a random position
     temp = tileArray[i];
     tileArray[i] = tileArray[randomIndex];
     tileArray[randomIndex] = temp;

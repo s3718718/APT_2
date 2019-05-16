@@ -10,6 +10,15 @@
 #define BLUE   'B'
 #define PURPLE 'P'
 
+#define ESCAPE "\e["
+#define RESET "\e[0m"
+#define RED_CODE 31
+#define ORAN_CODE 93
+#define YELL_CODE 33
+#define GREEN_CODE 32
+#define BLUE_CODE 34
+#define PURP_CODE 35
+
 // Shapes
 #define CIRCLE    1
 #define STAR_4    2

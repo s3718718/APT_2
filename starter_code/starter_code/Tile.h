@@ -16,6 +16,8 @@ public:
   void printTile();
   Colour getColour();
   Shape getShape();
+  // Prints the color and shape with color in the terminal.
+  void printColoured();
 
 private:
   Colour colour;
