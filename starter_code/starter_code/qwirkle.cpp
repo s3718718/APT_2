@@ -179,6 +179,47 @@ void qwirkle::newTurn()
   }
 }
 
+bool qwirkle::validateMove(char colour, int shape, int row, int col) {
+  bool valid = false;
+  Tile neighbours[4] = {
+    board->getTile(row - 1, col), 
+    board->getTile(row, col + 1), 
+    board->getTile(row + 1, col), 
+    board->getTile(row, col - 1)
+    };
+
+  for(i = 0; i < neighbours.size(); i++) {
+    if(neighbours[i] != nullptr) {
+      if((neighbours[i]->getColour() == colour) && (neighbours[i]->getShape() == shape) {
+        int x = 0;
+        int y = 0;
+        if(i = 0) {
+          x = row - 2;
+          y = col;
+        }
+        else if(i = 1) {
+          x = row;
+          y = col + 2;
+        }
+        else if(i = 2) {
+          x = row + 2;
+          y = col;
+        }
+        else if(1 = 3) {
+          x = row;
+          y = col - 2;
+        }
+        if(neighbours[i]s position + 1 != nullptr) {
+           if(board->getTile(x,y)->getColour() == colour) && (board->getTile(x,y)->getShape() == shape) {
+             valid = true;
+           }
+        }
+      }
+    }
+  }
+  return valid;
+}
+
 int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int direction)
 {
   int num = 0;
