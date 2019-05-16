@@ -31,6 +31,7 @@ void qwirkle::newGame()
   this->gameOver = false;
   std::string name = "";
   cout << "Starting a New Game" << endl;
+  cout << "How many players?" <<endl;
   this->bag = std::make_shared<Bag>(*(new Bag()));
   cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(26)));
