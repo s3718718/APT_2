@@ -26,9 +26,7 @@ void Board::setTile(int row, int col, Tile *tile)
 {
     if (row < getSize() && col < getSize())
     {
-        std::cout << "setting" << std::endl;
         board[row][col] = tile;
-        std::cout << "from setTile, using getTile colour is: " << getTile(row, col)->getColour() << std::endl;
     }
 }
 
@@ -108,7 +106,12 @@ void Board::display()
     std::cout << "   ";
     // shows the top most row conatining integers b0 , 1 2 and so on
     for (int k = 0; k < n; k++)
-        std::cout << k << "  ";
+        if (k < 10)
+        {
+            std::cout << k << "  ";
+        }
+        else
+            std::cout << k << " ";
     std::cout << "\n  ";
     for (int t = 0; t < n; t++)
         std::cout << "---";
@@ -129,4 +132,30 @@ void Board::display()
         }
         std::cout << std::endl;
     }
+}
+
+std::string Board::toString()
+{
+
+    std::string output = "";
+    int n = (int)board.size();
+    // loops to print the vector of vectors
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (board[i][j] != nullptr)
+            {
+                std::string colour(1, this->getTile(i, j)->getColour());
+                output.append(colour);
+                output.append(std::to_string(this->getTile(i, j)->getShape()));
+                output.append("|");
+            }
+            // std::cout<<board[i][j]->colour<<board[i][j]->shape<<"|";
+            else
+                output.append("  |");
+        }
+        output.append("\n");
+    }
+    return output;
 }

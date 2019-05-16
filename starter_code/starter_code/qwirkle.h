@@ -11,7 +11,7 @@ class qwirkle
 public:
   void newGame();
 
-  void saveGame();
+  void saveGame(std::string saveFile);
 
   void loadGame();
 
@@ -29,6 +29,8 @@ public:
 
   bool placeTile(Tile *tile, int row, int col, bool firstTurn);
 
+  int getIntFromChar(char c);
+
 private:
   shared_ptr<Bag> bag;
   shared_ptr<Board> board;
@@ -36,6 +38,7 @@ private:
   shared_ptr<Player> player2;
   shared_ptr<Player> currentPlayer;
   bool gameOver;
+  bool firstTurn;
 };
 
 // = std::make_shared<Bag>(null);
