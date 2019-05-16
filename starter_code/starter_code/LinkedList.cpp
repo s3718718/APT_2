@@ -163,7 +163,7 @@ void LinkedList::deleteAll()
 
 // TODO : Refactor method
 
-/*
+
 
 void LinkedList::shuffle()
 {
@@ -204,4 +204,3 @@ void LinkedList::shuffle()
   //std::cout<<"Size of list : "<<this->getSize()<<std::endl;
 }
 
-*/

@@ -158,6 +158,12 @@ void qwirkle::newTurn()
     {
       this->saveGame(args);
     }
+    else if(command == "help")
+    {
+      cout<<" --------List of valid commands------------"<<endl;
+      cout<<"place <tileCode>,<boardPosition>"<<endl;
+      cout<<"replace <tileCode>"<<endl;
+    }
 
     else
     {
