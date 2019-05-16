@@ -12,6 +12,7 @@
 
 #define ESCAPE "\e["
 #define RESET "\e[0m"
+#define END_ESCAPE "m"
 #define RED_CODE 31
 #define ORAN_CODE 93
 #define YELL_CODE 33

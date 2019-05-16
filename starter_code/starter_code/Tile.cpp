@@ -43,6 +43,6 @@ void Tile::printColoured(){
     }else if(this->colour == BLUE){
         colorCode = BLUE_CODE;
     }
-    
-    std::cout<<ESCAPE<<colorCode<<"m"<<this->colour<<this->shape<<RESET<<std::endl;
+
+    std::cout<<ESCAPE<<colorCode<<END_ESCAPE<<this->colour<<this->shape<<RESET<<std::endl;
 }
