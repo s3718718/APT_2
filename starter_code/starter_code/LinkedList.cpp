@@ -168,19 +168,19 @@ void LinkedList::deleteAll()
 void LinkedList::shuffle()
 {
   int len = 36;
-  Tile *tileArray = new Tile[len];
+  Tile* tileArray[len];
   int i = 0;
   Node *currentNode = head;
   //std::cout<<"Converting to Array"<<std::endl;
   while (currentNode != nullptr)
   {
     // std::cout<<"Adding to array at : "<<i<<std::endl;
-    tileArray[i] = *currentNode->getValue();
+    tileArray[i] = currentNode->getValue();
     currentNode = currentNode->getNext();
     i++;
   }
 
-  Tile temp;
+  Tile* temp;
   int randomIndex = 0;
   // Shuffling the array
   for (int i = 0; i < len; i++)

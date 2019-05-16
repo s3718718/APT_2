@@ -48,5 +48,5 @@ void Bag::getShuffledBag()
             tileList->add(tile);
         }
     }
-    //tileList->shuffle();
+    tileList->shuffle();
 }
