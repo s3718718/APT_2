@@ -30,8 +30,11 @@ void qwirkle::newGame()
   this->firstTurn = true;
   this->gameOver = false;
   std::string name = "";
+  int numPlayers;
   cout << "Starting a New Game" << endl;
+  //TODO : Do check for min 2 players.
   cout << "How many players?" <<endl;
+  cin >> numPlayers;
   this->bag = std::make_shared<Bag>(*(new Bag()));
   cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(26)));
@@ -195,7 +198,7 @@ bool qwirkle::validateMove(char colour, int shape, int row, int col) {
     board->getTile(row, col - 1)
     };
 
-  for(i = 0; i < neighbours.size(); i++) {
+  for(int i = 0; i < neighbours.size(); i++) {
     if(neighbours[i] != nullptr) {
       if((neighbours[i]->getColour() == colour) && (neighbours[i]->getShape() == shape) {
         int x = 0;
