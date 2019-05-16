@@ -77,7 +77,7 @@ Tile *LinkedList::takeFirst()
   return first;
 }
 
-Tile *LinkedList::takeTile(char colour, int shape)
+Tile *LinkedList::takeTile(Colour colour, Shape shape)
 {
   std::cout << "take tile input = " << colour << shape << std::endl;
   Tile *target = nullptr;
@@ -113,7 +113,7 @@ Tile *LinkedList::takeTile(char colour, int shape)
   return target;
 }
 
-Tile *LinkedList::get(char colour, int shape)
+Tile *LinkedList::get(Colour colour, Shape shape)
 {
   Node *currentNode = head;
   Tile *output = nullptr;
