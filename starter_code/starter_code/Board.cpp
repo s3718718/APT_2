@@ -155,7 +155,6 @@ std::string Board::toString()
             else
                 output.append("  |");
         }
-        output.append("\n");
     }
     return output;
 }

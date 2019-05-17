@@ -60,9 +60,10 @@ void qwirkle::loadGame()
 {
   cout << "Please enter save file name (relative path)" << endl;
   cout << "> ";
-
   std::string fileName;
+  cin.ignore();
   std::getline(cin, fileName);
+  cout << "filename = " << fileName << endl;
 
   //TODO
   //loadFile(fileName);
@@ -104,6 +105,8 @@ void qwirkle::newTurn()
   while (!validInput)
   {
     cout << "> ";
+    if (this->firstTurn)
+      cin.ignore();
     std::getline(cin, input);
     int commandEnd = input.find(' ');
     std::string command = input.substr(0, commandEnd);
@@ -114,7 +117,6 @@ void qwirkle::newTurn()
     //maybe wrap in while(validInput) when input is garbo alfonzo
     //lots of magic numbers here, will probs want to fix that at some point. but it works!
     //also change the string initialization to something that isn't trash
-
     if (command == "place")
     {
       std::string tileString = args.substr(0, args.find(','));
@@ -130,6 +132,7 @@ void qwirkle::newTurn()
       char *positionChar = &test1;
       positionString.substr(1, 2).copy(positionChar, 1);
       int positionInt = std::stoi(positionString.substr(2, 3));
+      cout << "position int is " << positionInt << endl;
       int positionCharInt = this->getIntFromChar(*positionChar);
 
       validInput = true;
