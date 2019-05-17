@@ -25,6 +25,8 @@ public:
 
   void newTurn();
 
+  bool validateMove(char colour, int shape, int row, int col);
+
   int checkTiles(Tile *tile, int row, int col, int selection, int direction);
 
   bool placeTile(Tile *tile, int row, int col, bool firstTurn);

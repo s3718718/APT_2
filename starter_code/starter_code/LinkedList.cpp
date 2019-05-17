@@ -44,9 +44,10 @@ void LinkedList::printList()
   while (currentNode != nullptr)
   {
     //check if current node matches args, if it don't currentNode = currentNode.getNext()
-    int tileShape = currentNode->getValue()->getShape();
-    char tileCol = currentNode->getValue()->getColour();
-    std::cout << tileCol << tileShape << std::endl;
+  //  Shape tileShape = currentNode->getValue()->getShape();
+  //  Colour tileCol = currentNode->getValue()->getColour();
+    //std::cout << "\e[31mred"<<tileCol << tileShape << std::endl;
+    currentNode->getValue()->printColoured();
     currentNode = currentNode->getNext();
   }
   std::cout << "---End---" << std::endl;
@@ -76,7 +77,7 @@ Tile *LinkedList::takeFirst()
   return first;
 }
 
-Tile *LinkedList::takeTile(char colour, int shape)
+Tile *LinkedList::takeTile(Colour colour, Shape shape)
 {
   std::cout << "take tile input = " << colour << shape << std::endl;
   Tile *target = nullptr;
@@ -112,7 +113,7 @@ Tile *LinkedList::takeTile(char colour, int shape)
   return target;
 }
 
-Tile *LinkedList::get(char colour, int shape)
+Tile *LinkedList::get(Colour colour, Shape shape)
 {
   Node *currentNode = head;
   Tile *output = nullptr;
@@ -163,29 +164,30 @@ void LinkedList::deleteAll()
 
 // TODO : Refactor method
 
-/*
+
 
 void LinkedList::shuffle()
 {
-  int len = 36;
-  Tile *tileArray = new Tile[len];
+  int len = this->getSize();
+  Tile* tileArray[len];
   int i = 0;
   Node *currentNode = head;
+  srand(time(0));
   //std::cout<<"Converting to Array"<<std::endl;
   while (currentNode != nullptr)
   {
     // std::cout<<"Adding to array at : "<<i<<std::endl;
-    tileArray[i] = *currentNode->getValue();
+    tileArray[i] = currentNode->getValue();
     currentNode = currentNode->getNext();
     i++;
   }
 
-  Tile temp;
+  Tile* temp;
   int randomIndex = 0;
   // Shuffling the array
   for (int i = 0; i < len; i++)
   {
-    randomIndex = rand() % len;
+    randomIndex = rand() % len; //Generate a random position
     temp = tileArray[i];
     tileArray[i] = tileArray[randomIndex];
     tileArray[randomIndex] = temp;
@@ -204,4 +206,3 @@ void LinkedList::shuffle()
   //std::cout<<"Size of list : "<<this->getSize()<<std::endl;
 }
 
-*/

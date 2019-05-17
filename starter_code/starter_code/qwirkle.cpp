@@ -30,7 +30,11 @@ void qwirkle::newGame()
   this->firstTurn = true;
   this->gameOver = false;
   std::string name = "";
+  int numPlayers;
   cout << "Starting a New Game" << endl;
+  //TODO : Do check for min 2 players, maybe make a different method.
+  cout << "How many players?" <<endl;
+  cin >> numPlayers;
   this->bag = std::make_shared<Bag>(*(new Bag()));
   cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(26)));
@@ -161,6 +165,14 @@ void qwirkle::newTurn()
     {
       this->saveGame(args);
     }
+    else if(command == "help")
+    {
+      cout<<" --------List of valid commands------------"<<endl;
+      cout<<"place <tileCode>,<boardPosition>"<<endl;
+      cout<<"replace <tileCode>"<<endl;
+      cout<<"save <filename>"<<endl;
+      cout<<"^D to quit game"<<endl;
+    }
 
     else
     {
@@ -181,6 +193,47 @@ void qwirkle::newTurn()
     cout << "current player assignment is breaking, debug please" << endl;
   }
 }
+
+// bool qwirkle::validateMove(char colour, int shape, int row, int col) {
+//   bool valid = false;
+//   Tile neighbours[4] = {
+//     board->getTile(row - 1, col), 
+//     board->getTile(row, col + 1), 
+//     board->getTile(row + 1, col), 
+//     board->getTile(row, col - 1)
+//     };
+
+//   for(int i = 0; i < neighbours.size(); i++) {
+//     if(neighbours[i] != nullptr) {
+//       if((neighbours[i]->getColour() == colour) && (neighbours[i]->getShape() == shape) {
+//         int x = 0;
+//         int y = 0;
+//         if(i = 0) {
+//           x = row - 2;
+//           y = col;
+//         }
+//         else if(i = 1) {
+//           x = row;
+//           y = col + 2;
+//         }
+//         else if(i = 2) {
+//           x = row + 2;
+//           y = col;
+//         }
+//         else if(1 = 3) {
+//           x = row;
+//           y = col - 2;
+//         }
+//         if(neighbours[i]s position + 1 != nullptr) {
+//            if(board->getTile(x,y)->getColour() == colour) && (board->getTile(x,y)->getShape() == shape) {
+//              valid = true;
+//            }
+//         }
+//       }
+//     }
+//   }
+//   return valid;
+// }
 
 int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int direction)
 {
