@@ -146,21 +146,26 @@ void qwirkle::newTurn()
       
       this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);
       }catch(const std::invalid_argument& e){
-        cout<<"Invalid arguments!"<< e.what() <<endl;
+        cout<<"Invalid arguments! To place a tile you must enter 'place <tile> at <grid location>'" <<endl;
+      }catch(const std::out_of_range& e){
+        cout<<"Out of range!"<<endl;
       }
       //cout << "after placeTile in newTurn, using this->board->getTile() col = " << this->board->getTile(5, 5)->getColour() << endl;
       this->firstTurn = false;
     }
     else if (command == "replace")
     {
-
+      try{
       char test3 = 'c';
       char *tileCol = &test3;
       args.substr(0, 1).copy(tileCol, 1);
-      int tileShape = std::stoi(args.substr(1, 2));
+      Shape tileShape = std::stoi(args.substr(1, 2));
 
       cout << "replacing " << *tileCol << tileShape << endl;
       validInput = true;
+      }catch(const std::invalid_argument& e){
+      cout<<"Invalid arguments! To place a tile you must enter 'replace <tile>'";
+      }
       //Run necessary code to replace a tile using *tileCol and tileShape
 
       //this->bag->add(currentPlayer->takeTile());
@@ -174,15 +179,15 @@ void qwirkle::newTurn()
     else if(command == "help")
     {
       cout<<" --------List of valid commands------------"<<endl;
-      cout<<"place <tileCode>,<boardPosition> to place a tile in the board"<<endl;
+      cout<<"place <tileCode> at <boardPosition> to place a tile in the board"<<endl;
       cout<<"replace <tileCode> to replace a tile from your hand"<<endl;
       cout<<"save <filename> to save game"<<endl;
-      cout<<"^D to quit game"<<endl;
+      cout<<"^D to quit game\n"<<endl;
     }
 
     else
     {
-      cout << "command \"" << command << "\" unknown" << endl;
+      cout << "command \"" << command << "\" unknown. Type 'help' to see list of availabe commands." << endl;
       validInput = false;
     }
   } // end of while
