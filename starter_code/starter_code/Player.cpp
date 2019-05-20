@@ -50,7 +50,7 @@ Tile *Player::removeTile(char colour, int shape)
 void Player::fillHand(Bag bag)
 {
     int i = 0;
-    while (i < HAND_LIMIT )
+    while (i < HAND_LIMIT)
     {
         drawTile(bag);
         i++;

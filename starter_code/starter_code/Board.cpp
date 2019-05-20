@@ -143,7 +143,9 @@ void Board::display()
         {
             if (board[i][j] != nullptr)
             {
-                std::cout << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape() << "|";
+                //std::cout << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape() << "|";
+                this->getTile(i,j)->printColoured();
+                std::cout<<"|";
             }
             // std::cout<<board[i][j]->colour<<board[i][j]->shape<<"|";
             else

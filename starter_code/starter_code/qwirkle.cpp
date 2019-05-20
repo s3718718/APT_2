@@ -33,30 +33,15 @@ void qwirkle::newGame()
   std::string name = "";
    numPlayers=0;
   cout << "Starting a New Game" << endl;
-  //TODO : Do check for min 2 players.
-  //bool check = true;
-  //do{
+  
     while(numPlayers<2 || numPlayers >4)
     {
   cout << "How many players?" << endl;
   cin >> numPlayers;
     }
-  //}while(check);
   this->bag = std::make_shared<Bag>(*(new Bag()));
   cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(6)));
- /* cout << "Enter a name for player 1" << endl
-       << "> ";
-  cin >> name;
-  //if (validUserName(name))
-  this->player1 = std::make_shared<Player>(*(new Player(name)));
-  this->player1->fillHand(*this->bag);
-  cout
-      << "Enter a name for player 2" << endl
-      << "> ";
-  cin >> name;
-  this->player2 = std::make_shared<Player>(*(new Player(name)));
-  this->player2->fillHand(*this->bag);*/
 
   for(int i=0;i<numPlayers;i++)
   {
@@ -348,10 +333,6 @@ void qwirkle::newTurn()
     //the 1s depend on delimiter length, hopefully if you need to debug it you find this
     std::string args = input.substr(commandEnd + 1, input.length()); //may need to be length -1
 
-    //TODO
-    //maybe wrap in while(validInput) when input is garbo alfonzo
-    //lots of magic numbers here, will probs want to fix that at some point. but it works!
-    //also change the string initialization to something that isn't trash
     if (command == "place")
     {
       try
@@ -448,7 +429,7 @@ void qwirkle::newTurn()
     else if (command == "help")
     {
       cout << " --------List of valid commands------------" << endl;
-      cout << "place <tileCode>,<boardPosition> to place a tile in the board" << endl;
+      cout << "place <tileCode> at <boardPosition> to place a tile in the board" << endl;
       cout << "replace <tileCode> to replace a tile from your hand" << endl;
       cout << "save <filename> to save game" << endl;
       cout << "^D to quit game" << endl;
@@ -464,61 +445,8 @@ void qwirkle::newTurn()
 
   turn++;
   turn = turn %numPlayers;
- // this->currentPlayer = players[turn];
-  /*if (this->currentPlayer == this->player1)
-  {
-    this->currentPlayer = this->player2;
-  }
-  else if (this->currentPlayer == this->player2)
-  {
-    this->currentPlayer = this->player1;
-  }
-  else
-  {
-    cout << "current player assignment is breaking, debug please" << endl;
-  }*/
 }
 
-// bool qwirkle::validateMove(char colour, int shape, int row, int col) {
-//   bool valid = false;
-//   Tile neighbours[4] = {
-//     board->getTile(row - 1, col),
-//     board->getTile(row, col + 1),
-//     board->getTile(row + 1, col),
-//     board->getTile(row, col - 1)
-//     };
-
-//   for(int i = 0; i < neighbours.size(); i++) {
-//     if(neighbours[i] != nullptr) {
-//       if((neighbours[i]->getColour() == colour) && (neighbours[i]->getShape() == shape) {
-//         int x = 0;
-//         int y = 0;
-//         if(i = 0) {
-//           x = row - 2;
-//           y = col;
-//         }
-//         else if(i = 1) {
-//           x = row;
-//           y = col + 2;
-//         }
-//         else if(i = 2) {
-//           x = row + 2;
-//           y = col;
-//         }
-//         else if(1 = 3) {
-//           x = row;
-//           y = col - 2;
-//         }
-//         if(neighbours[i]s position + 1 != nullptr) {
-//            if(board->getTile(x,y)->getColour() == colour) && (board->getTile(x,y)->getShape() == shape) {
-//              valid = true;
-//            }
-//         }
-//       }
-//     }
-//   }
-//   return valid;
-// }
 
 int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int direction)
 {
@@ -677,6 +605,7 @@ saveData.append(player1Data);
   outFile.close();
 }
 
+/*
 int qwirkle::getIntFromChar(char c)
 {
   c = std::toupper(c);
@@ -738,4 +667,16 @@ int qwirkle::getIntFromChar(char c)
     output = 26;
 
   return output;
+}
+
+*/
+
+int qwirkle::getIntFromChar(char c){
+  int retVal = 0;
+  if(isalpha(c)){
+    retVal = c-'A';
+  }else{
+    retVal = -1;
+  }
+  return retVal;
 }
