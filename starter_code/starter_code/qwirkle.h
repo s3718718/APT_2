@@ -68,5 +68,3 @@ private:
   int numPlayers;
   int turn;
 };
-
-// = std::make_shared<Bag>(null);
