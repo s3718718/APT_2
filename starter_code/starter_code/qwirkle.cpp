@@ -49,7 +49,7 @@ void qwirkle::newGame()
 
     while(!valid)
     {
-      cout << "Enter a name for player (Only uppercase characters)"<<i+1<< endl
+      cout << "Enter a name for player " << i+1 << " (Only uppercase characters)" << endl
       << "> ";
       cin >> name;
       if(validUserName(name))
