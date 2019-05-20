@@ -28,8 +28,8 @@ std::string LinkedList::toString()
       output.append(", ");
     }
     //check if current node matches args, if it don't currentNode = currentNode.getNext()
-    int tileShape = currentNode->getValue()->getShape();
-    char tileCol = currentNode->getValue()->getColour();
+    Shape tileShape = currentNode->getValue()->getShape();
+    Colour tileCol = currentNode->getValue()->getColour();
     std::string tileColString(1, tileCol);
     output.append(tileColString);
     output.append(std::to_string(tileShape));
@@ -41,7 +41,7 @@ std::string LinkedList::toString()
 
 void LinkedList::printList()
 {
-  std::cout << "Size of list : " << this->getSize() << std::endl;
+ // std::cout << "Size of list : " << this->getSize() << std::endl;
   Node *currentNode = head;
   // Tile *output == nullptr;
   std::cout << "---LinkedList Contents---" << std::endl;

@@ -17,7 +17,7 @@ public:
   //Getters
   string getName();
   int getPoints();
-  void addPoints(int i);
+  void setPoints(int i);
   bool addTile(Tile *tile);
   bool drawTile(Bag bag); //Removing from bag, adding to hand bag.takeFirst()
   Tile *removeTile(char colour, int shape);

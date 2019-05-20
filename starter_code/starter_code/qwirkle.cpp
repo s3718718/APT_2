@@ -262,7 +262,7 @@ Player *qwirkle::makePlayerFromString(std::string input)
   std::vector<std::string> playerData = splitString(input, "\n");
   //cout << "supposedly player name = " << playerData[0] << endl;
   Player *player = new Player(playerData[0]);
-  player->addPoints(std::stoi(playerData[1]));
+  player->setPoints(std::stoi(playerData[1]));
   std::vector<Tile *> hand = getTileVectorFromStringVector(splitString(playerData[2], ", "));
   for (unsigned int i = 0; i < hand.size(); i++)
   {
@@ -319,6 +319,7 @@ void qwirkle::newTurn()
   for(int i=0;i<numPlayers; i++)
   cout << this->players[i]->getName() << ": " << this->players[i]->getPoints() << "\n ";
   this->board->display();
+  cout << "Your hand is" << endl;
   this->players[turn]->printHand();
   std::string input;
   bool validInput = false;
@@ -490,7 +491,7 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
     {
       this->board->setTile(row, col, tile);
       total = total + 1;
-      this->players[turn]->addPoints(total);
+      this->players[turn]->setPoints(total);
     }
     else
     {
@@ -530,7 +531,7 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
                 this->board->setTile(row, col, tile);
                 std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
                 total =  1 + numOfTiles;
-                this->players[turn]->addPoints(total);
+                this->players[turn]->setPoints(total);
               }
             }
           }

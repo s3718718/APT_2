@@ -22,9 +22,9 @@ int Player::getPoints()
     return points;
 }
 
-void Player::addPoints(int i)
+void Player::setPoints(int i)
 {
-    points += i;
+    points = i;
 }
 
 bool Player::addTile(Tile *tile)
