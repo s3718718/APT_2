@@ -33,6 +33,20 @@ public:
 
   int getIntFromChar(char c);
 
+  Tile *makeTileFromString(std::string input);
+
+  Player *makePlayerFromString(std::string input);
+
+  std::vector<std::string> splitString(std::string input, std::string delim);
+
+  std::vector<Tile *> getTileVectorFromStringVector(std::vector<std::string> input);
+
+  std::vector<Player *> getPlayerVectorFromStringVector(std::vector<std::string> input);
+
+  void setBoardState(std::vector<std::string> input);
+
+  //int getCurrentPlayerIndexByName(std::string name);
+
 private:
   shared_ptr<Bag> bag;
   shared_ptr<Board> board;

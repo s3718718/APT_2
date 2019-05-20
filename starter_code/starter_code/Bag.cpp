@@ -27,6 +27,11 @@ Tile *Bag::pullTile()
     return tileList->takeFirst();
 }
 
+void Bag::addTile(Tile *tile)
+{
+    tileList->add(tile);
+}
+
 bool Bag::isEmpty()
 {
     bool retVal = false;

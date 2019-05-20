@@ -20,17 +20,21 @@ std::string LinkedList::toString()
   Node *currentNode = head;
   // Tile *output == nullptr;
   std::string output = "";
+  bool firstItem = true;
   while (currentNode != nullptr)
   {
-
+    if (!firstItem)
+    {
+      output.append(", ");
+    }
     //check if current node matches args, if it don't currentNode = currentNode.getNext()
     int tileShape = currentNode->getValue()->getShape();
     char tileCol = currentNode->getValue()->getColour();
     std::string tileColString(1, tileCol);
     output.append(tileColString);
     output.append(std::to_string(tileShape));
-    output.append(", ");
     currentNode = currentNode->getNext();
+    firstItem = false;
   }
   return output;
 }
@@ -44,8 +48,8 @@ void LinkedList::printList()
   while (currentNode != nullptr)
   {
     //check if current node matches args, if it don't currentNode = currentNode.getNext()
-  //  Shape tileShape = currentNode->getValue()->getShape();
-  //  Colour tileCol = currentNode->getValue()->getColour();
+    //  Shape tileShape = currentNode->getValue()->getShape();
+    //  Colour tileCol = currentNode->getValue()->getColour();
     //std::cout << "\e[31mred"<<tileCol << tileShape << std::endl;
     currentNode->getValue()->printColoured();
     currentNode = currentNode->getNext();
@@ -87,22 +91,25 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
   {
     target = head->getValue();
     head = head->getNext();
+    std::cout << "found in first" << std::endl;
   }
   else
   {
+    bool notFound = true;
     while (currentNode->getNext() != nullptr)
     {
 
       int tileShape = currentNode->getNext()->getValue()->getShape();
       char tileCol = currentNode->getNext()->getValue()->getColour();
       std::cout << "checking input: " << colour << shape << " vs current: " << tileCol << tileShape << std::endl;
-      if (tileCol == colour && tileShape == shape)
+      if (tileCol == colour && tileShape == shape && notFound)
       {
-
+        std::cout << "found in loop" << std::endl;
         //TODO this might break when there's 2 of each tile. If it does, change it so that this rearrangement happens only at the end of the loop.
         Node *newNext = currentNode->getNext()->getNext();
         target = currentNode->getNext()->getValue();
         currentNode->setNext(newNext);
+        notFound = false;
       }
       else
       {
@@ -110,6 +117,8 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
       }
     }
   }
+  std::cout << "target col = " << std::endl;
+  std::cout << target->getColour() << std::endl;
   return target;
 }
 
@@ -164,12 +173,10 @@ void LinkedList::deleteAll()
 
 // TODO : Refactor method
 
-
-
 void LinkedList::shuffle()
 {
   int len = this->getSize();
-  Tile* tileArray[len];
+  Tile *tileArray[len];
   int i = 0;
   Node *currentNode = head;
   srand(time(0));
@@ -182,7 +189,7 @@ void LinkedList::shuffle()
     i++;
   }
 
-  Tile* temp;
+  Tile *temp;
   int randomIndex = 0;
   // Shuffling the array
   for (int i = 0; i < len; i++)
@@ -205,4 +212,3 @@ void LinkedList::shuffle()
   }
   //std::cout<<"Size of list : "<<this->getSize()<<std::endl;
 }
-
