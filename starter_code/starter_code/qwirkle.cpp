@@ -56,6 +56,7 @@ void qwirkle::newGame()
       {
         this->players[i] = std::make_shared<Player>(*(new Player(name)));
         this->players[i]->fillHand(*this->bag);
+        valid = true;
       }
       else
       {
@@ -692,11 +693,15 @@ int qwirkle::getIntFromChar(char c){
   return retVal;
 }
 
-bool validUserName(std::string name) 
+bool qwirkle::validUserName(std::string name) 
 {
   bool valid = true;
   for(char& c : name)
   {
+    if(c >='a' && c <= 'z')
+    {
+      valid = false;
+    }
     if(c <= 'A' && c >= 'Z')
     {
       valid = false;
