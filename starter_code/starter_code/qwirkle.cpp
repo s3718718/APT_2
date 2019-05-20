@@ -10,6 +10,7 @@
 #include "qwirkle.h"
 #include <iostream>
 #include <cctype>
+#include <stdexcept>
 
 #define EXIT_SUCCESS 0
 
@@ -32,9 +33,12 @@ void qwirkle::newGame()
   std::string name = "";
   int numPlayers;
   cout << "Starting a New Game" << endl;
-  //TODO : Do check for min 2 players, maybe make a different method.
+  //TODO : Do check for min 2 players.
+  //bool check = true;
+  //do{
   cout << "How many players?" << endl;
   cin >> numPlayers;
+  //}while(check);
   this->bag = std::make_shared<Bag>(*(new Bag()));
   cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(26)));
@@ -330,26 +334,34 @@ void qwirkle::newTurn()
     //also change the string initialization to something that isn't trash
     if (command == "place")
     {
-      std::string tileString = args.substr(0, args.find(','));
-      std::string positionString = args.substr(tileString.length(), args.length());
+      try
+      {
+        std::string tileString = args.substr(0, args.find(','));
+        std::string positionString = args.substr(tileString.length(), args.length());
 
-      char test2 = 'b';
+        char test2 = 'b';
 
-      char *tileCol = &test2;
-      tileString.substr(0, 1).copy(tileCol, 1);
-      int tileShape = std::stoi(tileString.substr(1, 2));
+        char *tileCol = &test2;
+        tileString.substr(0, 1).copy(tileCol, 1);
+        int tileShape = std::stoi(tileString.substr(1, 2));
 
-      char test1 = 'a';
-      char *positionChar = &test1;
-      positionString.substr(1, 2).copy(positionChar, 1);
-      int positionInt = std::stoi(positionString.substr(2, 3));
-      cout << "position int is " << positionInt << endl;
-      int positionCharInt = this->getIntFromChar(*positionChar);
+        char test1 = 'a';
+        char *positionChar = &test1;
+        positionString.substr(1, 2).copy(positionChar, 1);
+        int positionInt = std::stoi(positionString.substr(2, 3));
+        cout << "position int is " << positionInt << endl;
+        int positionCharInt = this->getIntFromChar(*positionChar);
 
-      validInput = true;
-      //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
-      this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);
-      cout << "after placeTile in newTurn, using this->board->getTile() col = " << this->board->getTile(positionCharInt, positionInt)->getColour() << endl;
+        validInput = true;
+        //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
+
+        this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);
+      }
+      catch (const std::invalid_argument &e)
+      {
+        cout << "Invalid arguments!" << e.what() << endl;
+      }
+      //cout << "after placeTile in newTurn, using this->board->getTile() col = " << this->board->getTile(5, 5)->getColour() << endl;
       this->firstTurn = false;
     }
     else if (command == "replace")
@@ -375,17 +387,18 @@ void qwirkle::newTurn()
     else if (command == "help")
     {
       cout << " --------List of valid commands------------" << endl;
-      cout << "place <tileCode>,<boardPosition>" << endl;
-      cout << "replace <tileCode>" << endl;
-      cout << "save <filename>" << endl;
+      cout << "place <tileCode>,<boardPosition> to place a tile in the board" << endl;
+      cout << "replace <tileCode> to replace a tile from your hand" << endl;
+      cout << "save <filename> to save game" << endl;
       cout << "^D to quit game" << endl;
     }
 
     else
     {
       cout << "command \"" << command << "\" unknown" << endl;
+      validInput = false;
     }
-  }
+  } // end of while
 
   if (this->currentPlayer == this->player1)
   {
