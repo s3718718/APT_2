@@ -44,11 +44,11 @@ void qwirkle::newGame()
 
   for(int i=0;i<numPlayers;i++)
   {
-    bool valid = false;
+    //bool valid = false;
     std::string name = "invalid";
 
-    while(!valid)
-    {
+    // while(!valid)
+    // {
       cout << "Enter a name for player (Only uppercase characters)"<<i+1<< endl
       << "> ";
       cin >> name;
@@ -61,7 +61,7 @@ void qwirkle::newGame()
       {
         cout << "Invalid username, please only enter uppercase characters" << endl;
       }
-    }
+   // }
   }
   cout<<"Players for the game are \n";
   for(int i=0;i< numPlayers; i++)
@@ -350,7 +350,7 @@ void qwirkle::newTurn()
       {
         if(args.length() <8 || args.length()>9)
         {
-          cout<<"Invalid command format, please check the guidelines";
+          cout<<"Invalid command format, enter 'help' for list of valid commands";
         }
         else
         {
@@ -378,8 +378,8 @@ void qwirkle::newTurn()
       this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);*/
       std::string tileString = args.substr(0,2);
       std::string positionString = args.substr(6);
-      char tileCol = tileString[0];
-      int tileShape = std::stoi(tileString.substr(1));
+      Colour tileCol = tileString[0];
+      Shape tileShape = std::stoi(tileString.substr(1));
       int placeRow = getIntFromChar(positionString[0]);
       int placeCol = std::stoi(positionString.substr(1));
       cout<<tileCol<<tileShape<<placeRow<<placeCol<<"\n";
@@ -500,6 +500,7 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
       cout<<"Board resiezd"<<endl;
       this->board->reSize();
     }
+    if(row>=0 && row < this->board->getSize() && col>=0 && col < this->board->getSize()){
     if (firstTurn)
     {
       this->board->setTile(row, col, tile);
@@ -513,13 +514,13 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
       {
 
         Tile *check = nullptr;
-        if (d == UP) // up
+        if (d == UP && row-1>=0) // up
           check = this->board->getTile(row - 1, col);
-        else if (d == DOWN) //down
+        else if (d == DOWN && row + 1 < this->board->getSize()) //down
           check = this->board->getTile(row + 1, col);
-        else if (d == RIGHT) // right
+        else if (d == RIGHT && col+1 < this->board->getSize()) // right
           check = this->board->getTile(row, col + 1);
-        else //left
+        else if(d==LEFT && col - 1 >= 0) //left
           check = this->board->getTile(row, col - 1);
 
         cout << "b4 test 2" << endl;
@@ -551,6 +552,7 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
         }
       }
     }
+  }
   }
   return true;
 }
@@ -695,7 +697,7 @@ int qwirkle::getIntFromChar(char c){
   return retVal;
 }
 
-bool validUserName(std::string name) 
+bool qwirkle::validUserName(std::string name) 
 {
   bool valid = true;
   for(char& c : name)
