@@ -356,6 +356,15 @@ void qwirkle::newTurn()
         //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
 
         this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);
+        if (!this->bag->isEmpty())
+        {
+          this->currentPlayer->addTile(this->bag->pullTile());
+        }
+        else if (this->currentPlayer->isEmpty())
+        {
+          this->currentPlayer->addPoints(6);
+          // END GAME HERE
+        }
       }
       catch (const std::invalid_argument &e)
       {

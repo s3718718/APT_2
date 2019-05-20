@@ -15,6 +15,16 @@ LinkedList::~LinkedList()
 {
 }
 
+bool LinkedList::isEmpty()
+{
+  output = false;
+  if (head == nullptr)
+  {
+    output = true;
+  }
+  return output;
+}
+
 std::string LinkedList::toString()
 {
   Node *currentNode = head;
