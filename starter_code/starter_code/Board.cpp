@@ -43,6 +43,25 @@ Board::Board(int size)
         board.push_back(row);
     }
 }
+
+ void Board::reSize()
+ {
+     int bsize = getSize();
+     if( bsize < 26 )
+     {
+         for(int i=0; i< getSize(); i++)
+         {
+             board[i].push_back(nullptr);
+         }
+         std::vector <Tile*> row;
+         for(int j=0; j<= getSize(); j++)
+         {
+             row.push_back(nullptr);
+         }
+         board.push_back(row);
+     }
+ }
+
 Board::Board()
 {
     std::vector<Tile *> row1;

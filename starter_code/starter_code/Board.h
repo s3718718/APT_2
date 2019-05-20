@@ -14,6 +14,8 @@
 #include <vector>
 #include "Tile.h"
 
+#define MAX_BOARD_SIZE 26;
+
 class Board
 {
   public:
@@ -25,5 +27,6 @@ class Board
     Tile *getTile(int row, int col);
     void setTile(int row, int col, Tile *tile);
     std::string toString();
+    void reSize();
 };
 #endif /* Board_h */

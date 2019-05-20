@@ -10,6 +10,7 @@ public:
   void print();
   bool isEmpty();
   std::string toString();
+  void addTile(Tile *tile);
 
 private:
   LinkedList *tileList;
