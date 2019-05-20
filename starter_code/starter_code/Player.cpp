@@ -43,7 +43,7 @@ bool Player::drawTile(Bag bag)
 
 Tile *Player::removeTile(char colour, int shape)
 {
-    std::cout << "LOL" << std::endl;
+    std::cout << "Removing tile from player's hand" << std::endl;
     return hand->takeTile(colour, shape);
 }
 

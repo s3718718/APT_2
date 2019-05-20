@@ -485,8 +485,11 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
 
   if (row < this->board->getSize() && col < this->board->getSize())
   {
-    if(row == this->board->getSize()-1 || col == this->board->getSize()-1)
+    cout << "Entered if " << endl;
+    if(row == this->board->getSize()-1 || col == this->board->getSize()-1){
+      cout<<"Board resiezd"<<endl;
       this->board->reSize();
+    }
     if (firstTurn)
     {
       this->board->setTile(row, col, tile);
