@@ -52,6 +52,7 @@ void LinkedList::printList()
     //  Colour tileCol = currentNode->getValue()->getColour();
     //std::cout << "\e[31mred"<<tileCol << tileShape << std::endl;
     currentNode->getValue()->printColoured();
+    std::cout<<", ";
     currentNode = currentNode->getNext();
   }
   std::cout << "---End---" << std::endl;

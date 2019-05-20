@@ -39,7 +39,7 @@ void qwirkle::newGame()
   cin >> numPlayers;
     }
   this->bag = std::make_shared<Bag>(*(new Bag()));
-  cout << this->bag->toString() << endl;
+  //cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(6)));
 
   for(int i=0;i<numPlayers;i++)
@@ -355,28 +355,6 @@ void qwirkle::newTurn()
         }
         else
         {
-
-        /*  
-        std::string tileString = args.substr(0, args.find(' '));
-        std::string positionString = args.substr(tileString.length(), args.length());
-
-        char test2 = 'b';
-
-        char *tileCol = &test2;
-        tileString.substr(0, 1).copy(tileCol, 1);
-        int tileShape = std::stoi(tileString.substr(1, 2));
-
-        char test1 = 'a';
-        char *positionChar = &test1;
-        positionString.substr(1, 2).copy(positionChar, 1);
-        int positionInt = std::stoi(positionString.substr(2, 3));
-        cout << "position int is " << positionInt << endl;
-        int positionCharInt = this->getIntFromChar(*positionChar);
-
-      validInput = true;
-      //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
-      
-      this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);*/
       std::string tileString = args.substr(0,2);
       std::string positionString = args.substr(6);
       Colour tileCol = tileString[0];
@@ -384,19 +362,7 @@ void qwirkle::newTurn()
       int placeRow = getIntFromChar(positionString[0]);
       int placeCol = std::stoi(positionString.substr(1));
       cout<<tileCol<<tileShape<<placeRow<<placeCol<<"\n";
-     /* Tile *tile = this->players[turn]->removeTile(tileCol,tileShape);
-      if(tile==nullptr)
-        cout<<"No such tile found in hand\n";
-      else
-      {
-        if(this->placeTile(tile,placeRow,placeCol,this->firstTurn))
-          this->players[turn]->drawTile(*(this->bag));
-        else
-        {
-          this->players[turn]->addTile(tile);
-        }
-        
-      }*/
+    
       validInput = true;
       //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
       
@@ -515,7 +481,7 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
       {
 
         Tile *check = nullptr;
-        if (d == UP && row-1>=0) // up
+        if (d == UP && row-1>=0) 
           check = this->board->getTile(row - 1, col);
         else if (d == DOWN && row + 1 < this->board->getSize()) //down
           check = this->board->getTile(row + 1, col);
