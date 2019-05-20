@@ -30,8 +30,7 @@ void qwirkle::newGame()
 {
   this->firstTurn = true;
   this->gameOver = false;
-  std::string name = "";
-   numPlayers=0;
+  numPlayers=0;
   cout << "Starting a New Game" << endl;
   
     while(numPlayers<2 || numPlayers >4)
@@ -45,14 +44,25 @@ void qwirkle::newGame()
 
   for(int i=0;i<numPlayers;i++)
   {
-    cout << "Enter a name for player "<<i+1<< endl
-       << "> ";
-  cin >> name;
-  //if (validUserName(name))
-  this->players[i] = std::make_shared<Player>(*(new Player(name)));
-  this->players[i]->fillHand(*this->bag);
+    bool valid = false;
+    std::string name = "invalid";
+
+    while(!valid)
+    {
+      cout << "Enter a name for player (Only uppercase characters)"<<i+1<< endl
+      << "> ";
+      cin >> name;
+      if(validUserName(name))
+      {
+        this->players[i] = std::make_shared<Player>(*(new Player(name)));
+        this->players[i]->fillHand(*this->bag);
+      }
+      else
+      {
+        cout << "Invalid username, please only enter uppercase characters" << endl;
+      }
+    }
   }
-  //if (validUserName(name))
   cout<<"Players for the game are \n";
   for(int i=0;i< numPlayers; i++)
   cout << "Player "<<i+1<<" : " + this->players[i]->getName() + "\n";
@@ -680,4 +690,17 @@ int qwirkle::getIntFromChar(char c){
     retVal = -1;
   }
   return retVal;
+}
+
+bool validUserName(std::string name) 
+{
+  bool valid = true;
+  for(char& c : name)
+  {
+    if(c <= 'A' && c >= 'Z')
+    {
+      valid = false;
+    }
+  }
+  return valid;
 }
