@@ -421,6 +421,7 @@ void qwirkle::newTurn()
         {
           this->players[turn]->drawTile(*(this->bag));
           this->bag->addTile(t);
+          turn++;
         }
         validInput = true;
       }
