@@ -44,11 +44,11 @@ void qwirkle::newGame()
 
   for(int i=0;i<numPlayers;i++)
   {
-    //bool valid = false;
+    bool valid = false;
     std::string name = "invalid";
 
-    // while(!valid)
-    // {
+    while(!valid)
+    {
       cout << "Enter a name for player (Only uppercase characters)"<<i+1<< endl
       << "> ";
       cin >> name;
@@ -56,13 +56,13 @@ void qwirkle::newGame()
       {
         this->players[i] = std::make_shared<Player>(*(new Player(name)));
         this->players[i]->fillHand(*this->bag);
-        //valid = true;
+        valid = true;
       }
       else
       {
         cout << "Invalid username, please only enter uppercase characters" << endl;
       }
-   // }
+    }
   }
   cout<<"Players for the game are \n";
   for(int i=0;i< numPlayers; i++)
