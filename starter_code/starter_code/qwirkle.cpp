@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cctype>
 #include <stdexcept>
+#include <cmath>
 
 #define EXIT_SUCCESS 0
 
@@ -31,18 +32,21 @@ void qwirkle::newGame()
   this->firstTurn = true;
   this->gameOver = false;
   std::string name = "";
-  int numPlayers;
+  numPlayers = 0;
   cout << "Starting a New Game" << endl;
   //TODO : Do check for min 2 players.
   //bool check = true;
   //do{
-  cout << "How many players?" << endl;
-  cin >> numPlayers;
+  while (numPlayers < 2 || numPlayers > 4)
+  {
+    cout << "How many players?" << endl;
+    cin >> numPlayers;
+  }
   //}while(check);
   this->bag = std::make_shared<Bag>(*(new Bag()));
   cout << this->bag->toString() << endl;
-  this->board = std::make_shared<Board>(*(new Board(26)));
-  cout << "Enter a name for player 1" << endl
+  this->board = std::make_shared<Board>(*(new Board(6)));
+  /* cout << "Enter a name for player 1" << endl
        << "> ";
   cin >> name;
   //if (validUserName(name))
@@ -53,10 +57,24 @@ void qwirkle::newGame()
       << "> ";
   cin >> name;
   this->player2 = std::make_shared<Player>(*(new Player(name)));
-  this->player2->fillHand(*this->bag);
+  this->player2->fillHand(*this->bag);*/
+
+  for (int i = 0; i < numPlayers; i++)
+  {
+    cout << "Enter a name for player " << i + 1 << endl
+         << "> ";
+    cin >> name;
+    //if (validUserName(name))
+    this->players[i] = std::make_shared<Player>(*(new Player(name)));
+    this->players[i]->fillHand(*this->bag);
+  }
   //if (validUserName(name))
-  cout << "Player 1: " + this->player1->getName() + "\nPlayer 2: " + this->player2->getName() << endl;
-  this->currentPlayer = this->player1;
+  cout << "Players for the game are \n";
+  for (int i = 0; i < numPlayers; i++)
+    cout << "Player " << i + 1 << " : " + this->players[i]->getName() + "\n";
+
+  turn = 0;
+  // this->currentPlayer = this->players[0];
   while (!this->gameOver)
   {
     this->newTurn();
@@ -90,41 +108,62 @@ void qwirkle::loadGame()
   std::string playerData = saveData.substr(0, boardStart);
   int boardEnd = saveData.substr(boardStart, saveData.length()).find("$");
   std::string boardData = saveData.substr(boardStart, boardEnd);
-  std::string finalData = saveData.substr(playerData.length() + boardEnd, saveData.length());
+  std::string finalData = saveData.substr(playerData.length() + boardEnd + 2, saveData.length());
   int bagEnd = finalData.find("\n");
-  std::string bagData = finalData.substr(1, bagEnd);
+  std::string bagData = finalData.substr(0, bagEnd);
   std::string currentPlayerName = finalData.substr(bagEnd + 1, finalData.length());
 
+  cout << "board = " << boardData << endl;
+  cout << "bag = " << bagData << endl;
   std::vector<std::string> bagString = splitString(bagData, ", ");
+
   std::vector<std::string> playersDataString = splitString(playerData, "$\n");
+
   std::vector<std::string> boardString = splitString(boardData, "|");
 
   cout << "after loop" << endl;
   //bag
   std::vector<Tile *> bagContents = getTileVectorFromStringVector(bagString);
-
+  cout << "after bag" << endl;
   //nest in for loop
-  std::vector<Player *> players = getPlayerVectorFromStringVector(playersDataString);
+  std::vector<Player *> playersList = getPlayerVectorFromStringVector(playersDataString);
+  cout << "after player" << endl;
 
   //                initialization
   //board
   this->setBoardState(boardString);
-
+  cout << "after board" << endl;
   //bag
   this->bag = std::make_shared<Bag>(*(new Bag()));
   for (unsigned int i = 0; i < bagContents.size(); ++i)
   {
     this->bag->addTile(bagContents[i]);
   }
-  this->player1 = std::make_shared<Player>(*(new Player("yikes1")));
-  this->player2 = std::make_shared<Player>(*(new Player("yikes2")));
-  this->currentPlayer = player1;
+
+  cout << currentPlayerName.substr(0, currentPlayerName.find("\n")) << "<-------------" << endl;
+
+  currentPlayerName = currentPlayerName.substr(0, currentPlayerName.find("\n"));
+  for (unsigned int i = 0; i < playersList.size(); ++i)
+  {
+    this->players[i] = std::make_shared<Player>(*playersList[i]);
+    cout << "checking " << currentPlayerName << " vs " << playersList[i]->getName();
+    if (currentPlayerName == this->players[i]->getName())
+    {
+      cout << "true" << endl;
+      turn = i;
+    }
+  }
+  // this->player1 = std::make_shared<Player>(*(new Player("yikes1")));
+  // this->player2 = std::make_shared<Player>(*(new Player("yikes2")));
+  // this->currentPlayer = player1;
+
+  // To read the player details from the vector of players created above
 
   while (!gameOver)
   {
     this->newTurn();
   }
-  cout << "done?" << endl;
+
   /*TODO
     
     addPlayersFromVector
@@ -146,16 +185,19 @@ Looping logic referenced:
 
 void qwirkle::setBoardState(std::vector<std::string> input)
 {
-  this->board = std::make_shared<Board>(*(new Board(26)));
+  cout << "input length " << input.size() << endl;
+  int boardLength = std::sqrt(input.size() - 1);
+  this->board = std::make_shared<Board>(*(new Board(boardLength)));
   for (unsigned int i = 0; i < input.size(); ++i)
   {
+    //std::cout << "looping " << i << endl;
     if (input[i] != "  " && input[i] != "\n  " && input[i] != "\n")
     {
 
       Tile *tile = makeTileFromString(input[i]);
       //Tile *tileTest = new Tile('P', 3);
-      int row = i / 26;
-      int col = i % 26;
+      int row = i / boardLength;
+      int col = i % boardLength;
       //cout << i << " " << row << " " << col << endl;
       this->board->setTile(row, col, tile);
       //cout << "COL FROM BOARD POSITION " << row << ", " << col << "= " << this->board->getTile(row, col)->getColour() << endl;
@@ -311,10 +353,12 @@ Code References for newTurn:
 //Runs initially without taking input, then runs again thanks to loop and takes input. Fix this.
 void qwirkle::newTurn()
 {
-  cout << "Player " << this->currentPlayer->getName() << endl;
-  cout << this->player1->getName() << ": " << this->player1->getPoints() << ", " << this->player2->getName() << ": " << this->player2->getPoints() << endl;
+  cout << "Starting new game \n";
+  cout << "Player " << this->players[turn]->getName() << "\'s turn " << endl;
+  for (int i = 0; i < numPlayers; i++)
+    cout << this->players[i]->getName() << ": " << this->players[i]->getPoints() << "\n ";
   this->board->display();
-  this->currentPlayer->printHand();
+  this->players[turn]->printHand();
   std::string input;
   bool validInput = false;
   while (!validInput)
@@ -336,7 +380,14 @@ void qwirkle::newTurn()
     {
       try
       {
-        std::string tileString = args.substr(0, args.find(','));
+        if (args.length() < 8 || args.length() > 9)
+        {
+          cout << "Invalid command format, please check the guidelines";
+        }
+        else
+        {
+          /*  
+        std::string tileString = args.substr(0, args.find(' '));
         std::string positionString = args.substr(tileString.length(), args.length());
 
         char test2 = 'b';
@@ -352,37 +403,68 @@ void qwirkle::newTurn()
         cout << "position int is " << positionInt << endl;
         int positionCharInt = this->getIntFromChar(*positionChar);
 
-        validInput = true;
-        //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
-
-        this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);
-        if (!this->bag->isEmpty())
+      validInput = true;
+      //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
+      
+      this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);*/
+          std::string tileString = args.substr(0, 2);
+          std::string positionString = args.substr(6);
+          char tileCol = tileString[0];
+          int tileShape = std::stoi(tileString.substr(1));
+          int placeRow = getIntFromChar(positionString[0]);
+          int placeCol = std::stoi(positionString.substr(1));
+          cout << tileCol << tileShape << placeRow << placeCol << "\n";
+          /* Tile *tile = this->players[turn]->removeTile(tileCol,tileShape);
+      if(tile==nullptr)
+        cout<<"No such tile found in hand\n";
+      else
+      {
+        if(this->placeTile(tile,placeRow,placeCol,this->firstTurn))
+          this->players[turn]->drawTile(*(this->bag));
+        else
         {
-          this->currentPlayer->addTile(this->bag->pullTile());
+          this->players[turn]->addTile(tile);
         }
-        else if (this->currentPlayer->isEmpty())
-        {
-          this->currentPlayer->addPoints(6);
-          // END GAME HERE
+        
+      }*/
+          validInput = true;
+          //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
+
+          this->placeTile(this->players[turn]->removeTile(tileCol, tileShape), placeRow, placeCol, this->firstTurn);
+          this->players[turn]->addTile(this->bag->pullTile());
         }
       }
       catch (const std::invalid_argument &e)
       {
-        cout << "Invalid arguments!" << e.what() << endl;
+        cout << "Invalid arguments! To place a tile you must enter 'place <tile> at <grid location>'" << endl;
+      }
+      catch (const std::out_of_range &e)
+      {
+        cout << "Out of range!" << endl;
       }
       //cout << "after placeTile in newTurn, using this->board->getTile() col = " << this->board->getTile(5, 5)->getColour() << endl;
       this->firstTurn = false;
+      validInput = true;
     }
     else if (command == "replace")
     {
+      try
+      {
+        char test3 = 'c';
+        char *tileCol = &test3;
+        args.substr(0, 1).copy(tileCol, 1);
+        Shape tileShape = std::stoi(args.substr(1, 2));
 
-      char test3 = 'c';
-      char *tileCol = &test3;
-      args.substr(0, 1).copy(tileCol, 1);
-      int tileShape = std::stoi(args.substr(1, 2));
-
-      cout << "replacing " << *tileCol << tileShape << endl;
-      validInput = true;
+        cout << "replacing " << *tileCol << tileShape << endl;
+        this->bag->addTile(this->players[turn]->removeTile(*tileCol, tileShape));
+        this->players[turn]->addTile(this->bag->pullTile());
+        //this->players[turn]->drawTile(*(this->bag));
+        validInput = true;
+      }
+      catch (const std::invalid_argument &e)
+      {
+        cout << "Invalid arguments! To place a tile you must enter 'replace <tile>'";
+      }
       //Run necessary code to replace a tile using *tileCol and tileShape
 
       //this->bag->add(currentPlayer->takeTile());
@@ -404,12 +486,15 @@ void qwirkle::newTurn()
 
     else
     {
-      cout << "command \"" << command << "\" unknown" << endl;
+      cout << "command \"" << command << "\" unknown. Type 'help' to see list of availabe commands." << endl;
       validInput = false;
     }
   } // end of while
 
-  if (this->currentPlayer == this->player1)
+  turn++;
+  turn = turn % numPlayers;
+  // this->currentPlayer = players[turn];
+  /*if (this->currentPlayer == this->player1)
   {
     this->currentPlayer = this->player2;
   }
@@ -420,7 +505,7 @@ void qwirkle::newTurn()
   else
   {
     cout << "current player assignment is breaking, debug please" << endl;
-  }
+  }*/
 }
 
 // bool qwirkle::validateMove(char colour, int shape, int row, int col) {
@@ -471,20 +556,20 @@ int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int directi
   int x = row, y = col;
   while (!stop && x > 0 && y > 0 && x < this->board->getSize() && y < this->board->getSize())
   {
-    if (direction == 1)
+    if (direction == UP)
       x = x - 1;
-    else if (direction == 2)
+    else if (direction == DOWN)
       x = x + 1;
-    else if (direction == 3)
+    else if (direction == RIGHT)
       y = y + 1;
-    else if (direction == 4)
+    else if (direction == LEFT)
       y = y - 1;
     Tile *neighbour = this->board->getTile(x, y);
     if (neighbour == nullptr)
       stop = true;
-    else if (selection == 1 && tile->getColour() == neighbour->getColour())
+    else if (selection == MATCH_COLOUR && tile->getColour() == neighbour->getColour())
       num++;
-    else if (selection == 2 && tile->getShape() == neighbour->getShape())
+    else if (selection == MATCH_SHAPE && tile->getShape() == neighbour->getShape())
       num++;
     else
       stop = true;
@@ -500,11 +585,13 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
 
   if (row < this->board->getSize() && col < this->board->getSize())
   {
+    if (row == this->board->getSize() - 1 || col == this->board->getSize() - 1)
+      this->board->reSize();
     if (firstTurn)
     {
       this->board->setTile(row, col, tile);
       total = total + 1;
-      this->currentPlayer->addPoints(total);
+      this->players[turn]->addPoints(total);
     }
     else
     {
@@ -513,11 +600,11 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
       {
 
         Tile *check = nullptr;
-        if (d == 1) // up
+        if (d == UP) // up
           check = this->board->getTile(row - 1, col);
-        else if (d == 2) //down
+        else if (d == DOWN) //down
           check = this->board->getTile(row + 1, col);
-        else if (d == 3) // right
+        else if (d == RIGHT) // right
           check = this->board->getTile(row, col + 1);
         else //left
           check = this->board->getTile(row, col - 1);
@@ -532,19 +619,19 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
           {
             cout << "plassing test 3" << endl;
             if (check->getColour() == tile->getColour())
-              selection = 1;
+              selection = MATCH_COLOUR;
             else
-              selection = 2;
+              selection = MATCH_SHAPE;
             // to get number of tiles matching in that direction
-            int numOfTiles = 1 + checkTiles(tile, row, col, selection, 2);
+            int numOfTiles = 1 + checkTiles(tile, row, col, selection, d);
             if (numOfTiles < 6) // if there are less than 6 in a row, set thde new tile on bthis->board
             {
               if (this->board->getTile(row, col) == nullptr) //if the selected location is empty
               {
                 this->board->setTile(row, col, tile);
                 std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
-                total = total + 1 + numOfTiles;
-                this->currentPlayer->addPoints(total);
+                total = 1 + numOfTiles;
+                this->players[turn]->addPoints(total);
               }
             }
           }
@@ -560,12 +647,26 @@ void qwirkle::saveGame(std::string saveFile)
   //Construct yuge string of the save file
   std::string saveData = "";
   std::string player1Data = "";
-  std::string player2Data = "";
+  //std::string player2Data = "";
   std::string boardData = "";
   std::string bagData = "";
 
   //TODO change player data to a for loop for the players array
+  for (int i = 0; i < numPlayers; i++)
+  {
+    player1Data.append(players[i]->getName());
+    player1Data.append("\n");
+    player1Data.append(std::to_string(players[i]->getPoints()));
+    player1Data.append("\n");
+    player1Data.append(players[i]->toString());
+    player1Data.append("$");
 
+    cout << player1Data << endl;
+    saveData.append(player1Data);
+    saveData.append("\n");
+    player1Data = "";
+  }
+  /*
   player1Data.append(player1->getName());
   player1Data.append("\n");
   player1Data.append(std::to_string(player1->getPoints()));
@@ -583,20 +684,20 @@ void qwirkle::saveGame(std::string saveFile)
   player2Data.append("$");
 
   cout << player2Data << endl;
-
+*/
   bagData.append(this->bag->toString());
   boardData.append(this->board->toString());
   boardData.append("$");
-
+  /*
   saveData.append(player1Data);
   saveData.append("\n");
   saveData.append(player2Data);
-  saveData.append("\n");
+  saveData.append("\n");*/
   saveData.append(boardData);
-  //saveData.append("\n");
+  saveData.append("\n");
   saveData.append(bagData);
   saveData.append("\n");
-  saveData.append(currentPlayer->getName());
+  saveData.append(this->players[turn]->getName());
 
   std::ofstream outFile;
   outFile.open(saveFile);

@@ -15,15 +15,15 @@ LinkedList::~LinkedList()
 {
 }
 
-bool LinkedList::isEmpty()
-{
-  output = false;
-  if (head == nullptr)
-  {
-    output = true;
-  }
-  return output;
-}
+// bool LinkedList::isEmpty()
+// {
+//   output = false;
+//   if (head == nullptr)
+//   {
+//     output = true;
+//   }
+//   return output;
+// }
 
 std::string LinkedList::toString()
 {
@@ -51,18 +51,26 @@ std::string LinkedList::toString()
 
 void LinkedList::printList()
 {
+  bool first = true;
   std::cout << "Size of list : " << this->getSize() << std::endl;
   Node *currentNode = head;
   // Tile *output == nullptr;
   std::cout << "---LinkedList Contents---" << std::endl;
   while (currentNode != nullptr)
   {
-    //check if current node matches args, if it don't currentNode = currentNode.getNext()
-    //  Shape tileShape = currentNode->getValue()->getShape();
-    //  Colour tileCol = currentNode->getValue()->getColour();
-    //std::cout << "\e[31mred"<<tileCol << tileShape << std::endl;
-    currentNode->getValue()->printColoured();
-    currentNode = currentNode->getNext();
+    if (!first)
+    {
+      std::cout << ", ";
+    }
+    else
+    {
+      //check if current node matches args, if it don't currentNode = currentNode.getNext()
+      //  Shape tileShape = currentNode->getValue()->getShape();
+      //  Colour tileCol = currentNode->getValue()->getColour();
+      //std::cout << "\e[31mred"<<tileCol << tileShape << std::endl;
+      currentNode->getValue()->printColoured();
+      currentNode = currentNode->getNext();
+    }
   }
   std::cout << "---End---" << std::endl;
 }
