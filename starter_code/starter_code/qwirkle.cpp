@@ -31,44 +31,40 @@ void qwirkle::newGame()
 {
   this->firstTurn = true;
   this->gameOver = false;
-  std::string name = "";
   numPlayers = 0;
   cout << "Starting a New Game" << endl;
-  //TODO : Do check for min 2 players.
-  //bool check = true;
-  //do{
+
   while (numPlayers < 2 || numPlayers > 4)
   {
     cout << "How many players?" << endl;
     cin >> numPlayers;
   }
-  //}while(check);
   this->bag = std::make_shared<Bag>(*(new Bag()));
-  cout << this->bag->toString() << endl;
+  //cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(6)));
-  /* cout << "Enter a name for player 1" << endl
-       << "> ";
-  cin >> name;
-  //if (validUserName(name))
-  this->player1 = std::make_shared<Player>(*(new Player(name)));
-  this->player1->fillHand(*this->bag);
-  cout
-      << "Enter a name for player 2" << endl
-      << "> ";
-  cin >> name;
-  this->player2 = std::make_shared<Player>(*(new Player(name)));
-  this->player2->fillHand(*this->bag);*/
 
   for (int i = 0; i < numPlayers; i++)
   {
-    cout << "Enter a name for player " << i + 1 << endl
-         << "> ";
-    cin >> name;
-    //if (validUserName(name))
-    this->players[i] = std::make_shared<Player>(*(new Player(name)));
-    this->players[i]->fillHand(*this->bag);
+    bool valid = false;
+    std::string name = "invalid";
+
+    while (!valid)
+    {
+      cout << "Enter a name for player (Only uppercase characters)" << i + 1 << endl
+           << "> ";
+      cin >> name;
+      if (validUserName(name))
+      {
+        this->players[i] = std::make_shared<Player>(*(new Player(name)));
+        this->players[i]->fillHand(*this->bag);
+        valid = true;
+      }
+      else
+      {
+        cout << "Invalid username, please only enter uppercase characters" << endl;
+      }
+    }
   }
-  //if (validUserName(name))
   cout << "Players for the game are \n";
   for (int i = 0; i < numPlayers; i++)
     cout << "Player " << i + 1 << " : " + this->players[i]->getName() + "\n";
@@ -79,7 +75,8 @@ void qwirkle::newGame()
   {
     this->newTurn();
   }
-  //TODO implement a makeTurn method that handles player actions and keeps repeating until the end
+
+  cout << "game over" << endl;
 }
 
 void qwirkle::loadGame()
@@ -301,7 +298,7 @@ Player *qwirkle::makePlayerFromString(std::string input)
   std::vector<std::string> playerData = splitString(input, "\n");
   //cout << "supposedly player name = " << playerData[0] << endl;
   Player *player = new Player(playerData[0]);
-  player->addPoints(std::stoi(playerData[1]));
+  player->setPoints(std::stoi(playerData[1]));
   std::vector<Tile *> hand = getTileVectorFromStringVector(splitString(playerData[2], ", "));
   for (unsigned int i = 0; i < hand.size(); i++)
   {
@@ -356,8 +353,9 @@ void qwirkle::newTurn()
   cout << "Starting new game \n";
   cout << "Player " << this->players[turn]->getName() << "\'s turn " << endl;
   for (int i = 0; i < numPlayers; i++)
-    cout << this->players[i]->getName() << ": " << this->players[i]->getPoints() << "\n ";
+    cout << this->players[i]->getName() << ": " << this->players[i]->getPoints() << "\n";
   this->board->display();
+  cout << "Your hand is" << endl;
   this->players[turn]->printHand();
   std::string input;
   bool validInput = false;
@@ -372,10 +370,6 @@ void qwirkle::newTurn()
     //the 1s depend on delimiter length, hopefully if you need to debug it you find this
     std::string args = input.substr(commandEnd + 1, input.length()); //may need to be length -1
 
-    //TODO
-    //maybe wrap in while(validInput) when input is garbo alfonzo
-    //lots of magic numbers here, will probs want to fix that at some point. but it works!
-    //also change the string initialization to something that isn't trash
     if (command == "place")
     {
       try
@@ -386,52 +380,28 @@ void qwirkle::newTurn()
         }
         else
         {
-          /*  
-        std::string tileString = args.substr(0, args.find(' '));
-        std::string positionString = args.substr(tileString.length(), args.length());
+          //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
 
-        char test2 = 'b';
-
-        char *tileCol = &test2;
-        tileString.substr(0, 1).copy(tileCol, 1);
-        int tileShape = std::stoi(tileString.substr(1, 2));
-
-        char test1 = 'a';
-        char *positionChar = &test1;
-        positionString.substr(1, 2).copy(positionChar, 1);
-        int positionInt = std::stoi(positionString.substr(2, 3));
-        cout << "position int is " << positionInt << endl;
-        int positionCharInt = this->getIntFromChar(*positionChar);
-
-      validInput = true;
-      //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
-      
-      this->placeTile(this->currentPlayer->removeTile(*tileCol, tileShape), positionCharInt, positionInt, this->firstTurn);*/
           std::string tileString = args.substr(0, 2);
           std::string positionString = args.substr(6);
           char tileCol = tileString[0];
           int tileShape = std::stoi(tileString.substr(1));
           int placeRow = getIntFromChar(positionString[0]);
           int placeCol = std::stoi(positionString.substr(1));
-          cout << tileCol << tileShape << placeRow << placeCol << "\n";
-          /* Tile *tile = this->players[turn]->removeTile(tileCol,tileShape);
-      if(tile==nullptr)
-        cout<<"No such tile found in hand\n";
-      else
-      {
-        if(this->placeTile(tile,placeRow,placeCol,this->firstTurn))
-          this->players[turn]->drawTile(*(this->bag));
-        else
-        {
-          this->players[turn]->addTile(tile);
-        }
-        
-      }*/
+          cout << tileCol << "|" << tileShape << placeRow << placeCol << "\n";
+
           validInput = true;
           //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
 
           this->placeTile(this->players[turn]->removeTile(tileCol, tileShape), placeRow, placeCol, this->firstTurn);
-          this->players[turn]->addTile(this->bag->pullTile());
+          if (!this->bag->isEmpty())
+          {
+            this->players[turn]->addTile(this->bag->pullTile());
+          }
+          else if (this->players[turn]->isEmpty())
+          {
+            this->gameOver = true;
+          }
         }
       }
       catch (const std::invalid_argument &e)
@@ -456,10 +426,14 @@ void qwirkle::newTurn()
         Shape tileShape = std::stoi(args.substr(1, 2));
 
         cout << "replacing " << *tileCol << tileShape << endl;
-        this->bag->addTile(this->players[turn]->removeTile(*tileCol, tileShape));
-        this->players[turn]->addTile(this->bag->pullTile());
-        //this->players[turn]->drawTile(*(this->bag));
-        validInput = true;
+
+        if (!this->bag->isEmpty())
+        {
+          this->bag->addTile(this->players[turn]->removeTile(*tileCol, tileShape));
+          this->players[turn]->addTile(this->bag->pullTile());
+          //this->players[turn]->drawTile(*(this->bag));
+          validInput = true;
+        }
       }
       catch (const std::invalid_argument &e)
       {
@@ -478,7 +452,7 @@ void qwirkle::newTurn()
     else if (command == "help")
     {
       cout << " --------List of valid commands------------" << endl;
-      cout << "place <tileCode>,<boardPosition> to place a tile in the board" << endl;
+      cout << "place <tileCode> at <boardPosition> to place a tile in the board" << endl;
       cout << "replace <tileCode> to replace a tile from your hand" << endl;
       cout << "save <filename> to save game" << endl;
       cout << "^D to quit game" << endl;
@@ -493,61 +467,7 @@ void qwirkle::newTurn()
 
   turn++;
   turn = turn % numPlayers;
-  // this->currentPlayer = players[turn];
-  /*if (this->currentPlayer == this->player1)
-  {
-    this->currentPlayer = this->player2;
-  }
-  else if (this->currentPlayer == this->player2)
-  {
-    this->currentPlayer = this->player1;
-  }
-  else
-  {
-    cout << "current player assignment is breaking, debug please" << endl;
-  }*/
 }
-
-// bool qwirkle::validateMove(char colour, int shape, int row, int col) {
-//   bool valid = false;
-//   Tile neighbours[4] = {
-//     board->getTile(row - 1, col),
-//     board->getTile(row, col + 1),
-//     board->getTile(row + 1, col),
-//     board->getTile(row, col - 1)
-//     };
-
-//   for(int i = 0; i < neighbours.size(); i++) {
-//     if(neighbours[i] != nullptr) {
-//       if((neighbours[i]->getColour() == colour) && (neighbours[i]->getShape() == shape) {
-//         int x = 0;
-//         int y = 0;
-//         if(i = 0) {
-//           x = row - 2;
-//           y = col;
-//         }
-//         else if(i = 1) {
-//           x = row;
-//           y = col + 2;
-//         }
-//         else if(i = 2) {
-//           x = row + 2;
-//           y = col;
-//         }
-//         else if(1 = 3) {
-//           x = row;
-//           y = col - 2;
-//         }
-//         if(neighbours[i]s position + 1 != nullptr) {
-//            if(board->getTile(x,y)->getColour() == colour) && (board->getTile(x,y)->getShape() == shape) {
-//              valid = true;
-//            }
-//         }
-//       }
-//     }
-//   }
-//   return valid;
-// }
 
 int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int direction)
 {
@@ -585,53 +505,60 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
 
   if (row < this->board->getSize() && col < this->board->getSize())
   {
+    cout << "Entered if " << endl;
     if (row == this->board->getSize() - 1 || col == this->board->getSize() - 1)
+    {
+      cout << "Board resiezd" << endl;
       this->board->reSize();
-    if (firstTurn)
-    {
-      this->board->setTile(row, col, tile);
-      total = total + 1;
-      this->players[turn]->addPoints(total);
     }
-    else
+    if (row >= 0 && row < this->board->getSize() && col >= 0 && col < this->board->getSize())
     {
-      // Checking if tile matches the any of four directions one bby one
-      for (int d = 1; d <= 4; d++)
+      if (firstTurn)
       {
-
-        Tile *check = nullptr;
-        if (d == UP) // up
-          check = this->board->getTile(row - 1, col);
-        else if (d == DOWN) //down
-          check = this->board->getTile(row + 1, col);
-        else if (d == RIGHT) // right
-          check = this->board->getTile(row, col + 1);
-        else //left
-          check = this->board->getTile(row, col - 1);
-
-        cout << "b4 test 2" << endl;
-        if (check != nullptr) // if threre is a tile
+        this->board->setTile(row, col, tile);
+        total = total + 1;
+        this->players[turn]->setPoints(total);
+      }
+      else
+      {
+        // Checking if tile matches the any of four directions one bby one
+        for (int d = 1; d <= 4; d++)
         {
-          cout << "plassing test 2" << endl;
 
-          // checks if its of same colour or shape
-          if (check->getColour() == tile->getColour() || check->getShape() == tile->getShape())
+          Tile *check = nullptr;
+          if (d == UP && row - 1 >= 0)
+            check = this->board->getTile(row - 1, col);
+          else if (d == DOWN && row + 1 < this->board->getSize()) //down
+            check = this->board->getTile(row + 1, col);
+          else if (d == RIGHT && col + 1 < this->board->getSize()) // right
+            check = this->board->getTile(row, col + 1);
+          else if (d == LEFT && col - 1 >= 0) //left
+            check = this->board->getTile(row, col - 1);
+
+          cout << "b4 test 2" << endl;
+          if (check != nullptr) // if threre is a tile
           {
-            cout << "plassing test 3" << endl;
-            if (check->getColour() == tile->getColour())
-              selection = MATCH_COLOUR;
-            else
-              selection = MATCH_SHAPE;
-            // to get number of tiles matching in that direction
-            int numOfTiles = 1 + checkTiles(tile, row, col, selection, d);
-            if (numOfTiles < 6) // if there are less than 6 in a row, set thde new tile on bthis->board
+            cout << "plassing test 2" << endl;
+
+            // checks if its of same colour or shape
+            if (check->getColour() == tile->getColour() || check->getShape() == tile->getShape())
             {
-              if (this->board->getTile(row, col) == nullptr) //if the selected location is empty
+              cout << "plassing test 3" << endl;
+              if (check->getColour() == tile->getColour())
+                selection = MATCH_COLOUR;
+              else
+                selection = MATCH_SHAPE;
+              // to get number of tiles matching in that direction
+              int numOfTiles = 1 + checkTiles(tile, row, col, selection, d);
+              if (numOfTiles < 6) // if there are less than 6 in a row, set thde new tile on bthis->board
               {
-                this->board->setTile(row, col, tile);
-                std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
-                total = 1 + numOfTiles;
-                this->players[turn]->addPoints(total);
+                if (this->board->getTile(row, col) == nullptr) //if the selected location is empty
+                {
+                  this->board->setTile(row, col, tile);
+                  std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
+                  total = 1 + numOfTiles;
+                  this->players[turn]->setPoints(total);
+                }
               }
             }
           }
@@ -705,6 +632,7 @@ void qwirkle::saveGame(std::string saveFile)
   outFile.close();
 }
 
+/*
 int qwirkle::getIntFromChar(char c)
 {
   c = std::toupper(c);
@@ -766,4 +694,37 @@ int qwirkle::getIntFromChar(char c)
     output = 26;
 
   return output;
+}
+
+*/
+
+int qwirkle::getIntFromChar(char c)
+{
+  int retVal = 0;
+  if (isalpha(c))
+  {
+    retVal = c - 'A';
+  }
+  else
+  {
+    retVal = -1;
+  }
+  return retVal;
+}
+
+bool qwirkle::validUserName(std::string name)
+{
+  bool valid = true;
+  for (char &c : name)
+  {
+    if (!isalpha(c))
+    {
+      valid = false;
+    }
+    if (c <= 'A' && c >= 'Z')
+    {
+      valid = false;
+    }
+  }
+  return valid;
 }

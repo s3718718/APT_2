@@ -22,14 +22,15 @@ int Player::getPoints()
     return points;
 }
 
-void Player::addPoints(int i)
+void Player::setPoints(int i)
 {
-    points += i;
+    points = i;
 }
 
 bool Player::addTile(Tile *tile)
 {
     //if statement first, return true if pass
+    std::cout << "adding tile " << tile->getColour() << tile->getShape() << std::endl;
     hand->add(tile);
     return true;
 }
@@ -43,14 +44,14 @@ bool Player::drawTile(Bag bag)
 
 Tile *Player::removeTile(char colour, int shape)
 {
-    std::cout << "LOL" << std::endl;
+    std::cout << "Removing tile from player's hand" << std::endl;
     return hand->takeTile(colour, shape);
 }
 
 void Player::fillHand(Bag bag)
 {
     int i = 0;
-    while (i < HAND_LIMIT )
+    while (i < HAND_LIMIT)
     {
         drawTile(bag);
         i++;
@@ -73,4 +74,9 @@ void Player::printHand()
 string Player::toString()
 {
     return hand->toString();
+}
+
+bool Player::isEmpty()
+{
+    return this->hand->isEmpty();
 }

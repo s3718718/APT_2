@@ -19,6 +19,7 @@ public:
   int getSize();
   void deleteAll();
   std::string toString();
+  bool isEmpty();
 
 private:
   Node *head;

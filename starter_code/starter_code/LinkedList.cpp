@@ -15,15 +15,15 @@ LinkedList::~LinkedList()
 {
 }
 
-// bool LinkedList::isEmpty()
-// {
-//   output = false;
-//   if (head == nullptr)
-//   {
-//     output = true;
-//   }
-//   return output;
-// }
+bool LinkedList::isEmpty()
+{
+  bool output = false;
+  if (head == nullptr)
+  {
+    output = true;
+  }
+  return output;
+}
 
 std::string LinkedList::toString()
 {
@@ -38,8 +38,8 @@ std::string LinkedList::toString()
       output.append(", ");
     }
     //check if current node matches args, if it don't currentNode = currentNode.getNext()
-    int tileShape = currentNode->getValue()->getShape();
-    char tileCol = currentNode->getValue()->getColour();
+    Shape tileShape = currentNode->getValue()->getShape();
+    Colour tileCol = currentNode->getValue()->getColour();
     std::string tileColString(1, tileCol);
     output.append(tileColString);
     output.append(std::to_string(tileShape));
@@ -62,15 +62,13 @@ void LinkedList::printList()
     {
       std::cout << ", ";
     }
-    else
-    {
-      //check if current node matches args, if it don't currentNode = currentNode.getNext()
-      //  Shape tileShape = currentNode->getValue()->getShape();
-      //  Colour tileCol = currentNode->getValue()->getColour();
-      //std::cout << "\e[31mred"<<tileCol << tileShape << std::endl;
-      currentNode->getValue()->printColoured();
-      currentNode = currentNode->getNext();
-    }
+    //check if current node matches args, if it don't currentNode = currentNode.getNext()
+    //  Shape tileShape = currentNode->getValue()->getShape();
+    //  Colour tileCol = currentNode->getValue()->getColour();
+    //std::cout << "\e[31mred"<<tileCol << tileShape << std::endl;
+    currentNode->getValue()->printColoured();
+    currentNode = currentNode->getNext();
+    first = false;
   }
   std::cout << "---End---" << std::endl;
 }
@@ -80,12 +78,14 @@ void LinkedList::add(Tile *tile)
   Node *node = new Node(tile, nullptr);
   if (head == nullptr)
   {
+    std::cout << "head is nullptr" << std::endl;
     head = node;
     tail = node;
     //std::cout << "head is " << head->getValue()->getShape() << std::endl;
   }
   else
   {
+    std::cout << "adding node to tail" << std::endl;
     tail->setNext(node);
     tail = node;
   }
@@ -119,10 +119,10 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
 
       int tileShape = currentNode->getNext()->getValue()->getShape();
       char tileCol = currentNode->getNext()->getValue()->getColour();
-      std::cout << "checking input: " << colour << shape << " vs current: " << tileCol << tileShape << std::endl;
+      //std::cout << "checking input: " << colour << shape << " vs current: " << tileCol << tileShape << std::endl;
       if (tileCol == colour && tileShape == shape && notFound)
       {
-        std::cout << "found in loop" << std::endl;
+        //std::cout << "found in loop" << std::endl;
         //TODO this might break when there's 2 of each tile. If it does, change it so that this rearrangement happens only at the end of the loop.
         Node *newNext = currentNode->getNext()->getNext();
         target = currentNode->getNext()->getValue();
@@ -133,6 +133,12 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
       {
         currentNode = currentNode->getNext();
       }
+    }
+    //Checks whether or not the tail value was the one selected. If so, it updates the tail value accordingly
+    if (!notFound && tail->getValue()->getColour() == target->getColour() && tail->getValue()->getShape() == target->getShape())
+    {
+      //std::cout << "tail element removed, updating new tail to " << currentNode->getValue()->getColour() << currentNode->getValue()->getShape() << std::endl;
+      tail = currentNode;
     }
   }
   std::cout << "target col = " << std::endl;
@@ -152,14 +158,14 @@ Tile *LinkedList::get(Colour colour, Shape shape)
     if (tileCol == colour && tileShape == shape)
     {
       output = currentNode->getValue();
-      return output;
+      //return output;
     }
     else
     {
       currentNode = currentNode->getNext();
     }
   }
-  return nullptr;
+  return output;
 }
 
 int LinkedList::getSize()

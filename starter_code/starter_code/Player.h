@@ -17,14 +17,7 @@ public:
   //Getters
   string getName();
   int getPoints();
-
-  //Setters
-  // void setName(string name);
-  // void setPoints(int points);
-  // void setStudentId(string studentId);
-  // void setEmail(string email);
-
-  void addPoints(int i);
+  void setPoints(int i);
   bool addTile(Tile *tile);
   bool drawTile(Bag bag); //Removing from bag, adding to hand bag.takeFirst()
   Tile *removeTile(char colour, int shape);
@@ -32,6 +25,8 @@ public:
   bool hasTile(char colour, int shape); //Validate the methods that manipulate tiles
   void printHand();                     //For Testing //CHANGE TO TOSTRING
   string toString();
+  bool replaceTile();
+  bool isEmpty();
 
 private:
   string name;

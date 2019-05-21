@@ -44,5 +44,5 @@ void Tile::printColoured(){
         colorCode = BLUE_CODE;
     }
 
-    std::cout<<ESCAPE<<colorCode<<END_ESCAPE<<this->colour<<this->shape<<RESET<<std::endl;
+    std::cout<<ESCAPE<<colorCode<<END_ESCAPE<<this->colour<<this->shape<<RESET;
 }

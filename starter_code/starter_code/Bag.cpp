@@ -49,11 +49,14 @@ void Bag::getShuffledBag()
     {
         for (Shape &shape : shapes)
         {
+
+            //TODO CHANGE THIS FOR GODS SAKES
+
             Tile *tile = new Tile(color, shape);
-            Tile *tile2 = new Tile(color, shape);
+            // Tile *tile2 = new Tile(color, shape);
             //  cout << "Adding Tile : " << shape << color << std::endl;
             tileList->add(tile);
-            tileList->add(tile2);
+            // tileList->add(tile2);
         }
     }
     tileList->shuffle();
