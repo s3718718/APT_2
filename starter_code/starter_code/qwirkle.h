@@ -34,7 +34,9 @@ public:
 
   void newTurn();
 
-  bool validateMove(char colour, int shape, int row, int col);
+  int validateMove(char colour, int shape, int row, int col);
+
+  int validateLine(char colour, int shape, int row, int col, int rowModifier, int colModifier);
 
   int checkTiles(Tile *tile, int row, int col, int selection, int direction);
 

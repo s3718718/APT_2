@@ -80,6 +80,7 @@ void qwirkle::newGame()
 
   turn = 0;
   // this->currentPlayer = this->players[0];
+  cout << "Starting new game \n";
   while (!this->gameOver)
   {
     this->newTurn();
@@ -119,26 +120,20 @@ void qwirkle::loadGame()
   std::string bagData = finalData.substr(0, bagEnd);
   std::string currentPlayerName = finalData.substr(bagEnd + 1, finalData.length());
 
-  cout << "board = " << boardData << endl;
-  cout << "bag = " << bagData << endl;
   std::vector<std::string> bagString = splitString(bagData, ", ");
 
   std::vector<std::string> playersDataString = splitString(playerData, "$\n");
 
   std::vector<std::string> boardString = splitString(boardData, "|");
 
-  cout << "after loop, cuz" << endl;
   //bag
   std::vector<Tile *> bagContents = getTileVectorFromStringVector(bagString);
-  cout << "after bag" << endl;
   //nest in for loop
   std::vector<Player *> playersList = getPlayerVectorFromStringVector(playersDataString);
-  cout << "after player" << endl;
 
   //                initialization
   //board
   this->setBoardState(boardString);
-  cout << "after board" << endl;
   //bag
   this->bag = std::make_shared<Bag>(*(new Bag()));
   for (unsigned int i = 0; i < bagContents.size(); ++i)
@@ -193,7 +188,7 @@ Looping logic referenced:
 
 void qwirkle::setBoardState(std::vector<std::string> input)
 {
-  cout << "input length " << input.size() << endl;
+  //cout << "input length " << input.size() << endl;
   int boardLength = std::sqrt(input.size() - 1);
   this->board = std::make_shared<Board>(*(new Board(boardLength)));
   for (unsigned int i = 0; i < input.size(); ++i)
@@ -361,7 +356,6 @@ Code References for newTurn:
 //Runs initially without taking input, then runs again thanks to loop and takes input. Fix this.
 void qwirkle::newTurn()
 {
-  cout << "Starting new game \n";
   cout << "Player " << this->players[turn]->getName() << "\'s turn " << endl;
   for (int i = 0; i < numPlayers; i++)
     cout << this->players[i]->getName() << ": " << this->players[i]->getPoints() << "\n";
@@ -397,28 +391,46 @@ void qwirkle::newTurn()
           Shape tileShape = std::stoi(tileString.substr(1));
           int placeRow = getIntFromChar(positionString[0]);
           int placeCol = std::stoi(positionString.substr(1));
-          cout << tileCol << tileShape << placeRow << placeCol << "\n";
+          //cout << tileCol << tileShape << placeRow << placeCol << "\n";
 
           validInput = true;
           //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
 
-          Tile *t = this->players[turn]->removeTile(tileCol, tileShape);
-          if (t != nullptr)
+          int moveScore = validateMove(tileCol, tileShape, placeRow, placeCol);
+          if (moveScore > 0)
           {
-            if (this->placeTile(t, placeRow, placeCol, this->firstTurn))
+            Tile *t = this->players[turn]->removeTile(tileCol, tileShape);
+            this->board->setTile(placeRow, placeCol, t);
+            this->players[turn]->setPoints(moveScore);
+            if (!this->bag->isEmpty())
             {
-              this->players[turn]->drawTile(*(this->bag));
-              this->firstTurn = false;
-              changeTurn();
+              this->players[turn]->addTile(this->bag->pullTile());
+              if (this->players[turn]->isEmpty())
+              {
+                gameOver = true;
+              }
             }
-            else
-            {
-              this->players[turn]->addTile(t);
-            }
+            changeTurn();
           }
+
+          // Tile *t = this->players[turn]->removeTile(tileCol, tileShape);
+          // if (t != nullptr)
+          // {
+          //   cout << "VALIDATE MOVE RESULT " << validateMove(tileCol, tileShape, placeRow, placeCol) << endl;
+          //   if (this->placeTile(t, placeRow, placeCol, this->firstTurn))
+          //   {
+          //     this->players[turn]->drawTile(*(this->bag));
+          //     this->firstTurn = false;
+          //     changeTurn();
+          //   }
+          //   else
+          //   {
+          //     this->players[turn]->addTile(t);
+          //   }
+          // }
           else
           {
-            cout << "No such tile found in hand\n";
+            cout << "Invalid move\n";
           }
         }
       }
@@ -441,13 +453,16 @@ void qwirkle::newTurn()
         char *tileCol = &test3;
         args.substr(0, 1).copy(tileCol, 1);
         Shape tileShape = std::stoi(args.substr(1, 2));
-        Tile *t = this->players[turn]->removeTile(*tileCol, tileShape);
-        cout << "replacing " << *tileCol << tileShape << endl;
+
+        //cout << "replacing " << *tileCol << tileShape << endl;
 
         if (!this->bag->isEmpty())
         {
-          this->players[turn]->drawTile(*(this->bag));
+          cout << "running test debug" << endl;
+          Tile *t = this->players[turn]->removeTile(*tileCol, tileShape);
+          cout << "this time" << endl;
           this->bag->addTile(t);
+          cout << "and another one" << endl;
           changeTurn();
         }
         validInput = true;
@@ -511,6 +526,145 @@ int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int directi
   return num;
 }
 
+int qwirkle::validateMove(char colour, int shape, int row, int col)
+{
+  int moveScore = 0;
+  bool allTestsTrue = true;
+  // 1
+  if (row >= 0 && row < this->board->getSize() && col >= 0 && col < this->board->getSize())
+  {
+    for (int d = 1; d <= 4; d++)
+    {
+
+      int colModifier = 0;
+      int rowModifier = 0;
+
+      if (d == UP && row - 1 >= 0)
+        rowModifier = -1;
+      else if (d == DOWN && row + 1 < this->board->getSize()) //down
+        rowModifier = 1;
+      else if (d == RIGHT && col + 1 < this->board->getSize()) // right
+        colModifier = 1;
+      else if (d == LEFT && col - 1 >= 0) //left
+        colModifier = -1;
+      //2
+      if (this->board->getTile(row + rowModifier, col + colModifier) != nullptr)
+      {
+        //3
+        int tempScore = validateLine(colour, shape, row, col, rowModifier, colModifier);
+        cout << "before validate line" << endl;
+        if (tempScore == 0)
+        {
+          cout << "test failed when checking line starting at " << row << ", " << col << endl;
+          allTestsTrue = false;
+        }
+        else
+        {
+          moveScore += tempScore;
+        }
+      }
+    }
+  }
+  else
+  {
+    allTestsTrue = false;
+  }
+  //4
+  if (!allTestsTrue)
+  {
+    moveScore = 0;
+  }
+  if (firstTurn)
+  {
+    moveScore = 1;
+  }
+
+  return moveScore;
+}
+
+int qwirkle::validateLine(char colour, int shape, int row, int col, int rowModifier, int colModifier)
+{
+  bool validPlacement = true;
+  Tile *oneStep = this->board->getTile(row + rowModifier, col + colModifier);
+  Tile *twoStep = nullptr;
+  //Checks whether the 'twoStep' neighbour will be out of bounds
+  if (row + (2 * rowModifier) >= 0 && row + (2 * rowModifier) < this->board->getSize() && col + (2 * colModifier) >= 0 && col + (2 * colModifier) < this->board->getSize())
+  {
+    twoStep = this->board->getTile(row + (2 * rowModifier), col + (2 * colModifier));
+  }
+  //Runs when there is a 'twoStep' neighbour
+  if (twoStep != nullptr)
+  {
+    //Checks whether the line is a shape line
+    if (oneStep->getColour() != twoStep->getColour())
+    {
+      //Check tile based on shape
+      if (oneStep->getShape() != shape)
+      {
+        cout << "twoStep, shape does not match" << endl;
+        validPlacement = false;
+      }
+    }
+    //Checks whether the line is a colour line
+    else if (oneStep->getShape() != twoStep->getShape())
+    {
+      //Check tile based on colour
+      if (oneStep->getColour() != colour)
+      {
+        cout << "twoStep, colour does not match" << endl;
+        validPlacement = false;
+      }
+    }
+  }
+  //Runs when there is no 'twoStep' neighbour
+  else
+  {
+    //Checks whether the tile doesn't match either shape or colour
+    if (oneStep->getColour() != colour && oneStep->getShape() != shape)
+    {
+      cout << "oneStep, shape nor colour match" << endl;
+      validPlacement = false;
+    }
+  }
+
+  bool keepChecking = true;
+  int currentRow = row + rowModifier;
+  int currentCol = col + colModifier;
+  int numTiles = 1;
+  cout << "starting while, right now validPlacement = " << validPlacement << endl;
+  while (keepChecking && currentRow > 0 && currentRow < this->board->getSize() && currentCol > 0 && currentCol < this->board->getSize())
+  {
+
+    Tile *currentTile = this->board->getTile(currentRow, currentCol);
+    //If line is not over
+    if (currentTile != nullptr)
+    {
+      //Checks if a tile is a duplicate of input tile
+      if (currentTile->getColour() == colour && currentTile->getShape() == shape)
+      {
+        validPlacement = false;
+      }
+      currentRow += rowModifier;
+      currentCol += colModifier;
+      numTiles++;
+    }
+    //If line is over
+    else
+    {
+      keepChecking = false;
+    }
+  }
+  if (!validPlacement)
+  {
+    numTiles = 0;
+  }
+  if (numTiles == 6)
+  {
+    numTiles = 12;
+  }
+  return numTiles;
+}
+
 bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
 {
   cout << "placeTile starting" << endl;
@@ -529,6 +683,7 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
     {
       if (firstTurn)
       {
+        cout << "first turn running" << endl;
         this->board->setTile(row, col, tile);
         total = total + 1;
         this->players[turn]->setPoints(total);
@@ -570,7 +725,7 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
                 if (this->board->getTile(row, col) == nullptr) //if the selected location is empty
                 {
                   this->board->setTile(row, col, tile);
-                  std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
+                  //std::cout << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
                   total = numOfTiles + this->players[turn]->getPoints();
                   this->players[turn]->setPoints(total);
                   result = true;
@@ -610,7 +765,7 @@ void qwirkle::saveGame(std::string saveFile)
     player1Data.append(players[i]->toString());
     player1Data.append("$");
 
-    cout << player1Data << endl;
+    //cout << player1Data << endl;
     saveData.append(player1Data);
     saveData.append("\n");
     player1Data = "";
