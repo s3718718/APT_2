@@ -21,23 +21,31 @@ using std::endl;
 void qwirkle::studentInformation()
 {
   cout << "Name: Duncan Do\nStudent Number: s3718718\nEmail: s3718718@student.rmit.edu.au" << endl
-       << "Name: Sam Hoch\nStudent Number: s3721859\nEmail: s3721859@student.rmit.edu.au" << endl
-       << "Name: Labiba Islam\nStudent Number: s3718718\nEmail: s3694372@student.rmit.edu.au" << endl
-       << "Name: Md Abir Ishtiaque\nStudent Number: s3718718\nEmail: s3677701@student.rmit.edu.au" << endl;
+       << "\nName: Sam Hoch\nStudent Number: s3721859\nEmail: s3721859@student.rmit.edu.au" << endl
+       << "\nName: Labiba Islam\nStudent Number: s3694372\nEmail: s3694372@student.rmit.edu.au" << endl
+       << "\nName: Md Abir Ishtiaque\nStudent Number: s3677701\nEmail: s3677701@student.rmit.edu.au" << endl;
 }
 
 void qwirkle::newGame()
 {
   this->firstTurn = true;
   this->gameOver = false;
-  numPlayers=0;
+  numPlayers = 0;
   cout << "Starting a New Game" << endl;
-  
-    while(numPlayers<2 || numPlayers >4)
-    {
-  cout << "How many players?" << endl;
+  cout << "How many players? (2-4)" << endl;
+  cout << "> ";
+  cin.clear();
+  cin.ignore();
   cin >> numPlayers;
-    }
+  while(numPlayers< 2 || numPlayers > 4)
+  {
+    cout << "\nInvalid input. Enter an integer between 2 and 4" << endl;
+    cout << "> ";
+    cin.clear();
+    cin.ignore();
+    cin >> numPlayers;
+  }
+
   this->bag = std::make_shared<Bag>(*(new Bag()));
   //cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(6)));
@@ -49,7 +57,7 @@ void qwirkle::newGame()
 
     while(!valid)
     {
-      cout << "Enter a name for player (Only uppercase characters)"<<i+1<< endl
+      cout << "Enter a name for player "<< i + 1 << " (Only uppercase characters)" << endl
       << "> ";
       cin >> name;
       if(validUserName(name))
@@ -326,7 +334,7 @@ Code References for newTurn:
 void qwirkle::newTurn()
 {
   cout<<"Starting new game \n";
-  cout << "Player " << this->players[turn]->getName() << "\'s turn "<<endl;
+  cout << "Player " << this->players[turn]->getName() << "\'s turn " << endl;
   for(int i=0;i<numPlayers; i++)
   cout << this->players[i]->getName() << ": " << this->players[i]->getPoints() << "\n ";
   this->board->display();
@@ -673,7 +681,7 @@ bool qwirkle::validUserName(std::string name)
     {
       valid = false;
     }
-    if(c <= 'A' && c >= 'Z')
+    if(c >= 'a' && c <= 'z')
     {
       valid = false;
     }
