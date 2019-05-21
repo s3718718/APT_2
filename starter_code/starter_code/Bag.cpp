@@ -34,12 +34,14 @@ void Bag::addTile(Tile *tile)
 
 bool Bag::isEmpty()
 {
-    bool retVal = false;
-    if (tileList->getSize() == 0)
-    {
-        retVal = true;
-    }
-    return retVal;
+
+    return this->tileList->isEmpty();
+    // bool retVal = false;
+    // if (tileList->getSize() == 0)
+    // {
+    //     retVal = true;
+    // }
+    // return retVal;
 }
 
 void Bag::getShuffledBag()
