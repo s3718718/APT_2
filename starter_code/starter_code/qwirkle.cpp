@@ -669,7 +669,7 @@ bool qwirkle::validUserName(std::string name)
   bool valid = true;
   for(char& c : name)
   {
-    if(c >='a' && c <= 'z')
+    if(!isalpha(c))
     {
       valid = false;
     }
