@@ -86,6 +86,21 @@ void qwirkle::newGame()
     this->newTurn();
   }
 
+  cout << "Game over" << endl;
+  int highestPoints = this->players[0]->getPoints();
+  std::string winningPlayerName = this->players[0]->getName();
+  for (int i = 0; i < numPlayers; i++)
+  {
+    if (this->players[turn]->getPoints() > highestPoints)
+    {
+      winningPlayerName = this->players[turn]->getName();
+    }
+    cout << "Score for " << this->players[turn]->getName() << ": " << this->players[turn]->getPoints() << endl;
+  }
+  cout << "Player " << winningPlayerName << " won!\n"
+       << endl;
+
+  quit();
   cout << "game over" << endl;
 }
 
@@ -730,8 +745,10 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
                   this->players[turn]->setPoints(total);
                   result = true;
                 }
-              }else{
-                cout<<"There are alreay 6 tiles in the row!"<<endl;
+              }
+              else
+              {
+                cout << "There are alreay 6 tiles in the row!" << endl;
               }
             }
             else
