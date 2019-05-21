@@ -411,11 +411,12 @@ void qwirkle::newTurn()
           //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
 
           int moveScore = validateMove(tileCol, tileShape, placeRow, placeCol);
+          cout << moveScore << endl;
           if (moveScore > 0)
           {
             Tile *t = this->players[turn]->removeTile(tileCol, tileShape);
             this->board->setTile(placeRow, placeCol, t);
-            this->players[turn]->setPoints(moveScore);
+            this->players[turn]->addPoints(moveScore);
             if (!this->bag->isEmpty())
             {
               this->players[turn]->addTile(this->bag->pullTile());
@@ -479,10 +480,7 @@ void qwirkle::newTurn()
           cout << "and another one" << endl;
           changeTurn();
         }
-        else
-        {
-          cout << "bag is empty? debug message" << endl;
-        }
+        validInput = true;
       }
       catch (const std::invalid_argument &e)
       {
@@ -593,7 +591,13 @@ int qwirkle::validateMove(char colour, int shape, int row, int col)
   }
   if (firstTurn)
   {
+    cout << "first turn" << endl;
     moveScore = 1;
+  }
+  if (moveScore > 0 && (row == this->board->getSize() - 1 || col == this->board->getSize() - 1))
+  {
+    // cout << "Board resiezd" << endl;
+    this->board->reSize();
   }
 
   return moveScore;
@@ -747,6 +751,10 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
                   this->players[turn]->setPoints(total);
                   result = true;
                 }
+              }
+              else
+              {
+                cout << "There are alreay 6 tiles in the row!" << endl;
               }
             }
             else
@@ -923,6 +931,7 @@ bool qwirkle::validUserName(std::string name)
 
 void qwirkle::changeTurn()
 {
+  this->firstTurn = false;
   turn++;
   turn = turn % numPlayers;
 }
