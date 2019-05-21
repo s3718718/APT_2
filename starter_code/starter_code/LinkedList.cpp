@@ -113,8 +113,8 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
     while (currentNode->getNext() != nullptr && notFound)
     {
 
-      int tileShape = currentNode->getNext()->getValue()->getShape();
-      char tileCol = currentNode->getNext()->getValue()->getColour();
+      Shape tileShape = currentNode->getNext()->getValue()->getShape();
+      Colour tileCol = currentNode->getNext()->getValue()->getColour();
       //std::cout << "checking input: " << colour << shape << " vs current: " << tileCol << tileShape << std::endl;
       if (tileCol == colour && tileShape == shape && notFound)
       {
