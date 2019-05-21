@@ -97,7 +97,7 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
   else
   {
     bool notFound = true;
-    while (currentNode->getNext() != nullptr)
+    while (currentNode->getNext() != nullptr && notFound)
     {
 
       int tileShape = currentNode->getNext()->getValue()->getShape();
@@ -118,8 +118,8 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
       }
     }
   }
-  std::cout << "target col = " << std::endl;
-  std::cout << target->getColour() << std::endl;
+  //std::cout << "target col = " << std::endl;
+  //std::cout << target->getColour() << std::endl;
   return target;
 }
 
