@@ -111,7 +111,7 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
   else
   {
     bool notFound = true;
-    while (currentNode->getNext() != nullptr && notFound)
+    while (currentNode->getNext() != nullptr)
     {
 
       Shape tileShape = currentNode->getNext()->getValue()->getShape();
@@ -119,7 +119,7 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
       //std::cout << "checking input: " << colour << shape << " vs current: " << tileCol << tileShape << std::endl;
       if (tileCol == colour && tileShape == shape && notFound)
       {
-        //std::cout << "found in loop" << std::endl;
+        std::cout << "found in loop" << std::endl;
         //TODO this might break when there's 2 of each tile. If it does, change it so that this rearrangement happens only at the end of the loop.
         Node *newNext = currentNode->getNext()->getNext();
         target = currentNode->getNext()->getValue();
@@ -134,7 +134,7 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
     //Checks whether or not the tail value was the one selected. If so, it updates the tail value accordingly
     if (!notFound && tail->getValue()->getColour() == target->getColour() && tail->getValue()->getShape() == target->getShape())
     {
-      //std::cout << "tail element removed, updating new tail to " << currentNode->getValue()->getColour() << currentNode->getValue()->getShape() << std::endl;
+      std::cout << "tail element removed, updating new tail to " << currentNode->getValue()->getColour() << currentNode->getValue()->getShape() << std::endl;
       tail = currentNode;
     }
   }

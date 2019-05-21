@@ -476,9 +476,9 @@ void qwirkle::newTurn()
           cout << "running test debug" << endl;
           Tile *t = this->players[turn]->removeTile(*tileCol, tileShape);
           cout << "this time" << endl;
-          Tile* pulledTile = this->bag->pullTile();
+          Tile *pulledTile = this->bag->pullTile();
           this->players[turn]->addTile(pulledTile);
-         // this->players[turn]->drawTile(*(this->bag)); Min coupling
+          // this->players[turn]->drawTile(*(this->bag)); Min coupling
           this->bag->addTile(t);
           cout << "and another one" << endl;
           changeTurn();
@@ -684,6 +684,7 @@ int qwirkle::validateLine(char colour, int shape, int row, int col, int rowModif
   }
   if (numTiles == 6)
   {
+    cout << "Qwirkle!" << endl;
     numTiles = 12;
   }
   return numTiles;
