@@ -441,7 +441,7 @@ void qwirkle::newTurn()
         char *tileCol = &test3;
         args.substr(0, 1).copy(tileCol, 1);
         Shape tileShape = std::stoi(args.substr(1, 2));
-
+        Tile *t = this->players[turn]->removeTile(*tileCol, tileShape);
         cout << "replacing " << *tileCol << tileShape << endl;
 
         if (!this->bag->isEmpty())
@@ -450,6 +450,7 @@ void qwirkle::newTurn()
           this->bag->addTile(t);
           changeTurn();
         }
+        validInput = true;
       }
       catch (const std::invalid_argument &e)
       {
@@ -557,7 +558,7 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
             // checks if its of same colour or shape
             if (check->getColour() == tile->getColour() || check->getShape() == tile->getShape())
             {
-              cout << "plassing test 3" << endl;
+              //cout << "plassing test 3" << endl;
               if (check->getColour() == tile->getColour())
                 selection = MATCH_COLOUR;
               else
@@ -574,6 +575,8 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
                   this->players[turn]->setPoints(total);
                   result = true;
                 }
+              }else{
+                cout<<"There are alreay 6 tiles in the row!"<<endl;
               }
             }
             else
