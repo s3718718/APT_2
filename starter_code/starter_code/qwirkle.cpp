@@ -479,10 +479,7 @@ void qwirkle::newTurn()
           cout << "and another one" << endl;
           changeTurn();
         }
-        else
-        {
-          cout << "bag is empty? debug message" << endl;
-        }
+        validInput = true;
       }
       catch (const std::invalid_argument &e)
       {
@@ -747,6 +744,8 @@ bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
                   this->players[turn]->setPoints(total);
                   result = true;
                 }
+              }else{
+                cout<<"There are alreay 6 tiles in the row!"<<endl;
               }
             }
             else
