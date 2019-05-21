@@ -86,7 +86,21 @@ void qwirkle::newGame()
     this->newTurn();
   }
 
-  cout << "game over" << endl;
+  cout << "Game over" << endl;
+  int highestPoints = this->players[0]->getPoints();
+  std::string winningPlayerName = this->players[0]->getName();
+  for (int i = 0; i < numPlayers; i++)
+  {
+    if (this->players[turn]->getPoints() > highestPoints)
+    {
+      winningPlayerName = this->players[turn]->getName();
+    }
+    cout << "Score for " << this->players[turn]->getName() << ": " << this->players[turn]->getPoints() << endl;
+  }
+  cout << "Player " << winningPlayerName << " won!\n"
+       << endl;
+
+  quit();
 }
 
 void qwirkle::loadGame()
