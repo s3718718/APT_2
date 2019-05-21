@@ -69,6 +69,7 @@ void qwirkle::newGame()
       else
       {
         cout << "Invalid username, please only enter uppercase characters" << endl;
+        i--;
       }
     }
   }
