@@ -476,6 +476,9 @@ void qwirkle::newTurn()
           cout << "running test debug" << endl;
           Tile *t = this->players[turn]->removeTile(*tileCol, tileShape);
           cout << "this time" << endl;
+          Tile* pulledTile = this->bag->pullTile();
+          this->players[turn]->addTile(pulledTile);
+         // this->players[turn]->drawTile(*(this->bag)); Min coupling
           this->bag->addTile(t);
           cout << "and another one" << endl;
           changeTurn();
