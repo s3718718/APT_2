@@ -101,7 +101,6 @@ void qwirkle::newGame()
        << endl;
 
   quit();
-  cout << "game over" << endl;
 }
 
 void qwirkle::loadGame()
@@ -412,11 +411,12 @@ void qwirkle::newTurn()
           //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
 
           int moveScore = validateMove(tileCol, tileShape, placeRow, placeCol);
+          cout << moveScore << endl;
           if (moveScore > 0)
           {
             Tile *t = this->players[turn]->removeTile(tileCol, tileShape);
             this->board->setTile(placeRow, placeCol, t);
-            this->players[turn]->setPoints(moveScore);
+            this->players[turn]->addPoints(moveScore);
             if (!this->bag->isEmpty())
             {
               this->players[turn]->addTile(this->bag->pullTile());
@@ -591,7 +591,13 @@ int qwirkle::validateMove(char colour, int shape, int row, int col)
   }
   if (firstTurn)
   {
+    cout << "first turn" << endl;
     moveScore = 1;
+  }
+  if (moveScore > 0 && (row == this->board->getSize() - 1 || col == this->board->getSize() - 1))
+  {
+    // cout << "Board resiezd" << endl;
+    this->board->reSize();
   }
 
   return moveScore;
@@ -925,6 +931,7 @@ bool qwirkle::validUserName(std::string name)
 
 void qwirkle::changeTurn()
 {
+  this->firstTurn = false;
   turn++;
   turn = turn % numPlayers;
 }

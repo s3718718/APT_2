@@ -52,10 +52,10 @@ std::string LinkedList::toString()
 void LinkedList::printList()
 {
   bool first = true;
- // std::cout << "Size of list : " << this->getSize() << std::endl;
+  // std::cout << "Size of list : " << this->getSize() << std::endl;
   Node *currentNode = head;
   // Tile *output == nullptr;
- // std::cout << "---LinkedList Contents---" << std::endl;
+  // std::cout << "---LinkedList Contents---" << std::endl;
   while (currentNode != nullptr)
   {
     if (!first)
@@ -66,7 +66,8 @@ void LinkedList::printList()
     currentNode = currentNode->getNext();
     first = false;
   }
-//  std::cout << "---End---" << std::endl;
+  std::cout << std::endl;
+  //  std::cout << "---End---" << std::endl;
 }
 //TODO ask why Tile default constructor runs
 void LinkedList::add(Tile *tile)
@@ -187,7 +188,6 @@ void LinkedList::deleteAll()
   }
   head = nullptr;
 }
-
 
 void LinkedList::shuffle()
 {
