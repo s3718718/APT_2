@@ -4,6 +4,8 @@
 #include "Player.h"
 
 using std::string;
+using std::cout;
+using std::endl;
 
 Player::Player(string name)
 {
@@ -38,8 +40,8 @@ bool Player::addTile(Tile *tile)
 bool Player::drawTile(Bag bag)
 {
     //if statement first, return true if pass
-    addTile(bag.pullTile());
-    return true;
+    return addTile(bag.pullTile());
+    
 }
 
 Tile *Player::removeTile(char colour, int shape)
@@ -53,6 +55,7 @@ void Player::fillHand(Bag bag)
     int i = 0;
     while (i < HAND_LIMIT)
     {
+        std::cout<<"Adding Tile "<<i+1<<" for "<<name<<"\n";
         drawTile(bag);
         i++;
     }
