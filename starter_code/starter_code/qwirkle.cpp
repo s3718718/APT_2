@@ -409,8 +409,7 @@ void qwirkle::newTurn()
             {
               this->players[turn]->drawTile(*(this->bag));
               this->firstTurn = false;
-              turn++;
-              turn = turn % numPlayers;
+              changeTurn();
             }
             else
             {
@@ -447,13 +446,9 @@ void qwirkle::newTurn()
 
         if (!this->bag->isEmpty())
         {
-          Tile *t = this->players[turn]->removeTile(*tileCol, tileShape);
-          if (t != nullptr)
-          {
-            this->players[turn]->drawTile(*(this->bag));
-            this->bag->addTile(t);
-          }
-          validInput = true;
+          this->players[turn]->drawTile(*(this->bag));
+          this->bag->addTile(t);
+          changeTurn();
         }
       }
       catch (const std::invalid_argument &e)
@@ -751,4 +746,10 @@ bool qwirkle::validUserName(std::string name)
     }
   }
   return valid;
+}
+
+void qwirkle::changeTurn()
+{
+  turn++;
+  turn = turn % numPlayers;
 }

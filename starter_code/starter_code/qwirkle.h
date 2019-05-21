@@ -54,6 +54,8 @@ public:
 
   void setBoardState(std::vector<std::string> input);
 
+  void changeTurn();
+
   //int getCurrentPlayerIndexByName(std::string name);
 
 private:
