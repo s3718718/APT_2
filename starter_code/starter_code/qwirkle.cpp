@@ -21,9 +21,9 @@ using std::endl;
 void qwirkle::studentInformation()
 {
   cout << "Name: Duncan Do\nStudent Number: s3718718\nEmail: s3718718@student.rmit.edu.au" << endl
-       << "Name: Sam Hoch\nStudent Number: s3721859\nEmail: s3721859@student.rmit.edu.au" << endl
-       << "Name: Labiba Islam\nStudent Number: s3718718\nEmail: s3694372@student.rmit.edu.au" << endl
-       << "Name: Md Abir Ishtiaque\nStudent Number: s3718718\nEmail: s3677701@student.rmit.edu.au" << endl;
+       << "\nName: Sam Hoch\nStudent Number: s3721859\nEmail: s3721859@student.rmit.edu.au" << endl
+       << "\nName: Labiba Islam\nStudent Number: s3694372\nEmail: s3694372@student.rmit.edu.au" << endl
+       << "\nName: Md Abir Ishtiaque\nStudent Number: s3677701\nEmail: s3677701@student.rmit.edu.au" << endl;
 }
 
 void qwirkle::newGame()
@@ -32,42 +32,45 @@ void qwirkle::newGame()
   this->gameOver = false;
   numPlayers = 0;
   cout << "Starting a New Game" << endl;
-
-  while (numPlayers < 2 || numPlayers > 4)
+  cout << "How many players? (2-4)" << endl;
+  cout << "> ";
+  cin.clear();
+  cin.ignore();
+  cin >> numPlayers;
+  while(numPlayers< 2 || numPlayers > 4)
   {
-    cout << "How many players?" << endl;
+    cout << "\nInvalid input. Enter an integer between 2 and 4" << endl;
+    cout << "> ";
+    cin.clear();
+    cin.ignore();
     cin >> numPlayers;
   }
+
   this->bag = std::make_shared<Bag>(*(new Bag()));
   //cout << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(6)));
 
   for (int i = 0; i < numPlayers; ++i)
   {
-    //bool valid = false;
+    bool valid = false;
     std::string name = "invalid";
 
-    // while(!valid)
-    // {
-    cout << "Enter a name for player (Only uppercase characters)" << i + 1 << endl
-         << "> ";
-    cin >> name;
-    if (validUserName(name))
+    while(!valid)
     {
-      cout << "For player" << i << endl;
-      this->players[i] = std::make_shared<Player>(*(new Player(name)));
-      cout << "player " << i << "created successfully" << endl;
-
-      this->players[i]->fillHand(*this->bag);
-      cout << "hand filled" << endl;
-      //valid = true;
+      cout << "Enter a name for player "<< i + 1 << " (Only uppercase characters)" << endl
+      << "> ";
+      cin >> name;
+      if(validUserName(name))
+      {
+        this->players[i] = std::make_shared<Player>(*(new Player(name)));
+        this->players[i]->fillHand(*this->bag);
+        valid = true;
+      }
+      else
+      {
+        cout << "Invalid username, please only enter uppercase characters" << endl;
+      }
     }
-    else
-    {
-      cout << "Invalid username, please only enter uppercase characters" << endl;
-      i--;
-    }
-    // }
   }
   cout << "Players for the game are \n";
   for (int i = 0; i < numPlayers; i++)
@@ -330,10 +333,10 @@ Code References for newTurn:
 //Runs initially without taking input, then runs again thanks to loop and takes input. Fix this.
 void qwirkle::newTurn()
 {
-  cout << "Starting new game \n";
+  cout<<"Starting new game \n";
   cout << "Player " << this->players[turn]->getName() << "\'s turn " << endl;
-  for (int i = 0; i < numPlayers; i++)
-    cout << this->players[i]->getName() << ": " << this->players[i]->getPoints() << "\n ";
+  for(int i=0;i<numPlayers; i++)
+  cout << this->players[i]->getName() << ": " << this->players[i]->getPoints() << "\n ";
   this->board->display();
   cout << "Your hand is" << endl;
   this->players[turn]->printHand();
@@ -703,11 +706,11 @@ bool qwirkle::validUserName(std::string name)
   bool valid = true;
   for (char &c : name)
   {
-    if (c >= 'a' && c <= 'z')
+    if(!isalpha(c))
     {
       valid = false;
     }
-    if (c <= 'A' && c >= 'Z')
+    if(c >= 'a' && c <= 'z')
     {
       valid = false;
     }
