@@ -66,11 +66,11 @@ void qwirkle::newGame()
         this->players[i] = std::make_shared<Player>(*(new Player(name)));
         this->players[i]->fillHand(*this->bag);
         valid = true;
+        i--;
       }
       else
       {
         cout << "Invalid username, please only enter uppercase characters" << endl;
-        i--;
       }
     }
   }
