@@ -31,8 +31,9 @@ void Board::setTile(int row, int col, Tile *tile)
 }
 
 //to make an empty grid of size nxn. it has initially all nullpointers which can be later replaced with pointer to tiles
-Board::Board(int size)
+Board::Board(int size, std::ostream *outputStream)
 {
+    this->outputStream = outputStream;
     for (int i = 0; i < size; i++)
     {
         std::vector<Tile *> row;
@@ -122,36 +123,45 @@ void Board::reSize()
 void Board::display()
 {
     int n = (int)board.size();
-    std::cout << "   ";
+    *outputStream << "   ";
     // shows the top most row conatining integers b0 , 1 2 and so on
     for (int k = 0; k < n; k++)
         if (k < 10)
         {
-            std::cout << k << "  ";
+            *outputStream << k << "  ";
         }
         else
-            std::cout << k << " ";
-    std::cout << "\n  ";
+            *outputStream << k << " ";
+    *outputStream << "\n  ";
     for (int t = 0; t < n; t++)
-        std::cout << "---";
-    std::cout << std::endl;
+        *outputStream << "---";
+    *outputStream << std::endl;
     // loops to print the vector of vectors
     for (int i = 0; i < n; i++)
     {
-        std::cout << (char)('A' + i) << " |";
+        *outputStream << (char)('A' + i) << " |";
         for (int j = 0; j < n; j++)
         {
             if (board[i][j] != nullptr)
             {
-                //std::cout << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape() << "|";
-                this->getTile(i, j)->printColoured();
-                std::cout << "|";
+                //*outputStream << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape() << "|";
+                if (this->outputStream != &std::cout)
+                {
+
+                    *outputStream << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape();
+                    //this->getTile(i, j)->printTile();
+                }
+                else
+                {
+                    this->getTile(i, j)->printColoured();
+                }
+                *outputStream << "|";
             }
-            // std::cout<<board[i][j]->colour<<board[i][j]->shape<<"|";
+            // *outputStream<<board[i][j]->colour<<board[i][j]->shape<<"|";
             else
-                std::cout << "  |";
+                *outputStream << "  |";
         }
-        std::cout << std::endl;
+        *outputStream << std::endl;
     }
 }
 
@@ -172,7 +182,7 @@ std::string Board::toString()
                 output.append(std::to_string(this->getTile(i, j)->getShape()));
                 output.append("|");
             }
-            // std::cout<<board[i][j]->colour<<board[i][j]->shape<<"|";
+            // *outputStream<<board[i][j]->colour<<board[i][j]->shape<<"|";
             else
                 output.append("  |");
         }

@@ -4,10 +4,12 @@
 
 using std::cout;
 using std::endl;
-Bag::Bag()
+Bag::Bag(std::ostream *outputStream)
 {
-    tileList = new LinkedList();
+    tileList = new LinkedList(outputStream);
+    this->outputStream = outputStream;
     getShuffledBag();
+
     //tileList->printList();
 }
 
@@ -49,8 +51,8 @@ void Bag::getShuffledBag()
     {
         for (Shape &shape : shapes)
         {
-            Tile *tile = new Tile(color, shape);
-            Tile *tile2 = new Tile(color, shape);
+            Tile *tile = new Tile(color, shape, outputStream);
+            Tile *tile2 = new Tile(color, shape, outputStream);
             //  cout << "Adding Tile : " << shape << color << std::endl;
             tileList->add(tile);
             tileList->add(tile2);

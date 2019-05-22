@@ -1,10 +1,11 @@
 
 #include "Tile.h"
 #include <iostream>
-Tile::Tile(Colour colour, Shape shape)
+Tile::Tile(Colour colour, Shape shape, std::ostream *outputStream)
 {
     this->colour = colour;
     this->shape = shape;
+    this->outputStream = outputStream;
 }
 
 Tile::Tile()
@@ -15,7 +16,7 @@ Tile::Tile()
 
 void Tile::printTile()
 {
-    std::cout<<this->colour<<this->shape<<std::endl;
+    std::cout << this->colour << this->shape;
 }
 
 Colour Tile::getColour()
@@ -28,21 +29,40 @@ Shape Tile::getShape()
     return shape;
 }
 
-void Tile::printColoured(){
-    int colorCode=0;
-    if(this->colour == RED){
-        colorCode=RED_CODE;
-    }else if(this->colour == YELLOW){
-        colorCode=YELL_CODE;
-    }else if(this->colour == ORANGE){
-        colorCode=ORAN_CODE;
-    }else if(this->colour == GREEN){
-        colorCode = GREEN_CODE;
-    }else if(this->colour == PURPLE){
-        colorCode=PURP_CODE;
-    }else if(this->colour == BLUE){
-        colorCode = BLUE_CODE;
+void Tile::printColoured()
+{
+    if (outputStream != &std::cout)
+    {
+        printTile();
     }
+    else
+    {
+        int colorCode = 0;
+        if (this->colour == RED)
+        {
+            colorCode = RED_CODE;
+        }
+        else if (this->colour == YELLOW)
+        {
+            colorCode = YELL_CODE;
+        }
+        else if (this->colour == ORANGE)
+        {
+            colorCode = ORAN_CODE;
+        }
+        else if (this->colour == GREEN)
+        {
+            colorCode = GREEN_CODE;
+        }
+        else if (this->colour == PURPLE)
+        {
+            colorCode = PURP_CODE;
+        }
+        else if (this->colour == BLUE)
+        {
+            colorCode = BLUE_CODE;
+        }
 
-    std::cout<<ESCAPE<<colorCode<<END_ESCAPE<<this->colour<<this->shape<<RESET;
+        *outputStream << ESCAPE << colorCode << END_ESCAPE << this->colour << this->shape << RESET;
+    }
 }

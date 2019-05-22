@@ -4,11 +4,13 @@
 
 #include "Node.h"
 #include <string>
+#include <iostream>
 
 class LinkedList
 {
 public:
   LinkedList();
+  LinkedList(std::ostream *outputStream);
   ~LinkedList();
   void add(Tile *tile);
   Tile *takeTile(char colour, int shape);
@@ -24,6 +26,7 @@ public:
 private:
   Node *head;
   Node *tail;
+  std::ostream *outputStream;
 };
 
 #endif // ASSIGN2_LINKEDLIST_H
