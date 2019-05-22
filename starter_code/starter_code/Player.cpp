@@ -59,7 +59,7 @@ void Player::fillHand(Bag bag)
     int i = 0;
     while (i < HAND_LIMIT)
     {
-        std::cout<<"Adding Tile "<<i+1<<" for "<<name<<"\n";
+        //std::cout<<"Adding Tile "<<i+1<<" for "<<name<<"\n";
         drawTile(bag);
         i++;
     }

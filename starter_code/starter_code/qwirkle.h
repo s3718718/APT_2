@@ -32,7 +32,9 @@ public:
 
   void loadFile(std::string fileName);
 
-  void newTurn();
+  void newTurn(bool loadGame);
+
+  void endGame();
 
   int validateMove(char colour, int shape, int row, int col);
 
