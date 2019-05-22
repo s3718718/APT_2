@@ -140,7 +140,7 @@ void qwirkle::loadGame()
   *outputStream << "Please enter save file name (relative path)" << endl;
   *outputStream << "> ";
   std::string fileName;
-  inputStream->ignore();
+  //inputStream->ignore();
 
   std::getline(*inputStream, fileName);
 
@@ -191,7 +191,7 @@ void qwirkle::loadGame()
   {
     this->bag->addTile(bagContents[i]);
   }
-
+  this->numPlayers = 0;
   currentPlayerName = currentPlayerName.substr(0, currentPlayerName.find("\n"));
   for (unsigned int i = 0; i < playersList.size(); ++i)
   {
