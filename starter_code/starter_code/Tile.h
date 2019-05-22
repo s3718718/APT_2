@@ -2,6 +2,7 @@
 #ifndef ASSIGN2_TILE_H
 #define ASSIGN2_TILE_H
 #include "TileCodes.h"
+#include <iostream>
 // Define a Colour type
 typedef char Colour;
 
@@ -11,7 +12,7 @@ typedef int Shape;
 class Tile
 {
 public:
-  Tile(Colour colour, Shape shape);
+  Tile(Colour colour, Shape shape, std::ostream *outputStream);
   Tile();
   void printTile();
   Colour getColour();
@@ -22,6 +23,7 @@ public:
 private:
   Colour colour;
   Shape shape;
+  std::ostream *outputStream = &std::cout;
 };
 
 #endif // ASSIGN2_TILE_H

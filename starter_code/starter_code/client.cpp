@@ -10,29 +10,51 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-int main(void)
+int main(int argc, char **argv)
 {
+
+  std::istream *inputStream;
+  std::ostream *outputStream;
+
+  std::ofstream outputTest;
+  std::ifstream inputTest;
+
+  if (argc == 3)
+  {
+    outputTest.open(argv[2]);
+    inputTest.open(argv[1]);
+    inputStream = &inputTest;
+    outputStream = &outputTest;
+  }
+  else
+  {
+    inputStream = &cin;
+    outputStream = &cout;
+  }
   // LinkedList* list = new LinkedList();
   // delete list;
 
-  qwirkle game = qwirkle();
+  qwirkle game = qwirkle(inputStream, outputStream);
 
   std::string menuInputs[4] = {"1", "2", "3", "4"};
   std::string menuInput = "";
 
   while (menuInput != menuInputs[3])
   {
-    cout << "Welcome to Qwirkle!" << endl;
-    cout << "-------------------" << endl;
-    cout << "Menu" << endl;
-    cout << "----" << endl;
-    cout << "1. New Game" << endl;
-    cout << "2. Load Game" << endl;
-    cout << "3. Show student information" << endl;
-    cout << "4. Quit" << endl;
-    cout << "> ";
-    cin >> menuInput;
-
+    *outputStream << "Welcome to Qwirkle!" << endl;
+    *outputStream << "-------------------" << endl;
+    *outputStream << "Menu" << endl;
+    *outputStream << "----" << endl;
+    *outputStream << "1. New Game" << endl;
+    *outputStream << "2. Load Game" << endl;
+    *outputStream << "3. Show student information" << endl;
+    *outputStream << "4. Quit" << endl;
+    *outputStream << "> ";
+    getline(*inputStream, menuInput);
+    if (inputStream->eof())
+    {
+      game.quit();
+    }
     if (menuInput == menuInputs[0])
       game.newGame();
     else if (menuInput == menuInputs[1])
@@ -44,7 +66,7 @@ int main(void)
     else if (menuInput == menuInputs[3])
       game.quit();
     else
-      cout << "Invalid Input" << endl;
+      *outputStream << "Invalid Input" << endl;
   }
   return EXIT_SUCCESS;
 }

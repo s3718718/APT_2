@@ -7,10 +7,10 @@ using std::cout;
 using std::endl;
 using std::string;
 
-Player::Player(string name)
+Player::Player(string name, std::ostream *outputStream)
 {
     this->name = name;
-    this->hand = new LinkedList();
+    this->hand = new LinkedList(outputStream);
     points = 0;
 }
 
@@ -45,7 +45,10 @@ bool Player::addTile(Tile *tile)
 bool Player::drawTile(Bag bag)
 {
     //if statement first, return true if pass
-    return addTile(bag.pullTile());
+
+    Tile *t = bag.pullTile();
+    //std::cout << "t col = " << t->getColour();
+    return addTile(t);
 }
 
 Tile *Player::removeTile(char colour, int shape)

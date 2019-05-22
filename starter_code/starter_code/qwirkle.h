@@ -18,6 +18,12 @@ using std::shared_ptr;
 class qwirkle
 {
 public:
+  qwirkle();
+
+  qwirkle(std::istream *inputStream, std::ostream *outputStream);
+
+  qwirkle(std::istream *inputStream);
+
   void newGame();
 
   void saveGame(std::string saveFile);
@@ -73,4 +79,6 @@ private:
   bool firstTurn;
   int numPlayers;
   int turn;
+  std::ostream *outputStream;
+  std::istream *inputStream;
 };

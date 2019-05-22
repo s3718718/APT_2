@@ -1,7 +1,7 @@
 #include "Tile.h"
 #include "Bag.h"
 #include "LinkedList.h"
-
+#include <iostream>
 #include <string>
 
 #define HAND_LIMIT 6
@@ -10,7 +10,7 @@ using std::string;
 class Player
 {
 public:
-  Player(string name);
+  Player(string name, std::ostream *outputStream);
   //Copy Constructor?
   //Deconstructor?
 

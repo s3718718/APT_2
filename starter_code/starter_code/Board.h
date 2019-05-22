@@ -21,12 +21,13 @@ class Board
 public:
   std::vector<std::vector<Tile *>> board; //board is a vector of vectors holding tile pointers. so we can dymanically allocate the tiles and store them in the grid
   //Board();
-  Board(int size);
+  Board(int size, std::ostream *outputStream);
   void display();
   int getSize();
   Tile *getTile(int row, int col);
   void setTile(int row, int col, Tile *tile);
   std::string toString();
   void reSize();
+  std::ostream *outputStream = &std::cout;
 };
 #endif /* Board_h */
