@@ -63,62 +63,6 @@ void Board::reSize()
     }
 }
 
-// Board::Board()
-// {
-//     std::vector<Tile *> row1;
-//     row1.push_back(nullptr);
-//     row1.push_back(nullptr);
-//     row1.push_back(nullptr);
-//     row1.push_back(nullptr);
-//     row1.push_back(nullptr);
-//     row1.push_back(nullptr);
-//     board.push_back(row1);
-
-//     std::vector<Tile *> row2;
-//     row2.push_back(nullptr);
-//     row2.push_back(nullptr);
-//     row2.push_back(new Tile('B', 4));
-//     row2.push_back(new Tile('B', 5));
-//     row2.push_back(new Tile('B', 6));
-//     row2.push_back(nullptr);
-//     board.push_back(row2);
-
-//     std::vector<Tile *> row3;
-//     row3.push_back(nullptr);
-//     row3.push_back(nullptr);
-//     row3.push_back(new Tile('R', 4));
-//     row3.push_back(nullptr);
-//     row3.push_back(nullptr);
-//     row3.push_back(nullptr);
-//     board.push_back(row3);
-
-//     std::vector<Tile *> row4;
-//     row4.push_back(nullptr);
-//     row4.push_back(new Tile('Y', 1));
-//     row4.push_back(new Tile('Y', 4));
-//     row4.push_back(new Tile('Y', 2));
-//     row4.push_back(nullptr);
-//     row4.push_back(nullptr);
-//     board.push_back(row4);
-
-//     std::vector<Tile *> row5;
-//     row5.push_back(nullptr);
-//     row5.push_back(nullptr);
-//     row5.push_back(new Tile('P', 4));
-//     row5.push_back(nullptr);
-//     row5.push_back(nullptr);
-//     row5.push_back(nullptr);
-//     board.push_back(row5);
-
-//     std::vector<Tile *> row6;
-//     row6.push_back(nullptr);
-//     row6.push_back(nullptr);
-//     row6.push_back(nullptr);
-//     row6.push_back(nullptr);
-//     row6.push_back(nullptr);
-//     row6.push_back(nullptr);
-//     board.push_back(row6);
-// }
 //this is to display the grid
 void Board::display()
 {
@@ -144,12 +88,11 @@ void Board::display()
         {
             if (board[i][j] != nullptr)
             {
-                //*outputStream << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape() << "|";
+                //Behaves differently whether the outstream is to the terminal or a file
                 if (this->outputStream != &std::cout)
                 {
 
                     *outputStream << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape();
-                    //this->getTile(i, j)->printTile();
                 }
                 else
                 {
@@ -157,7 +100,6 @@ void Board::display()
                 }
                 *outputStream << "|";
             }
-            // *outputStream<<board[i][j]->colour<<board[i][j]->shape<<"|";
             else
                 *outputStream << "  |";
         }
@@ -182,7 +124,6 @@ std::string Board::toString()
                 output.append(std::to_string(this->getTile(i, j)->getShape()));
                 output.append("|");
             }
-            // *outputStream<<board[i][j]->colour<<board[i][j]->shape<<"|";
             else
                 output.append("  |");
         }

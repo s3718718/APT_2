@@ -60,10 +60,7 @@ std::string LinkedList::toString()
 void LinkedList::printList()
 {
   bool first = true;
-  // *outputStream << "Size of list : " << this->getSize() << std::endl;
   Node *currentNode = head;
-  // Tile *output == nullptr;
-  // *outputStream << "---LinkedList Contents---" << std::endl;
   while (currentNode != nullptr)
   {
     if (!first)
@@ -75,26 +72,20 @@ void LinkedList::printList()
     first = false;
   }
   *outputStream << std::endl;
-  //  *outputStream << "---End---" << std::endl;
 }
-//TODO ask why Tile default constructor runs
 void LinkedList::add(Tile *tile)
 {
   Node *node = new Node(tile, nullptr);
   if (head == nullptr)
   {
-    //*outputStream << "head is nullptr" << std::endl;
     head = node;
     tail = node;
-    //*outputStream << "head is " << head->getValue()->getShape() << std::endl;
   }
   else
   {
-    //*outputStream << "adding node to tail" << std::endl;
     tail->setNext(node);
     tail = node;
   }
-  //*outputStream << "head is " << head->getValue()->getShape();
 }
 
 Tile *LinkedList::takeFirst()
@@ -106,7 +97,6 @@ Tile *LinkedList::takeFirst()
 
 Tile *LinkedList::takeTile(Colour colour, Shape shape)
 {
-  // *outputStream << "take tile input = " << colour << shape << std::endl;
   Tile *target = nullptr;
   Node *currentNode = head;
 
@@ -114,7 +104,6 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
   {
     target = head->getValue();
     head = head->getNext();
-    // *outputStream << "found in first" << std::endl;
   }
   else
   {
@@ -124,11 +113,8 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
 
       Shape tileShape = currentNode->getNext()->getValue()->getShape();
       Colour tileCol = currentNode->getNext()->getValue()->getColour();
-      //*outputStream << "checking input: " << colour << shape << " vs current: " << tileCol << tileShape << std::endl;
       if (tileCol == colour && tileShape == shape && notFound)
       {
-        //*outputStream << "found in loop" << std::endl;
-        //TODO this might break when there's 2 of each tile. If it does, change it so that this rearrangement happens only at the end of the loop.
         Node *newNext = currentNode->getNext()->getNext();
         target = currentNode->getNext()->getValue();
         currentNode->setNext(newNext);
@@ -142,12 +128,9 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
     //Checks whether or not the tail value was the one selected. If so, it updates the tail value accordingly
     if (!notFound && tail->getValue()->getColour() == target->getColour() && tail->getValue()->getShape() == target->getShape())
     {
-      //*outputStream << "tail element removed, updating new tail to " << currentNode->getValue()->getColour() << currentNode->getValue()->getShape() << std::endl;
       tail = currentNode;
     }
   }
-  //*outputStream << "target col = " << std::endl;
-  //*outputStream << target->getColour() << std::endl;
   return target;
 }
 
@@ -203,7 +186,7 @@ void LinkedList::shuffle()
   Tile *tileArray[len];
   int i = 0;
   Node *currentNode = head;
-  //Uncomment to get truly random shuffle
+  //Uncomment to get random shuffle
   //srand(time(0));
 
   while (currentNode != nullptr)

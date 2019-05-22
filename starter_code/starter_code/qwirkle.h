@@ -66,15 +66,10 @@ public:
 
   void changeTurn();
 
-  //int getCurrentPlayerIndexByName(std::string name);
-
 private:
   shared_ptr<Bag> bag;
   shared_ptr<Board> board;
-  // shared_ptr<Player> player1;
-  //shared_ptr<Player> player2;
   shared_ptr<Player> players[MAX_PLAYERS];
-  // shared_ptr<Player> currentPlayer;
   bool gameOver;
   bool firstTurn;
   int numPlayers;
