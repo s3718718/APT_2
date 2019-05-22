@@ -209,7 +209,7 @@ void qwirkle::loadGame()
   this->gameOver = false;
   while (!gameOver)
   {
-    this->newTurn(false);
+    this->newTurn(true);
   }
   this->endGame();
 }
