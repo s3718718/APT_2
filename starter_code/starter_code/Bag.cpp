@@ -34,14 +34,12 @@ void Bag::addTile(Tile *tile)
 
 bool Bag::isEmpty()
 {
-
-    return this->tileList->isEmpty();
-    // bool retVal = false;
-    // if (tileList->getSize() == 0)
-    // {
-    //     retVal = true;
-    // }
-    // return retVal;
+    bool retVal = false;
+    if (tileList->getSize() == 0)
+    {
+        retVal = true;
+    }
+    return retVal;
 }
 
 void Bag::getShuffledBag()
@@ -51,9 +49,6 @@ void Bag::getShuffledBag()
     {
         for (Shape &shape : shapes)
         {
-
-            //TODO CHANGE THIS FOR GODS SAKES
-
             Tile *tile = new Tile(color, shape);
             Tile *tile2 = new Tile(color, shape);
             //  cout << "Adding Tile : " << shape << color << std::endl;
