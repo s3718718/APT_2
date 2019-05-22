@@ -142,7 +142,6 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
     //Checks whether or not the tail value was the one selected. If so, it updates the tail value accordingly
     if (!notFound && tail->getValue()->getColour() == target->getColour() && tail->getValue()->getShape() == target->getShape())
     {
-      //*outputStream << "tail element removed, updating new tail to " << currentNode->getValue()->getColour() << currentNode->getValue()->getShape() << std::endl;
       tail = currentNode;
     }
   }
