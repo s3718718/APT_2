@@ -447,11 +447,11 @@ void qwirkle::newTurn(bool loadGame)
             if (!this->bag->isEmpty())
             {
               this->players[turn]->addTile(this->bag->pullTile());
-              if (this->players[turn]->isEmpty())
+            
+            } else if (this->players[turn]->isEmpty())
               {
                 gameOver = true;
               }
-            }
             changeTurn();
           }
 
@@ -546,35 +546,6 @@ void qwirkle::newTurn(bool loadGame)
   } // end of while
 }
 
-/*
-int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int direction)
-{
-  int num = 0;
-  bool stop = false;
-  int x = row, y = col;
-  while (!stop && x > 0 && y > 0 && x < this->board->getSize() && y < this->board->getSize())
-  {
-    if (direction == UP)
-      x = x - 1;
-    else if (direction == DOWN)
-      x = x + 1;
-    else if (direction == RIGHT)
-      y = y + 1;
-    else if (direction == LEFT)
-      y = y - 1;
-    Tile *neighbour = this->board->getTile(x, y);
-    if (neighbour == nullptr)
-      stop = true;
-    else if (selection == MATCH_COLOUR && tile->getColour() == neighbour->getColour())
-      num++;
-    else if (selection == MATCH_SHAPE && tile->getShape() == neighbour->getShape())
-      num++;
-    else
-      stop = true;
-  }
-  return num;
-}
-*/
 int qwirkle::validateMove(char colour, int shape, int row, int col)
 {
   int moveScore = 0;
