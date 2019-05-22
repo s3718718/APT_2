@@ -612,35 +612,6 @@ void qwirkle::newTurn(bool loadGame)
   } // end of while
 }
 
-/*
-int qwirkle::checkTiles(Tile *tile, int row, int col, int selection, int direction)
-{
-  int num = 0;
-  bool stop = false;
-  int x = row, y = col;
-  while (!stop && x > 0 && y > 0 && x < this->board->getSize() && y < this->board->getSize())
-  {
-    if (direction == UP)
-      x = x - 1;
-    else if (direction == DOWN)
-      x = x + 1;
-    else if (direction == RIGHT)
-      y = y + 1;
-    else if (direction == LEFT)
-      y = y - 1;
-    Tile *neighbour = this->board->getTile(x, y);
-    if (neighbour == nullptr)
-      stop = true;
-    else if (selection == MATCH_COLOUR && tile->getColour() == neighbour->getColour())
-      num++;
-    else if (selection == MATCH_SHAPE && tile->getShape() == neighbour->getShape())
-      num++;
-    else
-      stop = true;
-  }
-  return num;
-}
-*/
 int qwirkle::validateMove(char colour, int shape, int row, int col)
 {
   int moveScore = 0;
@@ -692,7 +663,6 @@ int qwirkle::validateMove(char colour, int shape, int row, int col)
   }
   if (firstTurn)
   {
-    *outputStream << "first turn";
     moveScore = 1;
   }
   if (moveScore > 0 && (row == this->board->getSize() - 1 || col == this->board->getSize() - 1))
