@@ -88,12 +88,11 @@ void Board::display()
         {
             if (board[i][j] != nullptr)
             {
-                //*outputStream << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape() << "|";
+                //Behaves differently whether the outstream is to the terminal or a file
                 if (this->outputStream != &std::cout)
                 {
 
                     *outputStream << this->getTile(i, j)->getColour() << this->getTile(i, j)->getShape();
-                    //this->getTile(i, j)->printTile();
                 }
                 else
                 {
@@ -101,7 +100,6 @@ void Board::display()
                 }
                 *outputStream << "|";
             }
-            // *outputStream<<board[i][j]->colour<<board[i][j]->shape<<"|";
             else
                 *outputStream << "  |";
         }
@@ -126,7 +124,6 @@ std::string Board::toString()
                 output.append(std::to_string(this->getTile(i, j)->getShape()));
                 output.append("|");
             }
-            // *outputStream<<board[i][j]->colour<<board[i][j]->shape<<"|";
             else
                 output.append("  |");
         }

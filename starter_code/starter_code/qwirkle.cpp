@@ -5,10 +5,9 @@
 // Duncan Do s3718718
 
 //Input format:
-//place <tileCode>,<boardPosition>
+//place <tileCode> at <boardPosition>
 //replace <tileCode>
 #include "qwirkle.h"
-//#include <iostream>
 #include <cctype>
 #include <stdexcept>
 #include <cmath>
@@ -17,7 +16,6 @@
 
 using std::cin;
 using std::endl;
-//using std::outputStream;
 
 qwirkle::qwirkle()
 {
@@ -67,8 +65,6 @@ void qwirkle::newGame()
   {
     *outputStream << "\nInvalid input. Enter an integer between 2 and 4" << endl;
     *outputStream << "> ";
-    //inputStream->clear();
-    //inputStream->ignore();
     *inputStream >> numPlayers;
     if (inputStream->eof())
     {
@@ -77,7 +73,6 @@ void qwirkle::newGame()
   }
 
   this->bag = std::make_shared<Bag>(*(new Bag(outputStream)));
-  //*outputStream << this->bag->toString() << endl;
   this->board = std::make_shared<Board>(*(new Board(6, outputStream)));
 
   for (int i = 0; i < numPlayers; ++i)
@@ -113,7 +108,6 @@ void qwirkle::newGame()
     *outputStream << "Player " << i + 1 << " : " + this->players[i]->getName() + "\n";
 
   turn = 0;
-  // this->currentPlayer = this->players[0];
   *outputStream << "Starting new game \n";
   while (!this->gameOver)
   {
@@ -185,7 +179,7 @@ void qwirkle::loadGame()
 
   //bag
   std::vector<Tile *> bagContents = getTileVectorFromStringVector(bagString);
-  //nest in for loop
+  //players
   std::vector<Player *> playersList = getPlayerVectorFromStringVector(playersDataString);
 
   //                initialization
@@ -198,10 +192,6 @@ void qwirkle::loadGame()
     this->bag->addTile(bagContents[i]);
   }
 
-  //*outputStream << currentPlayerName.substr(0, currentPlayerName.find("\n")) << "<-------------" << endl;
-
-  //TODO maybe delete?
-
   currentPlayerName = currentPlayerName.substr(0, currentPlayerName.find("\n"));
   for (unsigned int i = 0; i < playersList.size(); ++i)
   {
@@ -210,39 +200,18 @@ void qwirkle::loadGame()
     {
       this->numPlayers++;
     }
-    //*outputStream << "checking " << currentPlayerName << " vs " << playersList[i]->getName();
 
     if (currentPlayerName == this->players[i]->getName())
     {
-      //*outputStream << "true" << endl;
       turn = i;
     }
   }
-  // this->player1 = std::make_shared<Player>(*(new Player("yikes1")));
-  // this->player2 = std::make_shared<Player>(*(new Player("yikes2")));
-  // this->currentPlayer = player1;
-
-  // To read the player details from the vector of players created above
-
+  this->gameOver = false;
   while (!gameOver)
   {
     this->newTurn(true);
   }
   this->endGame();
-
-  /*TODO
-    
-    addPlayersFromVector
-      takes string of multiple players data, adds each player to the game
-    initalizeBoardFromString
-      takes string of new board state, intializes new board, then sets the tile strings 
-      it finds to the correct position.
-      Can use double-to-int casting and modulous to automatically set correct board location
-      (col = listPosition mod 26, row = (int) listPosition / 26)
-
-
-*/
-  //loadFile(fileName);
 }
 /*
 Looping logic referenced: 
@@ -251,23 +220,19 @@ Looping logic referenced:
 
 void qwirkle::setBoardState(std::vector<std::string> input)
 {
-  //*outputStream << "input length " << input.size() << endl;
   bool unchanged = true;
   int boardLength = std::sqrt(input.size() - 1);
   this->board = std::make_shared<Board>(*(new Board(boardLength, outputStream)));
   for (unsigned int i = 0; i < input.size(); ++i)
   {
-    //std::*outputStream << "looping " << i << endl;
+
     if (input[i] != "  " && input[i] != "\n  " && input[i] != "\n")
     {
       unchanged = false;
       Tile *tile = makeTileFromString(input[i]);
-      //Tile *tileTest = new Tile('P', 3);
       int row = i / boardLength;
       int col = i % boardLength;
-      //*outputStream << i << " " << row << " " << col << endl;
       this->board->setTile(row, col, tile);
-      //*outputStream << "COL FROM BOARD POSITION " << row << ", " << col << "= " << this->board->getTile(row, col)->getColour() << endl;
     }
   }
   if (unchanged)
@@ -284,8 +249,6 @@ std::vector<std::string> qwirkle::splitString(std::string input, std::string del
 {
   std::vector<std::string> output;
   unsigned int position = 0;
-  // std::string end = "\n";
-  //*outputStream << "<<" << input << ">>" << endl;
   std::string datum = "";
   bool endOfInput = false;
   while ((position = input.find(delim)) != std::string::npos && !endOfInput)
@@ -293,7 +256,6 @@ std::vector<std::string> qwirkle::splitString(std::string input, std::string del
     if (input != "")
     {
       datum = input.substr(0, position);
-      //*outputStream << tile << endl;
       output.push_back(datum);
       input.erase(0, position + delim.length());
     }
@@ -317,56 +279,20 @@ std::vector<Tile *> qwirkle::getTileVectorFromStringVector(std::vector<std::stri
 
 std::vector<Player *> qwirkle::getPlayerVectorFromStringVector(std::vector<std::string> input)
 {
-  //*outputStream << "getPlayerVectorFromStringVector running" << endl;
   std::vector<Player *> output;
   for (unsigned int i = 0; i < input.size(); ++i)
   {
-    //*outputStream << "playerString = " << input[i] << endl;
     output.push_back(makePlayerFromString(input[i]));
   }
   return output;
 }
 
-/*
-  std::vector<Tile *> qwirkle::getTileVectorFromString(std::string input, std::string delim)
-  {
-    std::vector<Tile *> output;
-    unsigned int position = 0;
-    // std::string end = "\n";
-    *outputStream << "<<" << input << ">>" << endl;
-    std::string tile = "";
-    bool endOfInput = false;
-    while ((position = input.find(delim)) != std::string::npos && !endOfInput)
-    {
-      if (input != "")
-      {
-        tile = input.substr(0, position);
-        //outputStream << tile << endl;
-        output.push_back(makeTileFromString(tile));
-        input.erase(0, position + delim.length());
-      }
-      else
-      {
-        endOfInput = true;
-      }
-      // else
-      // {
-      //   keepLooping = false;
-      // }
-    }
-    return output;
-  }
-*/
 Tile *qwirkle::makeTileFromString(std::string input)
 {
-  //*outputStream << input < < endl;
   char c = 'a';
   char *tileCol = &c;
-  //*outputStream << "reading before tileString" << endl;
   input.substr(0, 1).copy(tileCol, 1);
-  //*outputStream << "reading before tileShape" << endl;
   int tileShape = std::stoi(input.substr(1, input.length()));
-  //*outputStream << "reading after tileShape" << endl;
   Tile *tile = new Tile(*tileCol, tileShape, outputStream);
 
   return tile;
@@ -375,7 +301,6 @@ Tile *qwirkle::makeTileFromString(std::string input)
 Player *qwirkle::makePlayerFromString(std::string input)
 {
   std::vector<std::string> playerData = splitString(input, "\n");
-  //*outputStream << "supposedly player name = " << playerData[0] << endl;
   Player *player = new Player(playerData[0], outputStream);
   player->setPoints(std::stoi(playerData[1]));
   std::vector<Tile *> hand = getTileVectorFromStringVector(splitString(playerData[2], ", "));
@@ -403,21 +328,6 @@ void qwirkle::loadFile(std::string fileName)
 {
   *outputStream << "loading file with filename " << fileName << endl;
 }
-
-/*
-int qwirkle::getCurrentPlayerIndexByName(std::string name)
-{
-  int output = 0;
-  for (unsigned int i = 0; i < this->players.size(); ++i)
-  {
-    if (this->players[i]->getName() == name)
-    {
-      output = (int)i;
-    }
-  }
-  return output;
-}
-*/
 
 /*
 Code References for newTurn:
@@ -462,10 +372,7 @@ void qwirkle::newTurn(bool loadGame)
     {
       inputStream->ignore();
     }
-    else if (!errorPrint)
-    {
-      //inputStream->ignore();
-    }
+
     errorPrint = false;
     std::getline(*inputStream, input);
     if (inputStream->eof())
@@ -474,8 +381,7 @@ void qwirkle::newTurn(bool loadGame)
     }
     int commandEnd = input.find(' ');
     std::string command = input.substr(0, commandEnd);
-    //the 1s depend on delimiter length, hopefully if you need to debug it you find this
-    std::string args = input.substr(commandEnd + 1, input.length()); //may need to be length -1
+    std::string args = input.substr(commandEnd + 1, input.length());
     if (inputStream->eof())
     {
       quit();
@@ -496,13 +402,10 @@ void qwirkle::newTurn(bool loadGame)
           Shape tileShape = std::stoi(tileString.substr(1));
           int placeRow = getIntFromChar(positionString[0]);
           int placeCol = std::stoi(positionString.substr(1));
-          //*outputStream << tileCol << tileShape << placeRow << placeCol << "\n";
 
           validInput = true;
-          //Run necessary code to place a tile using *tileCol, tileShape, *positionChar and positionInt
-
           int moveScore = validateMove(tileCol, tileShape, placeRow, placeCol);
-          //*outputStream << moveScore << endl;
+
           if (moveScore > 0)
           {
             Tile *t = this->players[turn]->removeTile(tileCol, tileShape);
@@ -518,22 +421,6 @@ void qwirkle::newTurn(bool loadGame)
             }
             changeTurn();
           }
-
-          // Tile *t = this->players[turn]->removeTile(tileCol, tileShape);
-          // if (t != nullptr)
-          // {
-          //   *outputStream << "VALIDATE MOVE RESULT " << validateMove(tileCol, tileShape, placeRow, placeCol) << endl;
-          //   if (this->placeTile(t, placeRow, placeCol, this->firstTurn))
-          //   {
-          //     this->players[turn]->drawTile(*(this->bag));
-          //     this->firstTurn = false;
-          //     changeTurn();
-          //   }
-          //   else
-          //   {
-          //     this->players[turn]->addTile(t);
-          //   }
-          // }
           else
           {
             *outputStream << "Invalid move\n";
@@ -548,7 +435,6 @@ void qwirkle::newTurn(bool loadGame)
       {
         *outputStream << "Out of range!" << endl;
       }
-      //*outputStream << "after placeTile in newTurn, using this->board->getTile() col = " << this->board->getTile(5, 5)->getColour() << endl;
       validInput = true;
     }
     else if (command == "replace")
@@ -560,14 +446,11 @@ void qwirkle::newTurn(bool loadGame)
         args.substr(0, 1).copy(tileCol, 1);
         Shape tileShape = std::stoi(args.substr(1, 2));
 
-        //*outputStream << "repla*inputStreamg " << *tileCol << tileShape << endl;
-
         if (!this->bag->isEmpty())
         {
           Tile *t = this->players[turn]->removeTile(*tileCol, tileShape);
           Tile *pulledTile = this->bag->pullTile();
           this->players[turn]->addTile(pulledTile);
-          // this->players[turn]->drawTile(*(this->bag)); Min coupling
           this->bag->addTile(t);
           changeTurn();
         }
@@ -577,17 +460,11 @@ void qwirkle::newTurn(bool loadGame)
       {
         *outputStream << "Invalid arguments! To place a tile you must enter 'replace <tile>'";
       }
-      //Run necessary code to replace a tile using *tileCol and tileShape
-
-      //this->bag->add(currentPlayer->takeTile());
-      //currentPlayer->add(this->bag->takeTile());
     }
 
     else if (command == "save")
     {
       this->saveGame(args);
-      //CHANGE THIS
-      quit();
     }
     else if (command == "help")
     {
@@ -609,16 +486,17 @@ void qwirkle::newTurn(bool loadGame)
       validInput = false;
       errorPrint = true;
     }
-  } // end of while
+  }
 }
 
 int qwirkle::validateMove(char colour, int shape, int row, int col)
 {
   int moveScore = 0;
   bool allTestsTrue = true;
-  // 1
+  //Checks whether the desired board location is within bounds
   if (row >= 0 && row < this->board->getSize() && col >= 0 && col < this->board->getSize())
   {
+    //For each direction
     for (int d = 1; d <= 4; d++)
     {
 
@@ -633,17 +511,20 @@ int qwirkle::validateMove(char colour, int shape, int row, int col)
         colModifier = 1;
       else if (d == LEFT && col - 1 >= 0) //left
         colModifier = -1;
-      //2
+
       if (colModifier != 0 || rowModifier != 0)
       {
+        //If there is a tile next to the desired board location
         if (this->board->getTile(row + rowModifier, col + colModifier) != nullptr)
         {
-          //3
+          //Calculate score for the placement
           int tempScore = validateLine(colour, shape, row, col, rowModifier, colModifier);
+          //If score == 0, the placement is invalid
           if (tempScore == 0)
           {
             allTestsTrue = false;
           }
+          //Else add the points
           else
           {
             moveScore += tempScore;
@@ -652,19 +533,23 @@ int qwirkle::validateMove(char colour, int shape, int row, int col)
       }
     }
   }
+  //Edge case if statements
+  //Runs if outside board location
   else
   {
     allTestsTrue = false;
   }
-  //4
+  //Runs if a previous test fails
   if (!allTestsTrue)
   {
     moveScore = 0;
   }
+  //Runs if it is the first turn
   if (firstTurn)
   {
     moveScore = 1;
   }
+  //Runs if the board needs to resize as a result of the placement
   if (moveScore > 0 && (row == this->board->getSize() - 1 || col == this->board->getSize() - 1))
   {
     this->board->reSize();
@@ -741,10 +626,12 @@ int qwirkle::validateLine(char colour, int shape, int row, int col, int rowModif
       keepChecking = false;
     }
   }
+  //Sets score to 0, or a fail state if any tests failed
   if (!validPlacement)
   {
     numTiles = 0;
   }
+  //Runs when a qwirkle has been performed
   if (numTiles == 6)
   {
     *outputStream << "Qwirkle!" << endl;
@@ -753,101 +640,14 @@ int qwirkle::validateLine(char colour, int shape, int row, int col, int rowModif
   return numTiles;
 }
 
-/*
-bool qwirkle::placeTile(Tile *tile, int row, int col, bool firstTurn)
-{
-  *outputStream << "placeTile starting" << endl;
-  int selection;
-  int total = 0;
-  bool result = false;
-  if (row < this->board->getSize() && col < this->board->getSize())
-  {
-    //outputStream << "Entered if " << endl;
-    if (row == this->board->getSize() - 1 || col == this->board->getSize() - 1)
-    {
-      // outputStream << "Board resiezd" << endl;
-      this->board->reSize();
-    }
-    if (row >= 0 && row < this->board->getSize() && col >= 0 && col < this->board->getSize())
-    {
-      if (firstTurn)
-      {
-        *outputStream << "first turn running" << endl;
-        this->board->setTile(row, col, tile);
-        total = total + 1;
-        this->players[turn]->setPoints(total);
-        result = true;
-      }
-      else
-      {
-        // Checking if tile matches the any of four directions one bby one
-        for (int d = 1; d <= 4; d++)
-        {
-
-          Tile *check = nullptr;
-          if (d == UP && row - 1 >= 0)
-            check = this->board->getTile(row - 1, col);
-          else if (d == DOWN && row + 1 < this->board->getSize()) //down
-            check = this->board->getTile(row + 1, col);
-          else if (d == RIGHT && col + 1 < this->board->getSize()) // right
-            check = this->board->getTile(row, col + 1);
-          else if (d == LEFT && col - 1 >= 0) //left
-            check = this->board->getTile(row, col - 1);
-
-          //outputStream << "b4 test 2" << endl;
-          if (check != nullptr) // if threre is a tile
-          {
-            // *outputStream << "plassing test 2" << endl;
-
-            // checks if its of same colour or shape
-            if (check->getColour() == tile->getColour() || check->getShape() == tile->getShape())
-            {
-              //outputStream << "plassing test 3" << endl;
-              if (check->getColour() == tile->getColour())
-                selection = MATCH_COLOUR;
-              else
-                selection = MATCH_SHAPE;
-              // to get number of tiles matching in that direction
-              int numOfTiles = 1 + checkTiles(tile, row, col, selection, d);
-              if (numOfTiles <= 6) // if there are less than 6 in a row, set thde new tile on bthis->board
-              {
-                if (this->board->getTile(row, col) == nullptr) //if the selected location is empty
-                {
-                  this->board->setTile(row, col, tile);
-                  //std::*outputStream << "from placeTile, using this->board->getTile colour is: " << this->board->getTile(row, col)->getColour() << endl;
-                  total = numOfTiles + this->players[turn]->getPoints();
-                  this->players[turn]->setPoints(total);
-                  result = true;
-                }
-              }
-              else
-              {
-                *outputStream << "There are alreay 6 tiles in the row!" << endl;
-              }
-            }
-            else
-            {
-              *outputStream << "Game rules VIOLATED" << endl;
-            }
-          }
-        }
-      }
-    }
-  }
-  return result;
-}
-*/
-
 void qwirkle::saveGame(std::string saveFile)
 {
-  //Construct yuge string of the save file
+  //Construct huge string of the save file
   std::string saveData = "";
   std::string player1Data = "";
-  //std::string player2Data = "";
   std::string boardData = "";
   std::string bagData = "";
 
-  //TODO change player data to a for loop for the players array
   for (int i = 0; i < numPlayers; i++)
   {
     player1Data.append(players[i]->getName());
@@ -862,33 +662,11 @@ void qwirkle::saveGame(std::string saveFile)
     saveData.append("\n");
     player1Data = "";
   }
-  /*
-  player1Data.append(player1->getName());
-  player1Data.append("\n");
-  player1Data.append(std::to_string(player1->getPoints()));
-  player1Data.append("\n");
-  player1Data.append(player1->toString());
-  player1Data.append("$");
 
-  *outputStream << player1Data << endl;
-
-  player2Data.append(player2->getName());
-  player2Data.append("\n");
-  player2Data.append(std::to_string(player2->getPoints()));
-  player2Data.append("\n");
-  player2Data.append(player2->toString());
-  player2Data.append("$");
-
-  *outputStream << player2Data << endl;
-*/
   bagData.append(this->bag->toString());
   boardData.append(this->board->toString());
   boardData.append("$");
-  /*
-  saveData.append(player1Data);
-  saveData.append("\n");
-  saveData.append(player2Data);
-  saveData.append("\n");*/
+
   saveData.append(boardData);
   saveData.append("\n");
   saveData.append(bagData);
@@ -937,5 +715,4 @@ void qwirkle::changeTurn()
   this->firstTurn = false;
   turn++;
   turn = turn % numPlayers;
-  //*outputStream << "end of changeTurn()" << endl;
 }
