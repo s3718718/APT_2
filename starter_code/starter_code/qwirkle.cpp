@@ -75,8 +75,9 @@ void qwirkle::newGame()
     }
   }
   cout << "Players for the game are \n";
-  for (int i = 0; i < numPlayers; i++)
+  for (int i = 0; i < numPlayers; i++){
     cout << "Player " << i + 1 << " : " + this->players[i]->getName() + "\n";
+  }
 
   turn = 0;
   // this->currentPlayer = this->players[0];
