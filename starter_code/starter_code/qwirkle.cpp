@@ -206,10 +206,10 @@ void qwirkle::loadGame()
       turn = i;
     }
   }
-
+  this->gameOver = false;
   while (!gameOver)
   {
-    this->newTurn(true);
+    this->newTurn(false);
   }
   this->endGame();
 }
