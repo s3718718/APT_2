@@ -404,11 +404,14 @@ void qwirkle::newTurn(bool loadGame)
           int placeCol = std::stoi(positionString.substr(1));
 
           validInput = true;
+          
           int moveScore = validateMove(tileCol, tileShape, placeRow, placeCol);
 
-          if (moveScore > 0)
+          if (moveScore > 0 && this->players[turn]->hasTile(tileCol, tileShape))
           {
-            Tile *t = this->players[turn]->removeTile(tileCol, tileShape);
+            
+            Tile *t = this->players[turn]->removeTile(tileCol, tileShape);  
+          
             this->board->setTile(placeRow, placeCol, t);
             this->players[turn]->addPoints(moveScore);
             if (!this->bag->isEmpty())
