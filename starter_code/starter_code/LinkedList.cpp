@@ -146,6 +146,7 @@ Tile *LinkedList::get(Colour colour, Shape shape)
     if (tileCol == colour && tileShape == shape)
     {
       output = currentNode->getValue();
+      currentNode = currentNode->getNext();
     }
     else
     {
