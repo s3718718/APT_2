@@ -561,10 +561,11 @@ int qwirkle::validateMove(char colour, int shape, int row, int col)
 int qwirkle::validateLine(char colour, int shape, int row, int col, int rowModifier, int colModifier)
 {
   bool validPlacement = true;
+  int bSize = this->board->getSize();
   Tile *oneStep = this->board->getTile(row + rowModifier, col + colModifier);
   Tile *twoStep = nullptr;
   //Checks whether the 'twoStep' neighbour will be out of bounds
-  if (row + (2 * rowModifier) >= 0 && row + (2 * rowModifier) < this->board->getSize() && col + (2 * colModifier) >= 0 && col + (2 * colModifier) < this->board->getSize())
+  if (row + (2 * rowModifier) >= 0 && row + (2 * rowModifier) < bSize && col + (2 * colModifier) >= 0 && col + (2 * colModifier) < bSize)
   {
     twoStep = this->board->getTile(row + (2 * rowModifier), col + (2 * colModifier));
   }
@@ -604,7 +605,7 @@ int qwirkle::validateLine(char colour, int shape, int row, int col, int rowModif
   int currentRow = row + rowModifier;
   int currentCol = col + colModifier;
   int numTiles = 1;
-  while (keepChecking && currentRow > 0 && currentRow < this->board->getSize() && currentCol > 0 && currentCol < this->board->getSize())
+  while (keepChecking && currentRow > 0 && currentRow < bSize && currentCol > 0 && currentCol < bSize)
   {
 
     Tile *currentTile = this->board->getTile(currentRow, currentCol);
