@@ -163,7 +163,7 @@ void qwirkle::loadGame()
   }
   inFile.close();
 
-  int boardStart = saveData.find("  |");
+  int boardStart = saveData.find("|") - 2;
   std::string playerData = saveData.substr(0, boardStart);
   int boardEnd = saveData.substr(boardStart, saveData.length()).find("$");
   std::string boardData = saveData.substr(boardStart, boardEnd);
