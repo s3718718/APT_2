@@ -442,6 +442,7 @@ void qwirkle::newTurn(bool loadGame)
             }
             changeTurn();
             firstTurn = false;
+            this->firstMove = false;
           }
           else
           {
