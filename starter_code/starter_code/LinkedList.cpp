@@ -3,7 +3,6 @@
 #include <iostream>
 #include <ctime>
 
-//TODO: Rewrite code to comply with structured programming
 
 LinkedList::LinkedList()
 {
@@ -100,7 +99,8 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
   Tile *target = nullptr;
   Node *currentNode = head;
 
-  if (head->getValue()->getColour() == colour && head->getValue()->getShape() == shape)
+  if (head->getValue()->getColour() == colour &&
+   head->getValue()->getShape() == shape)
   {
     target = head->getValue();
     head = head->getNext();
@@ -126,7 +126,8 @@ Tile *LinkedList::takeTile(Colour colour, Shape shape)
       }
     }
     //Checks whether or not the tail value was the one selected. If so, it updates the tail value accordingly
-    if (!notFound && tail->getValue()->getColour() == target->getColour() && tail->getValue()->getShape() == target->getShape())
+    if (!notFound && tail->getValue()->getColour() == target->getColour() &&
+     tail->getValue()->getShape() == target->getShape())
     {
       tail = currentNode;
     }
@@ -141,8 +142,8 @@ Tile *LinkedList::get(Colour colour, Shape shape)
   while (currentNode != nullptr)
   {
     //check if current node matches args, if it don't currentNode = currentNode.getNext()
-    int tileShape = currentNode->getValue()->getShape();
-    char tileCol = currentNode->getValue()->getColour();
+    Shape tileShape = currentNode->getValue()->getShape();
+    Colour tileCol = currentNode->getValue()->getColour();
     if (tileCol == colour && tileShape == shape)
     {
       output = currentNode->getValue();

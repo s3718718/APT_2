@@ -9,8 +9,6 @@ Bag::Bag(std::ostream *outputStream)
     tileList = new LinkedList(outputStream);
     this->outputStream = outputStream;
     getShuffledBag();
-
-    //tileList->printList();
 }
 
 // For debugging purposes. MUST Remove from final impl

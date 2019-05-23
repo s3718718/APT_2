@@ -30,7 +30,8 @@ void Board::setTile(int row, int col, Tile *tile)
     }
 }
 
-//to make an empty grid of size nxn. it has initially all nullpointers which can be later replaced with pointer to tiles
+//to make an empty grid of size nxn. it has initially all nullpointers
+//which can be later replaced with pointer to tiles
 Board::Board(int size, std::ostream *outputStream)
 {
     this->outputStream = outputStream;
@@ -45,6 +46,7 @@ Board::Board(int size, std::ostream *outputStream)
     }
 }
 
+// Makes the board expand diagonally
 void Board::reSize()
 {
     int bsize = getSize();
@@ -124,8 +126,9 @@ std::string Board::toString()
                 output.append(std::to_string(this->getTile(i, j)->getShape()));
                 output.append("|");
             }
-            else
+            else{
                 output.append("  |");
+            }
         }
         output.append("\n");
     }
