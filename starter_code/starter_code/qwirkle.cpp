@@ -124,11 +124,11 @@ void qwirkle::endGame()
   std::string winningPlayerName = this->players[0]->getName();
   for (int i = 0; i < numPlayers; i++)
   {
-    if (this->players[turn]->getPoints() > highestPoints)
+    if (this->players[i]->getPoints() > highestPoints)
     {
-      winningPlayerName = this->players[turn]->getName();
+      winningPlayerName = this->players[i]->getName();
     }
-    *outputStream << "Score for " << this->players[turn]->getName() << ": " << this->players[turn]->getPoints() << endl;
+    *outputStream << "Score for " << this->players[i]->getName() << ": " << this->players[i]->getPoints() << endl;
   }
   *outputStream << "Player " << winningPlayerName << " won!\n"
                 << endl;
