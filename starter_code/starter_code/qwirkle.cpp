@@ -48,6 +48,7 @@ void qwirkle::studentInformation()
 
 void qwirkle::newGame()
 {
+  this->firstMove = true;
   this->firstTurn = true;
   this->gameOver = false;
   numPlayers = 0;
@@ -238,10 +239,12 @@ void qwirkle::setBoardState(std::vector<std::string> input)
   if (unchanged)
   {
     this->firstTurn = true;
+    this->firstMove = true;
   }
   else
   {
     this->firstTurn = false;
+    this->firstMove = false;
   }
 }
 
@@ -341,8 +344,7 @@ Code References for newTurn:
         https://www.techiedelight.com/convert-string-char-array-cpp/
 */
 
-//TODO
-//Runs initially without taking input, then runs again thanks to loop and takes input. Fix this.
+
 void qwirkle::newTurn(bool loadGame)
 {
   *outputStream << "Player " << this->players[turn]->getName() << "\'s turn " << endl;
@@ -368,7 +370,23 @@ void qwirkle::newTurn(bool loadGame)
   while (!validInput)
   {
     *outputStream << "> ";
-    if (this->firstTurn && !loadGame && !errorPrint)
+    
+    
+    /*
+    firstTurn checks whether it is the program's first run,
+    and provides special functionality to other methods
+    
+    loadGame is true or false depending on whether newTurn is 
+    being run from the loadGame method, only necessary for input validation/capture
+    
+    firstMove is a special case for when the user replaces 
+    on the first turn, only necessary for input validation/capture
+
+    errorPrint notifies whether or not an error message has just been 
+    printed, only necessary for input validation/capture
+    
+    */
+    if (this->firstTurn && !loadGame && this->firstMove && !errorPrint)
     {
       inputStream->ignore();
     }
@@ -423,6 +441,7 @@ void qwirkle::newTurn(bool loadGame)
               gameOver = true;
             }
             changeTurn();
+            firstTurn = false;
           }
           else
           {
@@ -456,6 +475,7 @@ void qwirkle::newTurn(bool loadGame)
           this->players[turn]->addTile(pulledTile);
           this->bag->addTile(t);
           changeTurn();
+          this->firstMove = false;
         }
         validInput = true;
       }
@@ -715,7 +735,7 @@ bool qwirkle::validUserName(std::string name)
 
 void qwirkle::changeTurn()
 {
-  this->firstTurn = false;
+  //this->firstTurn = false;
   turn++;
   turn = turn % numPlayers;
 }

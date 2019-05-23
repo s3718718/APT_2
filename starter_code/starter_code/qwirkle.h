@@ -72,6 +72,7 @@ private:
   shared_ptr<Player> players[MAX_PLAYERS];
   bool gameOver;
   bool firstTurn;
+  bool firstMove;
   int numPlayers;
   int turn;
   std::ostream *outputStream;
