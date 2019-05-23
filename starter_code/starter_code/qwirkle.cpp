@@ -128,7 +128,8 @@ void qwirkle::endGame()
     {
       winningPlayerName = this->players[i]->getName();
     }
-    *outputStream << "Score for " << this->players[i]->getName() << ": " << this->players[i]->getPoints() << endl;
+    *outputStream << "Score for " << this->players[i]->getName() << ": " 
+    << this->players[i]->getPoints() << endl;
   }
   *outputStream << "Player " << winningPlayerName << " won!\n"
                 << endl;
@@ -318,12 +319,6 @@ Player *qwirkle::makePlayerFromString(std::string input)
 void qwirkle::quit()
 {
   *outputStream << "Goodbye" << endl;
-  // if (outputStream == &std::cout)
-  // {
-  //   std::ofstream *fileStream = outputStream;
-  //   fileStream->close();
-  // }
-
   exit(0);
 }
 
@@ -574,7 +569,8 @@ int qwirkle::validateMove(char colour, int shape, int row, int col)
     moveScore = 1;
   }
   //Runs if the board needs to resize as a result of the placement
-  if (moveScore > 0 && (row == this->board->getSize() - 1 || col == this->board->getSize() - 1))
+  if (moveScore > 0 && (row == this->board->getSize() - 1 ||
+   col == this->board->getSize() - 1))
   {
     this->board->reSize();
   }
@@ -582,13 +578,16 @@ int qwirkle::validateMove(char colour, int shape, int row, int col)
   return moveScore;
 }
 
-int qwirkle::validateLine(char colour, int shape, int row, int col, int rowModifier, int colModifier)
+int qwirkle::validateLine(char colour, int shape, int row, int col,
+ int rowModifier, int colModifier)
 {
   bool validPlacement = true;
+  int bSize = this->board->getSize();
   Tile *oneStep = this->board->getTile(row + rowModifier, col + colModifier);
   Tile *twoStep = nullptr;
   //Checks whether the 'twoStep' neighbour will be out of bounds
-  if (row + (2 * rowModifier) >= 0 && row + (2 * rowModifier) < this->board->getSize() && col + (2 * colModifier) >= 0 && col + (2 * colModifier) < this->board->getSize())
+  if (row + (2 * rowModifier) >= 0 && row + (2 * rowModifier) < bSize && col +
+   (2 * colModifier) >= 0 && col + (2 * colModifier) < bSize)
   {
     twoStep = this->board->getTile(row + (2 * rowModifier), col + (2 * colModifier));
   }
@@ -628,7 +627,8 @@ int qwirkle::validateLine(char colour, int shape, int row, int col, int rowModif
   int currentRow = row + rowModifier;
   int currentCol = col + colModifier;
   int numTiles = 1;
-  while (keepChecking && currentRow > 0 && currentRow < this->board->getSize() && currentCol > 0 && currentCol < this->board->getSize())
+  while (keepChecking && currentRow > 0 && currentRow < bSize &&
+   currentCol > 0 && currentCol < bSize)
   {
 
     Tile *currentTile = this->board->getTile(currentRow, currentCol);

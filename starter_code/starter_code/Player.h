@@ -11,10 +11,6 @@ class Player
 {
 public:
   Player(string name, std::ostream *outputStream);
-  //Copy Constructor?
-  //Deconstructor?
-
-  //Getters
   string getName();
   int getPoints();
   void setPoints(int i);
@@ -22,9 +18,9 @@ public:
   bool addTile(Tile *tile);
   bool drawTile(Bag bag); //Removing from bag, adding to hand bag.takeFirst()
   Tile *removeTile(char colour, int shape);
-  void fillHand(Bag bag);               // From TileBag
-  bool hasTile(char colour, int shape); //Validate the methods that manipulate tiles
-  void printHand();                     //For Testing //CHANGE TO TOSTRING
+  void fillHand(Bag bag);             
+  bool hasTile(char colour, int shape); 
+  void printHand();                    
   string toString();
   bool replaceTile();
   bool isEmpty();
